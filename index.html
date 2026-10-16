@@ -279,6 +279,16 @@ textarea { min-height: 84px; resize: vertical; }
 .db { display: grid; grid-template-rows: 1fr auto auto; height: 100%; gap: 4px; text-align: center; min-width: 0; }
 .db .col { align-self: end; background: var(--green); border-radius: 6px 6px 2px 2px; min-height: 3px; transition: height .6s cubic-bezier(.2,.8,.2,1); }
 .db.best .col { background: var(--accent); box-shadow: inset 0 0 0 1.5px var(--ink); }
+.roster { display: grid; border-top: 1px solid var(--line); margin-top: 6px; }
+.roster .rr { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 12px; padding-block: 9px; border-bottom: 1px dashed var(--line); align-items: baseline; }
+.roster .rr:last-child { border-bottom: 0; }
+.roster .rd { font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+.roster .rd b { font-weight: 600; }
+.roster .rd span { color: var(--muted); margin-left: 6px; }
+.roster .rr.best .rd b { background: var(--accent); color: var(--accent-ink); padding: 1px 5px; border-radius: 4px; }
+.roster .names { display: flex; flex-wrap: wrap; gap: 5px; font-size: 13.5px; }
+.roster .names span { padding: 2px 9px; border-radius: 99px; background: var(--paper); border: 1px solid var(--line); }
+.roster .names em { font-style: normal; color: var(--muted); font-size: 13px; }
 .db .v { font-family: var(--mono); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .db small { font-family: var(--mono); font-size: 11px; color: var(--muted); }
 .empty { color: var(--muted); font-size: 14px; }
@@ -520,7 +530,7 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid color-mix(in srgb, var
     </div>
     <div class="stats">
       <div class="panel"><h3>응답한 선생님<span>명</span></h3><div class="total" id="r-total">0</div><p class="empty" id="r-totalNote">아직 응답이 없어요. 위 설문의 첫 응답을 남겨 주세요.</p></div>
-      <div class="panel wide"><h3>날짜별 참여 가능 인원<span id="r-bestDate"></span></h3><div class="datebars" id="r-dates"></div></div>
+      <div class="panel wide"><h3>날짜별 참여 가능 인원<span id="r-bestDate"></span></h3><div class="datebars" id="r-dates"></div><div class="roster" id="r-roster"></div></div>
       <div class="panel"><h3>구독 중인 AI</h3><div class="bars" id="r-ai"></div></div>
       <div class="panel wide"><h3>기대하는 것<span id="r-wantsN"></span></h3><div class="quotes" id="r-wants"></div></div>
     </div>
@@ -763,6 +773,16 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid color-mix(in srgb, var
       const col = el("div", "col"); col.style.height = (max ? n / max * 100 : 0) + "%";
       c.append(col, el("span", "v", String(n)), el("small", null, s.m + "." + s.d.padStart(2, "0")));
       c.title = s.n + "회차 " + s.m + "월 " + s.d + "일 · " + n + "명"; dbx.append(c);
+    });
+    const ro = $("#r-roster"); ro.textContent = "";
+    DATES.forEach(s => {
+      const who = rows.filter(r => (r.dates || []).includes(s.id)).map(r => r.name || "이름 없음").sort((a, b) => a.localeCompare(b, "ko"));
+      const rr = el("div", "rr" + (max && who.length === max ? " best" : ""));
+      const rd = el("div", "rd"); rd.append(el("b", null, s.m + "." + s.d.padStart(2, "0")), el("span", null, who.length + "명"));
+      const names = el("div", "names");
+      if (who.length) who.forEach(n => names.append(el("span", null, n)));
+      else names.append(el("em", null, "아직 없음"));
+      rr.append(rd, names); ro.append(rr);
     });
     const best = DATES.filter(s => max && (dc[s.id] || 0) === max).map(s => s.m + "." + s.d);
     $("#r-bestDate").textContent = best.length ? "최다 " + best.join(", ") : "";
