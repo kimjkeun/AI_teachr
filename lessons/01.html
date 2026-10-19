@@ -108,7 +108,7 @@
           <div class="note">
             <b class="t">PS C:\WINDOWS\system32&gt; 가 보인다면</b>
             <p><b>관리자 권한</b>으로 연 창입니다. 창 제목에 "관리자"가 붙어 있을 거예요. <kbd>⊞ Win</kbd> + <kbd>X</kbd> 메뉴에서 <b>"터미널(관리자)"</b> 바로 위의 <b>"터미널"</b>을 눌러 다시 여세요. 정상이면 <code class="i">PS C:\Users\선생님이름&gt;</code>으로 시작합니다.</p>
-            <p>system32는 Windows 핵심 파일이 있는 폴더라, 여기서 에이전트를 실행하면 중요한 파일을 건드릴 수 있습니다. 어느 창이든 <b>에이전트를 부르기 전에는 항상 <code class="i">cd C:\project</code>로 이동</b>하세요.</p>
+            <p>system32는 Windows 핵심 파일이 있는 폴더라, 여기서 에이전트를 실행하면 중요한 파일을 건드릴 수 있습니다. 어느 창이든 <b>에이전트를 부르기 전에는 항상 <code class="i">cd C:\projects</code>로 이동</b>하세요.</p>
           </div>
           <div class="tip">복사한 명령은 PowerShell 창에서 <b>마우스 오른쪽 클릭</b> 또는 <kbd>Ctrl</kbd> + <kbd>V</kbd>로 붙여 넣고 <kbd>Enter</kbd>를 누릅니다.</div>
         </div>
@@ -121,30 +121,30 @@
         <p class="lead">에이전트는 <b>지금 PowerShell이 들어가 있는 폴더 안에서</b> 일합니다. 그래서 일을 시키기 전에는 항상 작업 폴더로 이동부터 합니다. 오늘부터 8주 동안 쓸 작업 폴더를 하나 만들어 둘게요.</p>
 
         <div class="sub">
-          <h3><span class="k">3-1</span>C 드라이브에 project 폴더 만들기</h3>
+          <h3><span class="k">3-1</span>C 드라이브에 projects 폴더 만들기</h3>
           <ol class="plain">
             <li><kbd>⊞ Win</kbd> + <kbd>E</kbd>로 파일 탐색기를 엽니다.</li>
             <li>왼쪽에서 <b>내 PC</b>를 누르고 <b>로컬 디스크 (C:)</b>를 더블클릭합니다.</li>
             <li>빈 곳에서 마우스 오른쪽 클릭 → <b>새로 만들기</b> → <b>폴더</b>.</li>
-            <li>이름을 <code class="i">project</code>로 적고 <kbd>Enter</kbd>.</li>
+            <li>이름을 <code class="i">projects</code>로 적고 <kbd>Enter</kbd>.</li>
           </ol>
           <div class="screen">탐색기 주소창에 이렇게 보이면 성공
-<span class="ok">내 PC  ›  로컬 디스크 (C:)  ›  project</span></div>
+<span class="ok">내 PC  ›  로컬 디스크 (C:)  ›  projects</span></div>
           <div class="tip">폴더 이름은 <b>영어 소문자, 띄어쓰기 없이</b> 만드세요. 한글이나 띄어쓰기가 들어간 폴더는 명령어에서 오류가 나기 쉽습니다.</div>
         </div>
 
         <div class="sub">
           <h3><span class="k">3-2</span>PowerShell에서 폴더 이동하기 (<code class="i">cd</code>)</h3>
           <p><code class="i">cd</code>는 "change directory", 즉 <b>폴더로 들어가기</b>입니다. 지금 어디에 있는지는 <code class="i">PS</code> 뒤에 보이는 주소로 알 수 있어요. 아래 순서대로 하나씩 따라 해 보세요.</p>
-          <div class="cmd"><span class="lbl">① project 폴더로 바로 가기</span><pre>cd C:\project</pre><button class="copy" type="button">복사</button></div>
+          <div class="cmd"><span class="lbl">① projects 폴더로 바로 가기</span><pre>cd C:\projects</pre><button class="copy" type="button">복사</button></div>
           <div class="cmd"><span class="lbl">② 한 단계 위(상위 폴더)로 나가기</span><pre>cd ..</pre><button class="copy" type="button">복사</button></div>
-          <div class="cmd"><span class="lbl">③ 지금 위치 안의 project 폴더로 들어가기</span><pre>cd project</pre><button class="copy" type="button">복사</button></div>
+          <div class="cmd"><span class="lbl">③ 지금 위치 안의 projects 폴더로 들어가기</span><pre>cd projects</pre><button class="copy" type="button">복사</button></div>
           <div class="cmd"><span class="lbl">④ 지금 폴더를 탐색기 창으로 열기</span><pre>explorer .</pre><button class="copy" type="button">복사</button></div>
-          <div class="screen">PS C:\Users\선생님이름&gt; cd C:\project
-<span class="ok">PS C:\project&gt;</span> cd ..
-<span class="ok">PS C:\&gt;</span> cd project
-<span class="ok">PS C:\project&gt;</span>                ← 이 상태에서 에이전트를 부르면 됩니다</div>
-          <div class="tip">처음 주소가 <code class="i">C:\Users\선생님이름</code>이든 <code class="i">C:\WINDOWS\system32</code>든 상관없이, ① <code class="i">cd C:\project</code> 한 줄이면 어디서든 project 폴더로 바로 갑니다.</div>
+          <div class="screen">PS C:\Users\선생님이름&gt; cd C:\projects
+<span class="ok">PS C:\projects&gt;</span> cd ..
+<span class="ok">PS C:\&gt;</span> cd projects
+<span class="ok">PS C:\projects&gt;</span>                ← 이 상태에서 에이전트를 부르면 됩니다</div>
+          <div class="tip">처음 주소가 <code class="i">C:\Users\선생님이름</code>이든 <code class="i">C:\WINDOWS\system32</code>든 상관없이, ① <code class="i">cd C:\projects</code> 한 줄이면 어디서든 projects 폴더로 바로 갑니다.</div>
           <div class="tip"><b>꿀팁</b>: <code class="i">cd pro</code>까지만 치고 <kbd>Tab</kbd>을 누르면 폴더 이름이 자동으로 완성됩니다.</div>
         </div>
 
@@ -172,13 +172,13 @@
         <div class="note">
           <b class="t">"허용하시겠습니까?"라고 물어보면</b>
           <p>에이전트는 파일을 만들거나 명령을 실행하기 전에 확인을 받습니다. <b>무엇을 하려는지 한 줄 읽어 보고</b> 괜찮으면 허용(Yes)을 고르세요.</p>
-          <p>파일 <b>삭제</b>나 <code class="i">C:\project</code> 폴더 <b>바깥</b>을 건드리려 하면 거절(No)하고 다시 설명해 주면 됩니다.</p>
+          <p>파일 <b>삭제</b>나 <code class="i">C:\projects</code> 폴더 <b>바깥</b>을 건드리려 하면 거절(No)하고 다시 설명해 주면 됩니다.</p>
         </div>
 
         <div class="sub">
           <h3><span class="k">5-1</span>파일 만들기</h3>
           <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>이 폴더에 '환영합니다.txt' 파일을 만들고, 안에 오늘 날짜와 "수요 AI 에이전트 빌더스 첫 실습 출석!"이라고 적어줘.</pre><button class="copy" type="button">복사</button></div>
-          <p>확인: 열어 둔 <code class="i">C:\project</code> 탐색기 창에 <b>환영합니다.txt</b>가 생겼나요? 더블클릭해서 내용을 열어 보세요.</p>
+          <p>확인: 열어 둔 <code class="i">C:\projects</code> 탐색기 창에 <b>환영합니다.txt</b>가 생겼나요? 더블클릭해서 내용을 열어 보세요.</p>
         </div>
 
         <div class="sub">
@@ -209,7 +209,7 @@
         <div class="sub">
           <h3><span class="k">6-2</span>다음에 다시 시작하는 법</h3>
           <p>PowerShell을 열고 작업 폴더로 이동한 뒤, 내 에이전트 이름(<code class="i">claude</code>, <code class="i">codex</code>, <code class="i">agy</code>, <code class="i">grok</code>)을 입력하면 됩니다.</p>
-          <div class="cmd"><pre>cd C:\project</pre><button class="copy" type="button">복사</button></div>
+          <div class="cmd"><pre>cd C:\projects</pre><button class="copy" type="button">복사</button></div>
         </div>
         <div class="sub">
           <h3><span class="k">6-3</span>다음 자료 예고</h3>
@@ -324,10 +324,10 @@
 
     const s3 = el("div", "sub"); const h3 = el("h3"); h3.append(el("span", "k", "4-3"), document.createTextNode("작업 폴더로 이동하고 실행"));
     s3.append(h3,
-      el("p", null, "3단계에서 만든 C:\\project 폴더로 이동하고, 탐색기 창으로 열어 옆에 띄워 둡니다."),
-      cmdBlock("cd C:\\project", "PowerShell"),
+      el("p", null, "3단계에서 만든 C:\\projects 폴더로 이동하고, 탐색기 창으로 열어 옆에 띄워 둡니다."),
+      cmdBlock("cd C:\\projects", "PowerShell"),
       cmdBlock("explorer .", "PowerShell"),
-      el("p", null, "PS C:\\project> 가 보이면 에이전트를 부릅니다."),
+      el("p", null, "PS C:\\projects> 가 보이면 에이전트를 부릅니다."),
       cmdBlock(t.cmd, "PowerShell"));
 
     const s4 = el("div", "sub"); const h4 = el("h3"); h4.append(el("span", "k", "4-4"), document.createTextNode("처음 한 번만: 로그인"));
