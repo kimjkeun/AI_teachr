@@ -106,6 +106,11 @@
           </ol>
           <div class="screen"><span class="ok">PS C:\Users\선생님이름&gt;</span>     ← 앞에 PS가 보이면 정답
 <span class="bad">C:\Users\선생님이름&gt;</span>        ← PS가 없으면 CMD입니다. 창을 닫고 다시 열어 주세요</div>
+          <div class="note">
+            <b class="t">PS C:\WINDOWS\system32&gt; 가 보인다면</b>
+            <p><b>관리자 권한</b>으로 연 창입니다. 창 제목에 "관리자"가 붙어 있을 거예요. <kbd>⊞ Win</kbd> + <kbd>X</kbd> 메뉴에서 <b>"터미널(관리자)"</b> 바로 위의 <b>"터미널"</b>을 눌러 다시 여세요. 정상이면 <code class="i">PS C:\Users\선생님이름&gt;</code>으로 시작합니다.</p>
+            <p>system32는 Windows 핵심 파일이 있는 폴더라, 여기서 에이전트를 실행하면 중요한 파일을 건드릴 수 있습니다. 어느 창이든 <b>에이전트를 부르기 전에는 항상 <code class="i">cd C:\project</code>로 이동</b>하세요.</p>
+          </div>
           <div class="tip">복사한 명령은 PowerShell 창에서 <b>마우스 오른쪽 클릭</b> 또는 <kbd>Ctrl</kbd> + <kbd>V</kbd>로 붙여 넣고 <kbd>Enter</kbd>를 누릅니다.</div>
         </div>
 
@@ -156,6 +161,7 @@
 <span class="ok">PS C:\project&gt;</span> cd ..
 <span class="ok">PS C:\&gt;</span> cd project
 <span class="ok">PS C:\project&gt;</span>                ← 이 상태에서 에이전트를 부르면 됩니다</div>
+          <div class="tip">처음 주소가 <code class="i">C:\Users\선생님이름</code>이든 <code class="i">C:\WINDOWS\system32</code>든 상관없이, ① <code class="i">cd C:\project</code> 한 줄이면 어디서든 project 폴더로 바로 갑니다.</div>
           <div class="tip"><b>꿀팁</b>: <code class="i">cd pro</code>까지만 치고 <kbd>Tab</kbd>을 누르면 폴더 이름이 자동으로 완성됩니다.</div>
         </div>
 
