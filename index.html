@@ -342,6 +342,7 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid color-mix(in srgb, var
       <li><a href="#course">8주 과정</a></li>
       <li><a href="#survey">사전 설문</a></li>
       <li><a href="#results">결과판</a></li>
+      <li><a href="lessons/">강의자료</a></li>
       <li><a href="https://padlet.com/strads/ai-cj29920iztskd4vm" target="_blank" rel="noopener">패들렛 ↗</a></li>
     </ul>
     <a class="btn small" href="#survey">설문 참여</a>
@@ -364,6 +365,7 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid color-mix(in srgb, var
     <div class="cta-row">
       <a class="btn" href="#survey">사전 설문 남기기 →</a>
       <a class="btn ghost" href="#course">8주 과정 보기</a>
+      <a class="btn ghost" href="lessons/">강의자료 보기</a>
       <a class="btn ghost" href="https://padlet.com/strads/ai-cj29920iztskd4vm" target="_blank" rel="noopener">공동체 패들렛 ↗</a>
     </div>
   </div>
@@ -567,7 +569,7 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid color-mix(in srgb, var
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 
   const SESSIONS = [
-    { id: "10.21", m: "10", d: "21", n: 1, ph: 1, tag: "Phase 1", title: "첫 만남 & 세팅", href: "lessons/01.html", items: ["오리엔테이션, Git과 VS Code 설치", "내 구독에 맞는 CLI 에이전트 설치하고 첫 인사"] },
+    { id: "10.21", m: "10", d: "21", n: 1, ph: 1, tag: "Phase 1", title: "첫 만남 & 세팅", items: ["오리엔테이션, PowerShell과 작업 폴더 준비", "내 구독에 맞는 CLI 에이전트 설치하고 첫 인사"] },
     { id: "10.28", m: "10", d: "28", n: 2, ph: 1, tag: "Phase 1", title: "에이전트 길들이기", items: ["말로 지시해서 랜덤 발표자 뽑기 & 타이머 띄우기", "에러가 나면 AI가 스스로 고치는 과정 지켜보기"] },
     { id: "11.04", m: "11", d: "4", n: 3, ph: 2, tag: "Phase 2", title: "행정편: 공문 폴더 정리", items: ["공문서·지침서 폴더를 통째로 읽고 할 일 3단계 추출", "웹 챗봇에서는 왜 안 되는지 직접 비교"] },
     { id: "11.11", m: "11", d: "11", n: 4, ph: 2, tag: "Phase 2", title: "학급편: 과제와 사진 정리", items: ["뒤섞인 학생 과제 폴더 취합, 미제출자 명단 엑셀 정리", "학급 사진 수백 장을 번호순으로 한 번에 이름 바꾸기"] },
@@ -596,7 +598,6 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid color-mix(in srgb, var
     const tagc = el("div", "tagcell"); tagc.append(el("span", "tag", s.tag));
     const h = el("h3"); h.append(el("small", null, s.n ? s.n + "회차" : "쉬는 주")); h.append(document.createTextNode(s.title));
     const ul = el("ul"); s.items.forEach(i => ul.append(el("li", null, i)));
-    if (s.href) { const li = el("li", "lesson-link"); const a = el("a", null, "강의자료 보기 →"); a.href = s.href; li.append(a); ul.append(li); }
     r.append(date, tagc, h, ul); tt.append(r);
   });
 

@@ -171,3 +171,16 @@ details .body { padding: 0 16px 16px; display: grid; gap: 10px; font-size: 15px;
 .btn { display: inline-flex; align-items: center; gap: 8px; font: 600 15px/1 var(--body); text-decoration: none; background: var(--accent); color: var(--accent-ink); padding: 13px 18px; border-radius: 999px; border: 0; cursor: pointer; justify-self: start; }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } html { scroll-behavior: auto; } }
+
+/* 강의자료 목록 */
+.lib { display: grid; gap: 14px; padding-bottom: 80px; }
+.lib a, .lib div.item { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 20px; align-items: center; padding: 22px 24px; border: 1.5px solid var(--ink); border-radius: 14px; background: var(--surface); color: var(--ink); text-decoration: none; }
+.lib a:hover { box-shadow: 5px 5px 0 var(--ink); transform: translate(-2px, -2px); transition: all .2s ease; }
+.lib .no { font: 600 28px var(--mono); color: var(--green); letter-spacing: -0.03em; }
+.lib h2 { font-size: 24px; font-weight: 700; }
+.lib p { color: var(--muted); font-size: 15px; margin-top: 4px; }
+.lib .st { font: 600 12px var(--mono); padding: 5px 11px; border-radius: 99px; white-space: nowrap; background: var(--accent); color: var(--accent-ink); }
+.lib div.item { border-style: dashed; border-color: var(--line); background: transparent; }
+.lib div.item .no, .lib div.item h2 { color: var(--muted); }
+.lib div.item .st { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+@media (max-width: 560px) { .lib a, .lib div.item { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
