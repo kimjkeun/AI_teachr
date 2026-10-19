@@ -62,25 +62,23 @@
       <section class="step" id="s1" data-step="s1">
         <div class="step-head"><span class="n">1</span><h2>웹 챗봇 vs CLI 에이전트</h2><span class="time">10분</span></div>
         <p class="lead">같은 일, "공문 폴더 10개를 요약해서 할 일 목록으로 정리하기"를 시킨다고 해 볼게요.</p>
-        <div class="compare">
-          <div>
-            <p class="verdict">웹 챗봇 (지금까지)</p>
-            <h3>내가 옮겨 주는 AI</h3>
-            <ol>
-              <li>파일을 하나씩 찾아서 업로드</li>
-              <li>답변을 복사</li>
-              <li>한글·엑셀에 붙여 넣고 정리</li>
-              <li>파일이 많으면 나눠서 반복</li>
-            </ol>
+        <div class="race" id="race">
+          <div class="race-bar">
+            <button class="btn" id="raceBtn" type="button">▶ 비교 재생</button>
+            <span class="race-cap">같은 일을 동시에 시작하면 어떻게 될까요?</span>
           </div>
-          <div>
-            <p class="verdict">CLI 에이전트 (오늘부터)</p>
-            <h3>내 폴더에서 직접 일하는 AI</h3>
-            <ol>
-              <li>"이 폴더 공문 전부 읽고 할 일 정리해서 파일로 저장해줘"</li>
-              <li>끝. 결과 파일이 폴더에 생깁니다</li>
-            </ol>
+          <div class="lanes">
+            <div class="lane web">
+              <div class="lane-head"><div><p class="verdict">웹 챗봇 (지금까지)</p><h3>내가 옮겨 주는 AI</h3></div><b class="clock" id="clockWeb">15:00+</b></div>
+              <ol class="log" id="logWeb"></ol>
+            </div>
+            <div class="lane agent">
+              <div class="lane-head"><div><p class="verdict">CLI 에이전트 (오늘부터)</p><h3>내 폴더에서 직접 일하는 AI</h3></div><b class="clock" id="clockAgent">00:40</b></div>
+              <div class="log term" id="logAgent"></div>
+              <div class="folder"><span class="fname">📁 C:\projects\공문</span><div class="files" id="files"></div></div>
+            </div>
           </div>
+          <p class="race-note">시간은 실제 업무를 가정한 예시입니다.</p>
         </div>
         <div class="sub">
           <h3><span class="k">Q.</span>터미널이 뭔가요?</h3>
@@ -140,10 +138,25 @@
           <div class="cmd"><span class="lbl">② 한 단계 위(상위 폴더)로 나가기</span><pre>cd ..</pre><button class="copy" type="button">복사</button></div>
           <div class="cmd"><span class="lbl">③ 지금 위치 안의 projects 폴더로 들어가기</span><pre>cd projects</pre><button class="copy" type="button">복사</button></div>
           <div class="cmd"><span class="lbl">④ 지금 폴더를 탐색기 창으로 열기</span><pre>explorer .</pre><button class="copy" type="button">복사</button></div>
-          <div class="screen">PS C:\Users\선생님이름&gt; cd C:\projects
-<span class="ok">PS C:\projects&gt;</span> cd ..
-<span class="ok">PS C:\&gt;</span> cd projects
-<span class="ok">PS C:\projects&gt;</span>                ← 이 상태에서 에이전트를 부르면 됩니다</div>
+          <div class="sim" id="sim">
+            <div class="sim-tree">
+              <p class="sim-cap">내 컴퓨터 폴더 지도</p>
+              <div id="simTree"></div>
+            </div>
+            <div class="sim-term">
+              <p class="sim-cap">연습용 PowerShell <span>(진짜가 아니라서 마음껏 쳐 봐도 됩니다)</span></p>
+              <div class="sim-out" id="simOut" aria-live="polite"></div>
+              <form class="sim-line" id="simForm"><label for="simIn" id="simPs">PS C:\Users\선생님이름&gt;</label><input id="simIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="cd 명령 입력 후 Enter"></form>
+              <div class="sim-btns">
+                <button type="button" data-cmd="cd C:\projects">cd C:\projects</button>
+                <button type="button" data-cmd="cd ..">cd ..</button>
+                <button type="button" data-cmd="cd projects">cd projects</button>
+                <button type="button" data-cmd="explorer .">explorer .</button>
+                <button type="button" class="reset" data-reset="home">처음 위치로</button>
+                <button type="button" class="reset" data-reset="sys">system32에서 시작</button>
+              </div>
+            </div>
+          </div>
           <div class="tip">처음 주소가 <code class="i">C:\Users\선생님이름</code>이든 <code class="i">C:\WINDOWS\system32</code>든 상관없이, ① <code class="i">cd C:\projects</code> 한 줄이면 어디서든 projects 폴더로 바로 갑니다.</div>
           <div class="tip"><b>꿀팁</b>: <code class="i">cd pro</code>까지만 치고 <kbd>Tab</kbd>을 누르면 폴더 이름이 자동으로 완성됩니다.</div>
         </div>
@@ -363,6 +376,154 @@
     const selectIt = () => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); done("Ctrl+C"); };
     try { navigator.clipboard.writeText(text).then(() => done("복사됨 ✓"), selectIt); } catch { selectIt(); }
   });
+
+  /* ---------- 비교 애니메이션 ---------- */
+  const WEB = [
+    ["공문 1~3 업로드 (한 번에 올릴 수 있는 개수 제한)", 90],
+    ["요약 답변 복사", 30],
+    ["한글 문서에 붙여넣기", 40],
+    ["공문 4~6 업로드", 90],
+    ["답변 복사 · 붙여넣기", 70],
+    ["공문 7~10 업로드", 110],
+    ["답변 복사 · 붙여넣기", 70],
+    ["할 일만 다시 골라서 정리", 240],
+    ["파일 이름 정해서 저장", 160]
+  ];
+  const AGENT_PROMPT = "이 폴더 공문 전부 읽고, 할 일만 마감일 순으로 정리해서 파일로 저장해줘";
+  const AGENT = [["d", "● 공문 10건 읽는 중…", 20], ["d", "● 마감일 순으로 정리하는 중…", 12], ["ok", "✓ 할일목록.md 저장 완료", 4]];
+  const fmt = (sec) => String(Math.floor(sec / 60)).padStart(2, "0") + ":" + String(sec % 60).padStart(2, "0");
+  const R = { webLog: $("#logWeb"), agentLog: $("#logAgent"), cw: $("#clockWeb"), ca: $("#clockAgent"), files: $("#files"), btn: $("#raceBtn") };
+  function raceFinal() {
+    R.webLog.textContent = ""; WEB.forEach(([t]) => R.webLog.append(el("li", null, t)));
+    R.webLog.append(el("li", "more", "…파일이 더 많으면 계속 반복"));
+    R.agentLog.textContent = "";
+    const pl = el("div", "pl"); pl.append(el("span", "p", "> "), document.createTextNode(AGENT_PROMPT)); R.agentLog.append(pl);
+    AGENT.forEach(([c, t]) => R.agentLog.append(el("div", c, t)));
+    R.agentLog.append(el("div", "end", "끝. 남은 시간에 커피 한 잔 ☕"));
+    R.files.textContent = ""; R.files.append(el("span", "file", "할일목록.md"));
+    R.cw.textContent = "15:00+"; R.ca.textContent = "00:40";
+  }
+  let raceToken = 0;
+  async function racePlay() {
+    const my = ++raceToken; const alive = () => my === raceToken;
+    const wait = (ms) => new Promise(r => setTimeout(r, ms));
+    R.webLog.textContent = ""; R.agentLog.textContent = ""; R.files.textContent = "";
+    R.cw.textContent = "00:00"; R.ca.textContent = "00:00";
+    R.btn.textContent = "↺ 다시 재생";
+    const web = (async () => {
+      let t = 0;
+      for (const [txt, sec] of WEB) {
+        await wait(850); if (!alive()) return;
+        t += sec; R.cw.textContent = fmt(t);
+        R.webLog.append(el("li", "new", txt));
+      }
+      await wait(600); if (!alive()) return;
+      R.webLog.append(el("li", "more new", "…파일이 더 많으면 계속 반복")); R.cw.textContent = "15:00+";
+    })();
+    const agent = (async () => {
+      const pl = el("div", "pl"); const typed = el("span"); const caret = el("span", "caret");
+      pl.append(el("span", "p", "> "), typed, caret); R.agentLog.append(pl);
+      for (const ch of AGENT_PROMPT) { await wait(45); if (!alive()) return; typed.textContent += ch; }
+      caret.remove();
+      let t = 4; R.ca.textContent = fmt(t);
+      for (const [c, txt, sec] of AGENT) {
+        await wait(700); if (!alive()) return;
+        t += sec; R.ca.textContent = fmt(t);
+        R.agentLog.append(el("div", c + " new", txt));
+      }
+      R.files.append(el("span", "file new pop", "할일목록.md"));
+      await wait(500); if (!alive()) return;
+      R.agentLog.append(el("div", "end new", "끝. 남은 시간에 커피 한 잔 ☕"));
+    })();
+    await Promise.all([web, agent]);
+  }
+  raceFinal();
+  R.btn.addEventListener("click", () => {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) { raceFinal(); return; }
+    racePlay();
+  });
+
+  /* ---------- cd 연습 화면 ---------- */
+  const TREE = { name: "C:", kids: [
+    { name: "projects", kids: [] },
+    { name: "Users", kids: [{ name: "선생님이름", kids: [] }] },
+    { name: "Windows", kids: [{ name: "System32", kids: [] }] }
+  ] };
+  const HOME = ["C:", "Users", "선생님이름"], SYS = ["C:", "Windows", "System32"];
+  let cwd = HOME.slice(), prevCwd = cwd.slice();
+  const pathStr = (p) => p.length === 1 ? "C:\\" : p.join("\\");
+  const nodeAt = (p) => { let n = TREE; for (const seg of p.slice(1)) { n = n.kids.find(k => k.name === seg); if (!n) return null; } return n; };
+  const atProjects = () => cwd.join("\\") === "C:\\projects";
+  function drawTree() {
+    const box = $("#simTree"); box.textContent = "";
+    (function walk(n, path, depth) {
+      const row = el("div", "node" + (path.join("\\") === cwd.join("\\") ? " here" : ""));
+      row.style.setProperty("--d", depth);
+      row.append(el("span", "ic", depth ? "📁" : "💽"), el("span", "nm", depth ? n.name : "C:\\ (로컬 디스크)"));
+      if (n.name === "projects") row.append(el("span", "badge", "작업 폴더"));
+      if (n.name === "System32") row.append(el("span", "badge warn", "건드리면 안 됨"));
+      box.append(row);
+      n.kids.forEach(k => walk(k, path.concat(k.name), depth + 1));
+    })(TREE, ["C:"], 0);
+    $("#simPs").textContent = "PS " + pathStr(cwd) + ">";
+  }
+  function say(cmd, msg, kind) {
+    const out = $("#simOut");
+    const line = el("div", "cmdline"); line.append(el("span", "ps", "PS " + pathStr(prevCwd) + "> "), document.createTextNode(cmd)); out.append(line);
+    if (msg) out.append(el("div", "msg " + (kind || ""), msg));
+    out.scrollTop = out.scrollHeight;
+  }
+  function run(raw) {
+    const cmd = raw.trim(); if (!cmd) return;
+    prevCwd = cwd.slice();
+    const m = cmd.match(/^(cd|chdir|set-location)(?:\s+(.*))?$/i);
+    if (m) {
+      const arg = (m[2] || "").trim().replace(/^["']|["']$/g, "");
+      if (!arg) { say(cmd, "이동할 폴더 이름을 cd 뒤에 한 칸 띄우고 적어 주세요. 예: cd projects", "err"); return; }
+      let target;
+      if (arg === "~") target = HOME.slice();
+      else {
+        const abs = /^c:/i.test(arg) || arg.startsWith("\\");
+        target = abs ? ["C:"] : cwd.slice();
+        const segs = arg.replace(/^c:/i, "").split(/[\\/]+/).filter(Boolean);
+        for (const seg of segs) {
+          if (seg === ".") continue;
+          if (seg === "..") { if (target.length > 1) target.pop(); continue; }
+          const here = nodeAt(target);
+          const hit = here && here.kids.find(k => k.name.toLowerCase() === seg.toLowerCase());
+          if (!hit) {
+            say(cmd, "'" + seg + "' 폴더를 찾을 수 없습니다. 지금 위치(" + pathStr(target) + ") 안에 그 폴더가 있는지 왼쪽 지도에서 확인해 보세요.", "err");
+            return;
+          }
+          target.push(hit.name);
+        }
+      }
+      cwd = target; drawTree();
+      if (atProjects()) say(cmd, "작업 폴더에 도착했습니다. 여기서 에이전트를 부르면 됩니다.", "ok");
+      else if (cwd[cwd.length - 1] === "System32") say(cmd, "Windows 핵심 폴더입니다. 여기서는 에이전트를 부르지 마세요.", "warn");
+      else say(cmd, "");
+      return;
+    }
+    if (/^explorer\s+\.$/i.test(cmd)) { say(cmd, "실제 PowerShell이라면 지금 폴더(" + pathStr(cwd) + ")가 탐색기 창으로 열립니다.", "ok"); return; }
+    if (/^mkdir\b/i.test(cmd)) { say(cmd, "mkdir는 다음 자료에서 배워요. 오늘은 탐색기에서 만든 projects 폴더를 씁니다.", "warn"); return; }
+    if (/^(claude|codex|agy|grok)$/i.test(cmd)) {
+      if (atProjects()) say(cmd, "좋아요! 실제 PowerShell에서는 이 위치에서 에이전트가 시작됩니다.", "ok");
+      else say(cmd, "에이전트를 부르기 전에 먼저 cd C:\\projects 로 이동하세요.", "warn");
+      return;
+    }
+    say(cmd, "이 연습 화면에서는 cd 와 explorer . 만 해 볼 수 있어요.", "err");
+  }
+  function simReset(where) {
+    cwd = (where === "sys" ? SYS : HOME).slice(); prevCwd = cwd.slice();
+    const out = $("#simOut"); out.textContent = "";
+    out.append(el("div", "msg", where === "sys"
+      ? "관리자 창으로 열었을 때처럼 System32에서 시작합니다. 어떻게 작업 폴더로 갈까요?"
+      : "PowerShell을 막 연 상태입니다. 아래 버튼을 누르거나 직접 cd 명령을 입력해 보세요."));
+    drawTree();
+  }
+  $("#simForm").addEventListener("submit", (e) => { e.preventDefault(); const i = $("#simIn"); run(i.value); i.value = ""; });
+  $$(".sim-btns button").forEach(b => b.addEventListener("click", () => { if (b.dataset.reset) simReset(b.dataset.reset); else run(b.dataset.cmd); }));
+  simReset("home");
 
   /* ---------- 진행 체크 ---------- */
   const STEPS = ["s0", "s1", "s2", "sf", "s3", "s4", "s5"];

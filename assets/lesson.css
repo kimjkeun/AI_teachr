@@ -184,3 +184,67 @@ details .body { padding: 0 16px 16px; display: grid; gap: 10px; font-size: 15px;
 .lib div.item .no, .lib div.item h2 { color: var(--muted); }
 .lib div.item .st { background: transparent; color: var(--muted); border: 1px solid var(--line); }
 @media (max-width: 560px) { .lib a, .lib div.item { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
+
+/* 비교 애니메이션 */
+.race { display: grid; gap: 14px; }
+.race-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.race-cap { color: var(--muted); font-size: 15px; }
+.race-note { font: 12px var(--mono); color: var(--muted); }
+.lanes { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border: 1.5px solid var(--ink); border-radius: 14px; overflow: hidden; }
+.lane { padding: 20px; display: grid; gap: 14px; align-content: start; min-width: 0; min-height: 360px; }
+.lane.web { background: var(--surface); }
+.lane.agent { background: var(--board); color: var(--board-ink); border-left: 1.5px solid var(--ink); }
+.lane-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.lane-head .verdict { font: 12px var(--mono); opacity: .8; }
+.lane-head h3 { font-size: 20px; margin-top: 2px; }
+.clock { font: 600 30px/1 var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; white-space: nowrap; }
+.lane.web .clock { color: var(--danger); }
+.lane.agent .clock { color: var(--accent); }
+.log { margin: 0; padding-left: 1.3em; display: grid; gap: 5px; font-size: 14.5px; }
+.log li.more { list-style: none; margin-left: -1.3em; color: var(--muted); font-style: italic; }
+.log.term { padding: 0; font: 13.5px/1.7 var(--mono); }
+.log.term .p { color: var(--accent); }
+.log.term .d { color: var(--board-dim); }
+.log.term .ok { color: #9BE0B8; }
+.log.term .end { margin-top: 6px; color: var(--accent); font-weight: 600; }
+.log .new { animation: slideIn .35s ease both; }
+.caret { display: inline-block; width: .55em; height: 1.05em; vertical-align: -0.18em; background: var(--accent); animation: blink 1s steps(1) infinite; }
+.folder { margin-top: auto; border: 1px dashed color-mix(in srgb, var(--board-ink) 35%, transparent); border-radius: 10px; padding: 10px 12px; display: grid; gap: 8px; }
+.folder .fname { font: 12.5px var(--mono); color: var(--board-dim); }
+.files { display: flex; gap: 6px; flex-wrap: wrap; min-height: 28px; }
+.file { font: 600 13px var(--mono); background: var(--accent); color: var(--accent-ink); border-radius: 6px; padding: 4px 10px; }
+.file.pop { animation: pop .5s cubic-bezier(.2, 1.6, .4, 1) both; }
+@keyframes slideIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes pop { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes blink { 50% { opacity: 0; } }
+@media (max-width: 720px) { .lanes { grid-template-columns: minmax(0, 1fr); } .lane.agent { border-left: 0; border-top: 1.5px solid var(--ink); } .lane { min-height: 0; } }
+
+/* cd 연습 화면 */
+.sim { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); border: 1.5px solid var(--ink); border-radius: 14px; overflow: hidden; }
+.sim-tree { background: var(--surface); padding: 16px 18px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.sim-cap { font: 12px var(--mono); color: var(--muted); letter-spacing: .04em; }
+.sim-cap span { opacity: .8; }
+.node { --d: 0; display: flex; align-items: center; gap: 8px; padding: 6px 10px 6px calc(10px + var(--d) * 22px); border-radius: 8px; font-size: 14.5px; transition: background .3s ease; position: relative; }
+.node .nm { font-family: var(--mono); font-size: 13.5px; }
+.node .badge { font: 600 11px var(--body); padding: 2px 7px; border-radius: 99px; background: color-mix(in srgb, var(--green) 14%, transparent); color: var(--green); }
+.node .badge.warn { background: color-mix(in srgb, var(--danger) 12%, transparent); color: var(--danger); }
+.node.here { background: var(--accent); color: var(--accent-ink); }
+.node.here .badge { background: rgba(255,255,255,.55); color: var(--accent-ink); }
+.node.here::after { content: "◀ 지금 여기"; margin-left: auto; font: 600 11.5px var(--mono); white-space: nowrap; }
+.sim-term { background: var(--board); color: var(--board-ink); padding: 16px 18px; display: grid; gap: 10px; align-content: start; min-width: 0; border-left: 1.5px solid var(--ink); }
+.sim-term .sim-cap { color: var(--board-dim); }
+.sim-out { font: 13px/1.7 var(--mono); height: 170px; overflow-y: auto; display: grid; align-content: start; gap: 2px; }
+.sim-out .ps { color: var(--board-dim); }
+.sim-out .msg { color: var(--board-dim); font-family: var(--body); font-size: 13.5px; padding-left: 8px; border-left: 2px solid color-mix(in srgb, var(--board-ink) 25%, transparent); margin: 2px 0 6px; }
+.sim-out .msg.ok { color: #9BE0B8; border-color: #9BE0B8; }
+.sim-out .msg.warn { color: var(--accent); border-color: var(--accent); }
+.sim-out .msg.err { color: #F4A08C; border-color: #F4A08C; }
+.sim-line { display: flex; align-items: center; gap: 8px; border-top: 1px solid color-mix(in srgb, var(--board-ink) 18%, transparent); padding-top: 10px; min-width: 0; }
+.sim-line label { font: 13px var(--mono); color: var(--accent); white-space: nowrap; }
+.sim-line input { flex: 1; min-width: 0; font: 14px var(--mono); color: var(--board-ink); background: transparent; border: 0; border-bottom: 1px dashed var(--board-dim); padding: 4px 2px; }
+.sim-line input:focus { outline: none; border-bottom-color: var(--accent); }
+.sim-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+.sim-btns button { font: 13px var(--mono); background: color-mix(in srgb, var(--board-ink) 10%, transparent); color: var(--board-ink); border: 1px solid color-mix(in srgb, var(--board-ink) 25%, transparent); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+.sim-btns button:hover { border-color: var(--accent); color: var(--accent); }
+.sim-btns button.reset { font-family: var(--body); color: var(--board-dim); }
+@media (max-width: 760px) { .sim { grid-template-columns: minmax(0, 1fr); } .sim-term { border-left: 0; border-top: 1.5px solid var(--ink); } }
