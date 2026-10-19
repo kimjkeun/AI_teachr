@@ -62,6 +62,106 @@
       <section class="step" id="s1" data-step="s1">
         <div class="step-head"><span class="n">1</span><h2>웹 챗봇 vs CLI 에이전트</h2><span class="time">10분</span></div>
         <p class="lead">같은 일, "공문 폴더 10개를 요약해서 할 일 목록으로 정리하기"를 시킨다고 해 볼게요.</p>
+        <div class="diagram">
+          <div class="dg-head">
+            <h3>두뇌는 같고, 손이 다릅니다</h3>
+            <p>웹 챗봇과 CLI 에이전트는 같은 AI를 씁니다. 차이는 그 AI가 <b>내 컴퓨터의 파일에 직접 손을 댈 수 있느냐</b>입니다.</p>
+            <div class="dg-legend"><span class="lg hand">사람이 직접 옮기는 일</span><span class="lg ai">AI가 직접 하는 일</span></div>
+          </div>
+          <div class="dg-grid">
+            <figure class="dg">
+              <p class="dg-title">웹 챗봇</p>
+              <svg viewBox="0 0 460 420" role="img" aria-label="웹 챗봇 구조: 내 컴퓨터의 파일을 내가 찾아 브라우저에 올리고, AI의 답을 내가 복사해 다시 컴퓨터에 붙여 넣는다">
+                <defs>
+                  <marker id="ahHand" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah hand" d="M0,0 L10,5 L0,10 z"/></marker>
+                  <marker id="ahInk1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+                </defs>
+                <rect class="cloud" x="130" y="8" width="200" height="54" rx="27"/>
+                <text class="t-b" x="230" y="31" text-anchor="middle">AI 두뇌</text>
+                <text class="t-s" x="230" y="50" text-anchor="middle">ChatGPT · Claude · Gemini · Grok</text>
+                <line class="wire" x1="230" y1="64" x2="230" y2="94" marker-start="url(#ahInk1)" marker-end="url(#ahInk1)"/>
+
+                <rect class="box" x="110" y="96" width="240" height="70" rx="10"/>
+                <line class="box-line" x1="110" y1="114" x2="350" y2="114"/>
+                <circle class="dot" cx="123" cy="105" r="3"/><circle class="dot" cx="133" cy="105" r="3"/><circle class="dot" cx="143" cy="105" r="3"/>
+                <text class="t-b" x="230" y="138" text-anchor="middle">브라우저 채팅창</text>
+                <text class="t-s" x="230" y="156" text-anchor="middle">올려 준 파일만 보고, 글로만 답함</text>
+
+                <line class="wire hand" x1="205" y1="196" x2="205" y2="170" marker-end="url(#ahHand)"/>
+                <text class="lbl-hand" x="196" y="188" text-anchor="end">② 업로드</text>
+                <line class="wire hand" x1="255" y1="170" x2="255" y2="196" marker-end="url(#ahHand)"/>
+                <text class="lbl-hand" x="264" y="188">③ 답 복사</text>
+
+                <circle class="person" cx="230" cy="211" r="11"/>
+                <path class="person" d="M211,246 Q230,220 249,246 Z"/>
+                <text class="t-b" x="230" y="264" text-anchor="middle">나 = 옮기는 손</text>
+
+                <line class="wire hand" x1="205" y1="300" x2="205" y2="274" marker-end="url(#ahHand)"/>
+                <text class="lbl-hand" x="196" y="292" text-anchor="end">① 파일 찾기</text>
+                <line class="wire hand" x1="255" y1="274" x2="255" y2="300" marker-end="url(#ahHand)"/>
+                <text class="lbl-hand" x="264" y="292">④ 붙여넣기·정리</text>
+
+                <rect class="pc" x="60" y="304" width="340" height="106" rx="12"/>
+                <text class="t-s" x="76" y="324">내 컴퓨터</text>
+                <rect class="file" x="96" y="334" width="76" height="52" rx="5"/>
+                <text class="t-f" x="134" y="365" text-anchor="middle">공문.hwp</text>
+                <rect class="file" x="192" y="334" width="76" height="52" rx="5"/>
+                <text class="t-f" x="230" y="365" text-anchor="middle">명렬표.xlsx</text>
+                <rect class="file" x="288" y="334" width="76" height="52" rx="5"/>
+                <text class="t-f" x="326" y="365" text-anchor="middle">과제 폴더</text>
+              </svg>
+              <figcaption><b>AI는 내가 건네준 것만 봅니다.</b> 파일을 찾고, 올리고, 답을 복사해 붙여 넣는 손은 전부 '나'입니다. 파일이 많을수록 내 일이 늘어납니다.</figcaption>
+            </figure>
+
+            <figure class="dg">
+              <p class="dg-title">CLI 에이전트</p>
+              <svg viewBox="0 0 460 420" role="img" aria-label="CLI 에이전트 구조: 에이전트가 내 컴퓨터 안에서 AI 두뇌와 대화하며 projects 폴더의 파일을 직접 읽고 만들고 실행한다. 나는 지시하고 허용만 한다">
+                <defs>
+                  <marker id="ahAi" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah ai" d="M0,0 L10,5 L0,10 z"/></marker>
+                  <marker id="ahInk2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+                </defs>
+                <rect class="cloud" x="90" y="8" width="200" height="54" rx="27"/>
+                <text class="t-b" x="190" y="31" text-anchor="middle">AI 두뇌</text>
+                <text class="t-s" x="190" y="50" text-anchor="middle">같은 AI (내가 구독한 모델)</text>
+
+                <rect class="pc" x="16" y="96" width="350" height="314" rx="12"/>
+                <text class="t-s" x="32" y="118">내 컴퓨터</text>
+                <line class="wire ai" x1="190" y1="64" x2="190" y2="138" marker-start="url(#ahAi)" marker-end="url(#ahAi)"/>
+                <text class="lbl-ai" x="200" y="88">생각만 빌려 옴</text>
+
+                <rect class="agentbox" x="100" y="140" width="180" height="62" rx="10"/>
+                <text class="t-b on-board" x="190" y="167" text-anchor="middle">&gt;_ CLI 에이전트</text>
+                <text class="t-s on-board" x="190" y="187" text-anchor="middle">내 컴퓨터 안에서 실행</text>
+
+                <text class="lbl-ai" x="190" y="226" text-anchor="middle">읽기 → 실행 → 결과 확인 → 고치기 ↺</text>
+
+                <line class="wire ai" x1="150" y1="236" x2="150" y2="266" marker-end="url(#ahAi)"/>
+                <text class="lbl-ai" x="142" y="256" text-anchor="end">만들기·실행</text>
+                <line class="wire ai" x1="230" y1="266" x2="230" y2="236" marker-end="url(#ahAi)"/>
+                <text class="lbl-ai" x="238" y="256">읽기</text>
+
+                <rect class="box" x="36" y="270" width="310" height="124" rx="8"/>
+                <text class="t-s mono" x="52" y="292">📁 C:\projects</text>
+                <rect class="file" x="52" y="306" width="88" height="62" rx="5"/>
+                <text class="t-f" x="96" y="341" text-anchor="middle">공문.hwp</text>
+                <rect class="file hot" x="148" y="306" width="88" height="62" rx="5"/>
+                <text class="t-f hot" x="192" y="335" text-anchor="middle">할일목록.md</text>
+                <text class="t-f hot" x="192" y="352" text-anchor="middle">새로 만듦</text>
+                <rect class="file" x="244" y="306" width="88" height="62" rx="5"/>
+                <text class="t-f" x="288" y="341" text-anchor="middle">welcome.html</text>
+
+                <circle class="person" cx="416" cy="148" r="11"/>
+                <path class="person" d="M397,183 Q416,157 435,183 Z"/>
+                <text class="t-b" x="416" y="202" text-anchor="middle">나</text>
+                <line class="wire" x1="398" y1="162" x2="284" y2="162" marker-end="url(#ahInk2)"/>
+                <text class="t-s strong" x="332" y="154" text-anchor="middle">지시 한 줄</text>
+                <line class="wire dash" x1="284" y1="182" x2="398" y2="182" marker-end="url(#ahInk2)"/>
+                <text class="t-s" x="332" y="198" text-anchor="middle">"허용할까요?"</text>
+              </svg>
+              <figcaption><b>같은 AI 두뇌에 '손'이 생겼습니다.</b> 에이전트가 내 폴더 안에서 직접 읽고, 만들고, 실행하고, 결과를 확인해 고칩니다. 나는 지시하고 허용만 합니다.</figcaption>
+            </figure>
+          </div>
+        </div>
         <div class="race" id="race">
           <div class="race-bar">
             <button class="btn" id="raceBtn" type="button">▶ 비교 재생</button>

@@ -248,3 +248,47 @@ details .body { padding: 0 16px 16px; display: grid; gap: 10px; font-size: 15px;
 .sim-btns button:hover { border-color: var(--accent); color: var(--accent); }
 .sim-btns button.reset { font-family: var(--body); color: var(--board-dim); }
 @media (max-width: 760px) { .sim { grid-template-columns: minmax(0, 1fr); } .sim-term { border-left: 0; border-top: 1.5px solid var(--ink); } }
+
+/* 구조 도식 */
+.diagram { display: grid; gap: 16px; }
+.dg-head { display: grid; gap: 6px; }
+.dg-head h3 { font-size: 24px; font-weight: 700; }
+.dg-head p { color: var(--muted); max-width: 44em; }
+.dg-legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--muted); }
+.dg-legend .lg { display: inline-flex; align-items: center; gap: 8px; }
+.dg-legend .lg::before { content: ""; width: 26px; border-top: 2px solid; }
+.dg-legend .lg.hand::before { border-color: var(--danger); border-top-style: dashed; }
+.dg-legend .lg.ai::before { border-color: var(--green); border-top-width: 2.5px; }
+.dg-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+figure.dg { margin: 0; border: 1.5px solid var(--ink); border-radius: 14px; background: var(--surface); padding: 16px 16px 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.dg-title { font: 600 12px var(--mono); letter-spacing: .1em; color: var(--muted); }
+figure.dg svg { width: 100%; height: auto; display: block; max-width: 100%; }
+figure.dg figcaption { font-size: 14.5px; color: var(--muted); }
+figure.dg figcaption b { color: var(--ink); }
+.dg text { font-family: var(--body); fill: var(--ink); font-size: 14px; }
+.dg .t-b { font-weight: 700; font-size: 15px; }
+.dg .t-s { font-size: 11.5px; fill: var(--muted); }
+.dg .t-s.strong { font-weight: 600; fill: var(--ink); font-size: 12px; }
+.dg .mono { font-family: var(--mono); }
+.dg .t-f { font-size: 11.5px; font-family: var(--mono); fill: var(--ink); }
+.dg .t-f.hot { fill: var(--accent-ink); font-weight: 600; }
+.dg .on-board { fill: var(--board-ink); }
+.dg .cloud { fill: color-mix(in srgb, var(--green) 12%, var(--surface)); stroke: var(--green); stroke-width: 1.5; }
+.dg .box { fill: var(--paper); stroke: var(--ink); stroke-width: 1.5; }
+.dg .box-line { stroke: var(--ink); stroke-width: 1; }
+.dg .dot { fill: var(--muted); }
+.dg .pc { fill: none; stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 6 5; }
+.dg .file { fill: var(--surface); stroke: var(--muted); stroke-width: 1.2; }
+.dg .file.hot { fill: var(--accent); stroke: var(--ink); }
+.dg .agentbox { fill: var(--board); stroke: var(--ink); stroke-width: 1.5; }
+.dg .person { fill: var(--accent); stroke: var(--ink); stroke-width: 1.5; }
+.dg .wire { stroke: var(--ink); stroke-width: 1.6; fill: none; }
+.dg .wire.dash { stroke-dasharray: 4 4; }
+.dg .wire.hand { stroke: var(--danger); stroke-width: 2; stroke-dasharray: 5 4; }
+.dg .wire.ai { stroke: var(--green); stroke-width: 2.4; }
+.dg .ah { fill: var(--ink); }
+.dg .ah.hand { fill: var(--danger); }
+.dg .ah.ai { fill: var(--green); }
+.dg .lbl-hand { fill: var(--danger); font-size: 12.5px; font-weight: 600; }
+.dg .lbl-ai { fill: var(--green); font-size: 12.5px; font-weight: 600; }
+@media (max-width: 760px) { .dg-grid { grid-template-columns: minmax(0, 1fr); } }
