@@ -10,7 +10,7 @@ const SHEET_NAME = '응답';
 const HEADERS = ['key', 'pin', '이름', '기대하는 것', '구독 AI', '참여 가능일', '하고 싶은 말', '처음 제출', '마지막 수정'];
 const LIMITS = { name: 30, wants: 800, memo: 400 };
 const AI_OPTIONS = ['Claude', 'ChatGPT', 'Gemini', 'Grok', '아직 없음'];
-const DATE_OPTIONS = ['10.21', '10.28', '11.04', '11.11', '11.18', '12.02', '12.09', '12.16'];
+const DATE_OPTIONS = ['10.21', '10.28', '11.04', '11.11', '12.02', '12.09', '12.16'];
 const MAX_FAILS = 5;          // 비밀번호 연속 오류 허용 횟수
 const LOCK_SECONDS = 600;     // 초과 시 잠금 시간 (10분)
 

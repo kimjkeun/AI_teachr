@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="금옥여자고등학교 AI 교원 학습 공동체 · 매주 수요일 방과 후 8회. CLI AI 에이전트로 교직 업무 자동화부터 나만의 웹 서비스 배포까지.">
+<meta name="description" content="금옥여자고등학교 AI 교원 학습 공동체 · 매주 수요일 방과 후 7회. CLI AI 에이전트로 교직 업무 자동화부터 나만의 웹 서비스 배포까지.">
 <meta property="og:title" content="수요 AI 에이전트 빌더스 · 금옥여고">
 <meta property="og:description" content="내 컴퓨터에 교직 비서 한 명 채용합니다. 10.21 – 12.16 매주 수요일 방과 후, 사전 설문에 참여해 주세요.">
 <meta property="og:type" content="website">
@@ -278,7 +278,7 @@ textarea { min-height: 84px; resize: vertical; }
 .bar .trk i { display: block; height: 100%; background: var(--green); border-radius: inherit; transition: width .6s cubic-bezier(.2,.8,.2,1); }
 .bar.top .trk i { background: var(--accent); }
 .bar .n { font-family: var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
-.datebars { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px; align-items: end; height: 170px; padding-top: 10px; }
+.datebars { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; align-items: end; height: 170px; padding-top: 10px; }
 .db { display: grid; grid-template-rows: 1fr auto auto; height: 100%; gap: 4px; text-align: center; min-width: 0; }
 .db .col { align-self: end; background: var(--green); border-radius: 6px 6px 2px 2px; min-height: 3px; transition: height .6s cubic-bezier(.2,.8,.2,1); }
 .db.best .col { background: var(--accent); box-shadow: inset 0 0 0 1.5px var(--ink); }
@@ -305,7 +305,7 @@ textarea { min-height: 84px; resize: vertical; }
 .person .tags span { font-size: 12.5px; padding: 3px 9px; border-radius: 6px; background: var(--paper); border: 1px solid var(--line); }
 .person .tags span.ai { background: var(--board); color: var(--board-ink); border-color: var(--board); font-family: var(--mono); }
 .person .memo { font-size: 14px; color: var(--muted); margin-top: 8px; }
-.dots { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; }
+.dots { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
 .dots i { aspect-ratio: 1; border-radius: 4px; border: 1px solid var(--line); background: var(--paper); font: 500 9px/1 var(--mono); display: grid; place-items: center; color: var(--muted); font-style: normal; max-width: 100%; }
 .dots i.on { background: var(--green); border-color: var(--green); color: var(--paper); }
 .del { margin-top: 8px; }
@@ -360,7 +360,7 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid color-mix(in srgb, var
     </h1>
     <div class="dday" aria-live="polite">
       <b id="dday">D-5</b>
-      <span id="ddayText">첫 모임 10월 21일 (수) · 총 8회 · 12월 16일 종강</span>
+      <span id="ddayText">첫 모임 10월 21일 (수) · 총 7회 · 12월 16일 종강</span>
     </div>
     <div class="cta-row">
       <a class="btn" href="#survey">사전 설문 남기기 →</a>
@@ -417,7 +417,7 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid color-mix(in srgb, var
   <section class="block wrap" id="course">
     <div class="head">
       <div>
-        <p class="eyebrow">2026. 10. 21 – 12. 16 · 8회</p>
+        <p class="eyebrow">2026. 10. 21 – 12. 16 · 7회</p>
         <h2 style="margin-top:12px">8주 시간표</h2>
       </div>
       <p>설치에서 시작해 내 이름이 들어간 인터넷 주소로 끝납니다. 한 회차는 1시간에서 1시간 30분. 빠지는 주가 있어도 다음 주에 동료와 5분이면 따라잡도록 회차마다 완결된 실습으로 짰습니다.</p>
@@ -425,8 +425,7 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid color-mix(in srgb, var
     <div class="phases">
       <span class="ph1"><i></i>Phase 1 · 비서 채용</span>
       <span class="ph2"><i></i>Phase 2 · 로컬 업무 자동화</span>
-      <span class="ph3"><i></i>Phase 3 · 두뇌(API) 장착</span>
-      <span class="ph4"><i></i>Phase 4 · 웹 서비스 배포</span>
+      <span class="ph3"><i></i>Phase 3 · 두뇌(API) 장착 & 웹 서비스 배포</span>
       <span class="ph5"><i></i>종강</span>
     </div>
     <div class="tt" id="timetable"></div>
@@ -573,11 +572,10 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid color-mix(in srgb, var
     { id: "10.28", m: "10", d: "28", n: 2, ph: 1, tag: "Phase 1", title: "에이전트 길들이기", items: ["말로 지시해서 랜덤 발표자 뽑기 & 타이머 띄우기", "에러가 나면 AI가 스스로 고치는 과정 지켜보기"] },
     { id: "11.04", m: "11", d: "4", n: 3, ph: 2, tag: "Phase 2", title: "행정편: 공문 폴더 정리", items: ["공문서·지침서 폴더를 통째로 읽고 할 일 3단계 추출", "웹 챗봇에서는 왜 안 되는지 직접 비교"] },
     { id: "11.11", m: "11", d: "11", n: 4, ph: 2, tag: "Phase 2", title: "학급편: 과제와 사진 정리", items: ["뒤섞인 학생 과제 폴더 취합, 미제출자 명단 엑셀 정리", "학급 사진 수백 장을 번호순으로 한 번에 이름 바꾸기"] },
-    { id: "11.18", m: "11", d: "18", n: 5, ph: 3, tag: "Phase 3", title: "두뇌(API) 장착하기", items: ["카드 없이 Gemini 무료 API 키 발급", ".env 파일로 키 숨기는 보안 습관 익히기"] },
     { id: "rest", m: "11", d: "25", n: 0, ph: 0, tag: "자율", title: "자율 주간 · 쉬어가기", items: ["학사일정과 기말 준비 상황에 따라 자율 진행 또는 휴식"] },
-    { id: "12.02", m: "12", d: "2", n: 6, ph: 4, tag: "Phase 4", title: "나만의 웹앱 만들기", items: ["평소 필요했던 교직 도구 하나 정하기", "에이전트와 화면을 디자인하고 API 붙이기"] },
-    { id: "12.09", m: "12", d: "9", n: 7, ph: 4, tag: "Phase 4", title: "Vercel 무료 배포", items: ["GitHub 연동, 클릭 몇 번으로 배포", "https://내이름.vercel.app 주소를 QR로 스마트폰에서 열기"] },
-    { id: "12.16", m: "12", d: "16", n: 8, ph: 5, tag: "종강", title: "도구 쇼케이스 & 종강", items: ["서로 만든 웹앱 써보고 피드백 나누기", "크롬 즐겨찾기 등록하고 가벼운 쫑파티"] }
+    { id: "12.02", m: "12", d: "2", n: 5, ph: 3, tag: "Phase 3", title: "두뇌(API) 장착 & 나만의 웹앱", items: ["카드 없이 Gemini 무료 API 키 발급, .env로 키 숨기기", "평소 필요했던 교직 도구를 정해 화면 만들고 API 붙이기"] },
+    { id: "12.09", m: "12", d: "9", n: 6, ph: 3, tag: "Phase 3", title: "Vercel 무료 배포", items: ["GitHub 연동, 클릭 몇 번으로 배포", "https://내이름.vercel.app 주소를 QR로 스마트폰에서 열기"] },
+    { id: "12.16", m: "12", d: "16", n: 7, ph: 5, tag: "종강", title: "도구 쇼케이스 & 종강", items: ["서로 만든 웹앱 써보고 피드백 나누기", "크롬 즐겨찾기 등록하고 가벼운 쫑파티"] }
   ];
   const DATES = SESSIONS.filter(s => s.n > 0);
 
