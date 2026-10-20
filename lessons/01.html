@@ -339,6 +339,13 @@
           <div class="body"><p>설치 직후에 자주 나옵니다. <b>PowerShell 창을 닫고 새로 연 뒤</b> 다시 입력하세요. 그래도 안 되면 노트북을 재시작합니다.</p></div>
         </details>
         <details>
+          <summary>Codex를 winget으로 설치했는데 'codex'를 못 찾아요</summary>
+          <div class="body"><p>winget용 Codex는 실행 파일 이름이 <code class="i">codex-x86_64-pc-windows-msvc.exe</code>라서, Windows 설정에 따라 'codex'라는 이름이 연결되지 않습니다. 지우고 공식 스크립트로 다시 설치하세요.</p>
+            <div class="cmd"><pre>winget uninstall -e --id OpenAI.Codex</pre><button class="copy" type="button">복사</button></div>
+            <div class="cmd"><pre>powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"</pre><button class="copy" type="button">복사</button></div>
+            <p>설치가 끝나면 PowerShell 창을 닫고 새로 연 뒤 <code class="i">codex --version</code>으로 확인합니다.</p></div>
+        </details>
+        <details>
           <summary>"이 시스템에서 스크립트를 실행할 수 없으므로…" 오류</summary>
           <div class="body"><p>보안 설정 때문입니다. 아래 명령을 먼저 실행한 뒤 설치 명령을 다시 붙여 넣으세요. <b>지금 연 창에서만</b> 적용되니 안전합니다.</p>
             <div class="cmd"><pre>Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass</pre><button class="copy" type="button">복사</button></div></div>
@@ -403,8 +410,8 @@
       login: ["처음 실행하면 화면 색상(테마)을 고르라고 합니다. 화살표 키로 고르고 Enter.", "로그인 방법에서 'Claude account with subscription'을 고릅니다.", "브라우저가 열리면 Claude 계정으로 로그인하고 '승인'을 누릅니다.", "폴더를 믿을 수 있는지 물으면 'Yes'를 고릅니다."] },
     { id: "codex", tab: "ChatGPT", sub: "Codex CLI", cmd: "codex",
       who: [["ChatGPT Plus · Pro · Business · Edu"]],
-      install: "winget install -e --id OpenAI.Codex --accept-source-agreements --accept-package-agreements",
-      alt: 'powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"',
+      install: 'powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"',
+      installNote: "Codex는 winget으로 설치하면 'codex' 명령이 안 잡히는 경우가 있어 공식 설치 스크립트를 씁니다. 진행 표시 없이 1~2분 걸릴 수 있으니 기다려 주세요.",
       login: ["처음 실행하면 로그인 방법을 고르라고 합니다. 'Sign in with ChatGPT'를 고릅니다.", "브라우저가 열리면 ChatGPT 계정으로 로그인합니다.", "작업 폴더 권한을 물으면 이 폴더에서 작업을 허용하는 항목을 고릅니다."] },
     { id: "gemini", tab: "Gemini", sub: "Antigravity CLI", cmd: "agy",
       who: [["Google AI Pro · Ultra"], ["구글 계정 필요"]],
@@ -445,9 +452,11 @@
     if (t.note) { const n = el("div", "tip", t.note); p.append(n); }
 
     const s1 = el("div", "sub"); const h1 = el("h3"); h1.append(el("span", "k", "4-1"), document.createTextNode("설치하기"));
-    const alt = el("details", "alt"); alt.append(el("summary", null, "winget이 없다고 나오거나 설치가 안 될 때"),
-      el("p", null, "공식 설치 스크립트로 설치합니다. 진행 표시 없이 1~2분 걸릴 수 있으니 기다려 주세요."), cmdBlock(t.alt, "PowerShell"));
-    s1.append(h1, el("p", null, "PowerShell에 붙여 넣고 Enter. Windows에 들어 있는 설치 도구(winget)가 진행 막대를 보여 주며 설치합니다. 'Successfully installed(설치 성공)'가 나오고 다시 PS C:\\…> 가 나타나면 끝입니다."), cmdBlock(t.install, "PowerShell"), alt);
+    const alt = t.alt ? el("details", "alt") : null;
+    if (alt) { alt.append(el("summary", null, "winget이 없다고 나오거나 설치가 안 될 때"),
+      el("p", null, "공식 설치 스크립트로 설치합니다. 진행 표시 없이 1~2분 걸릴 수 있으니 기다려 주세요."), cmdBlock(t.alt, "PowerShell")); }
+    s1.append(h1, el("p", null, t.installNote || "PowerShell에 붙여 넣고 Enter. Windows에 들어 있는 설치 도구(winget)가 진행 막대를 보여 주며 설치합니다. 'Successfully installed(설치 성공)'가 나오고 다시 PS C:\\…> 가 나타나면 끝입니다."), cmdBlock(t.install, "PowerShell"));
+    if (alt) s1.append(alt);
 
     const s2 = el("div", "sub"); const h2 = el("h3"); h2.append(el("span", "k", "4-2"), document.createTextNode("설치 확인"));
     s2.append(h2, el("p", null, "PowerShell 창을 닫고 새로 연 뒤 입력합니다. 숫자로 된 버전이 나오면 성공입니다."), cmdBlock(t.cmd + " --version", "PowerShell"));
