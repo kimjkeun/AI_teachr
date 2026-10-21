@@ -89,6 +89,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .toc a small { font: 11px var(--mono); }
 .toc a.done { color: var(--ink); }
 .toc a.done b::before { content: "✓"; color: var(--green); }
+.toc a.now { background: color-mix(in srgb, var(--green) 12%, transparent); color: var(--ink); font-weight: 600; box-shadow: inset 3px 0 0 var(--green); }
 .toc a.done b span { display: none; }
 @media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); gap: 0; } .toc { display: none; } }
 
