@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>에이전트 길들이기 | 수요 AI 에이전트 빌더스</title>
+<meta name="description" content="수요 AI 에이전트 빌더스 강의자료 02: 규칙 파일, 계획 모드, 멈추기와 되돌리기, 이어 하기와 새 대화로 에이전트를 내 뜻대로 다루는 법.">
+<meta property="og:title" content="에이전트 길들이기 | 수요 AI 에이전트 빌더스">
+<meta property="og:description" content="멈추고, 되돌리고, 이어 가고, 규칙을 지키게 하기. 가짜 다운로드 폴더로 안전하게 연습합니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700;900&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="home" href="./">← 강의자료 목록</a>
+    <div class="prog" aria-live="polite"><span id="progText">0 / 6 완료</span><span class="trk"><i id="progBar"></i></span></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="lesson-hero">
+    <div class="meta"><span><b>강의자료 02</b></span><span>기본 조작</span><span>약 60분</span><span>Windows · PowerShell 기준</span></div>
+    <h1>에이전트 길들이기</h1>
+    <p class="goal">오늘의 목표: <span class="mark">에이전트를 내 뜻대로 멈추고, 되돌리고, 이어 가고, 규칙을 지키게 한다.</span> 실습은 가짜 다운로드 폴더로 하니 마음껏 시켜 보세요.</p>
+    <div class="takeaways">
+      <span><b>①</b>나만의 규칙 파일</span>
+      <span><b>②</b>계획 → 실행 → 되돌리기</span>
+      <span><b>③</b>이어 하기와 새 대화</span>
+    </div>
+  </section>
+
+  <div class="layout">
+    <nav class="toc" aria-label="오늘의 순서" id="toc">
+      <a href="#s0"><b><span>0</span></b>준비<small>5분</small></a>
+      <a href="#s1"><b><span>1</span></b>무엇을 보고 어디로?<small>5분</small></a>
+      <a href="#s2"><b><span>2</span></b>규칙 가르치기<small>10분</small></a>
+      <a href="#s3"><b><span>3</span></b>다운로드 폴더 정리<small>25분</small></a>
+      <a href="#s4"><b><span>4</span></b>이어 하기 · 새 대화<small>10분</small></a>
+      <a href="#s5"><b><span>5</span></b>마무리<small>5분</small></a>
+      <a href="#keys" class="faq-link"><b>⌘</b>명령 모음<small>표</small></a>
+      <a href="#faq" class="faq-link"><b>?</b>막혔을 때<small>상시</small></a>
+    </nav>
+
+    <main>
+      <!-- 0 -->
+      <section class="step" id="s0" data-step="s0">
+        <div class="step-head"><span class="n">0</span><h2>준비</h2><span class="time">5분</span></div>
+        <p class="lead">먼저 내가 쓰는 도구를 고르세요. 이 페이지의 명령이 그 도구에 맞게 바뀝니다. (01에서 고른 도구가 있으면 그대로 선택되어 있습니다.)</p>
+        <div class="tabs pick" role="tablist" id="pick"></div>
+
+        <div class="sub">
+          <h3><span class="k">0-1</span>오늘의 작업 폴더 만들기</h3>
+          <ol class="plain">
+            <li>탐색기에서 <b>C:\projects</b>를 열고 빈 곳을 오른쪽 클릭 → <b>새로 만들기 → 폴더</b>.</li>
+            <li>이름을 <b>02_agent</b>로 적고 <kbd>Enter</kbd>.</li>
+          </ol>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">0-2</span>실습 파일 받기</h3>
+          <p>PowerShell을 열고 아래 한 줄을 붙여 넣습니다. 가짜 자료로 만든 <b>엉망인 다운로드 폴더</b>가 <code class="i">02_agent\downloads</code>에 생기고 탐색기로 열립니다.</p>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre>cd C:\projects\02_agent; Invoke-WebRequest https://kimjkeun.github.io/AI_teachr/assets/samples/downloads-sample.zip -OutFile downloads.zip; Expand-Archive downloads.zip -DestinationPath . -Force; Remove-Item downloads.zip; explorer downloads</pre><button class="copy" type="button">복사</button></div>
+          <div class="screen">C:\projects\02_agent\downloads      파일 30개 · 모두 가짜 자료
+├─ 2026학년도_2학기_교원연수_안내(공문).pdf
+├─ 2026학년도_2학기_교원연수_안내(공문) (1).pdf   ← 어디서 많이 본…
+├─ 수행평가_채점기준표_최종 · 최종_수정 · 진짜최종.xlsx
+├─ KakaoTalk_20261015_….jpg · 학급사진 (1).jpg · image (3).png
+├─ 3학년2반_명렬표.xlsx                         ← 가명과 지어낸 연락처
+├─ 2024_1학기_시간표.pdf · 무제.txt · download.pdf
+├─ 연수자료_모음.zip  +  연수자료_모음\          ← 이미 풀어 둔 압축
+└─ 읽어주세요.txt</div>
+          <p>탐색기 창은 옆에 띄워 두고, PowerShell에서 에이전트를 부릅니다.</p>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre><span data-t="cmd">claude</span></pre><button class="copy" type="button">복사</button></div>
+          <p>"이 폴더를 믿을 수 있나요?"라고 물으면 Yes를 고르세요.</p>
+        </div>
+        <button class="done-btn" type="button" data-done="s0" aria-pressed="false">준비 완료</button>
+      </section>
+
+      <!-- 1 -->
+      <section class="step" id="s1" data-step="s1">
+        <div class="step-head"><span class="n">1</span><h2>에이전트는 무엇을 보고, 어디로 보내나</h2><span class="time">5분</span></div>
+        <p class="lead">에이전트는 내 노트북에서 일하지만, <b>생각은 AI 회사 서버에서</b> 합니다. 읽은 내용은 답을 만들기 위해 서버로 전송됩니다.</p>
+        <div class="screen">[내 노트북]   에이전트가 파일을 읽고, 명령을 실행
+      │  ▲
+      │  │  "이 명령을 실행해도 될까요?"
+      ▼  │
+[AI 회사 서버] 읽은 파일 이름과 내용을 보고 생각</div>
+        <ul class="plain">
+          <li><b>작업 폴더 안에서만</b> 시킵니다. 에이전트를 켠 폴더가 곧 작업 범위입니다.</li>
+          <li>허락을 물을 때 <b>경로를 읽고</b>, 작업 폴더 밖이면 <b>No</b>를 고릅니다.</li>
+          <li>실제 학생 자료는 <b>이름을 가리거나 맡기지 않습니다.</b> 성적, 상담 기록은 맡기지 않습니다.</li>
+          <li>그래서 오늘 실습 폴더는 <b>전부 가짜 자료</b>입니다. 학생 이름은 가명, 연락처는 지어낸 번호입니다.</li>
+        </ul>
+        <button class="done-btn" type="button" data-done="s1" aria-pressed="false">이해했어요</button>
+      </section>
+
+      <!-- 2 -->
+      <section class="step" id="s2" data-step="s2">
+        <div class="step-head"><span class="n">2</span><h2>규칙 가르치기</h2><span class="time">10분</span></div>
+        <p class="lead">매번 "존댓말로 해 줘", "지우기 전에 물어봐"라고 말할 필요 없이, <b>규칙 파일</b>에 한 번 적어 두면 에이전트가 켜질 때마다 읽고 따릅니다.</p>
+
+        <div class="sub">
+          <h3><span class="k">2-1</span>규칙 파일 만들기</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>이 폴더에 <span data-t="rules">CLAUDE.md</span> 파일을 만들고 아래 규칙을 적어줘.
+1. 어떠한 경우에도 이 작업 폴더 밖의 파일은 읽거나, 쓰거나, 수정하지 않는다.
+2. 파일을 지우기 전에는 반드시 나에게 먼저 묻는다.
+3. 존댓말로, 쉬운 말로 답한다.
+4. 작업이 끝나면 무엇을 했는지 세 줄로 요약한다.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: 탐색기에서 <b>02_agent</b> 폴더에 <code class="i" data-t="rules">CLAUDE.md</code>가 생겼나요? 메모장으로 열어 직접 고쳐도 됩니다.</p>
+          <div class="tip"><b>도구마다 파일 이름이 다릅니다.</b> Claude는 <code class="i">CLAUDE.md</code>, Codex·Antigravity·Grok은 <code class="i">AGENTS.md</code>를 읽습니다. Claude와 Codex에는 <code class="i">/init</code> 명령도 있는데, 이건 에이전트가 폴더를 훑어보고 규칙 초안을 <b>스스로</b> 쓰는 명령입니다. 내 규칙을 넣으려면 위처럼 말로 부탁하는 편이 확실합니다.</div>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">2-2</span>지키는지 시험하기</h3>
+          <p>규칙은 에이전트가 <b>켜질 때</b> 읽습니다. <code class="i">/exit</code>로 끄고 다시 부른 뒤 물어보세요.</p>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre><span data-t="cmd">claude</span></pre><button class="copy" type="button">복사</button></div>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>내 바탕화면에 있는 파일 목록을 알려줘.</pre><button class="copy" type="button">복사</button></div>
+          <div class="screen">Claude로 미리 해 본 결과
+<span class="ok">죄송하지만 바탕화면 파일 목록은 확인해 드릴 수 없습니다.
+작업 폴더 밖의 파일은 읽지 않는다는 규칙이 있어서…</span></div>
+          <div class="note">
+            <b class="t">규칙 파일은 부탁이지 잠금장치가 아닙니다</b>
+            <p>대부분 잘 지키지만, 대화가 길어지거나 내가 직접 "바탕화면 봐 줘"라고 우기면 놓칠 수 있습니다. 진짜 안전장치는 <b>허락을 물을 때 경로를 읽고 No를 고르는 것</b>입니다. 그래서 오늘은 "항상 허용"을 고르지 않습니다.</p>
+          </div>
+          <div class="tip"><b>참고</b>: 규칙 파일을 <code class="i">C:\projects</code>에 두면 그 안의 모든 하위 폴더에서 적용됩니다(Claude로 확인). 다른 도구는 확인 중입니다.</div>
+        </div>
+        <button class="done-btn" type="button" data-done="s2" aria-pressed="false">규칙 파일 완성</button>
+      </section>
+
+      <!-- 3 -->
+      <section class="step" id="s3" data-step="s3">
+        <div class="step-head"><span class="n">3</span><h2>엉망 다운로드 폴더 정리</h2><span class="time">25분</span></div>
+        <p class="lead"><b>점검 → 계획 → 실행 → 되돌리기</b> 순서로 진행합니다. 실제 업무 파일을 맡길 때도 이 순서를 지키면 안전합니다.</p>
+
+        <div class="sub">
+          <h3><span class="k">3-1</span>점검만 하기 · 허락과 멈추기</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>downloads 폴더를 점검해줘. 파일 개수, 종류별 개수와 용량, 1년 넘게 지난 파일, 이름이나 내용이 같은 중복 파일, 개인정보가 들어 있을 것 같은 파일을 표로 정리해줘. 아무것도 옮기거나 지우지 말고 확인만 해.</pre><button class="copy" type="button">복사</button></div>
+          <div class="note">
+            <b class="t">허락을 물어보면</b>
+            <p>파일 목록을 읽는 명령을 실행해도 되는지 묻습니다. <b>무엇을 하려는지 한 줄 읽고</b>, 읽기만 하는 명령이고 경로가 <code class="i">02_agent</code> 안이면 Yes를 고릅니다.</p>
+          </div>
+          <p><b>멈추기 연습</b>: 에이전트가 일하는 도중에 <kbd>Esc</kbd>를 한 번 눌러 보세요. 바로 멈춥니다. "계속해줘"라고 하면 이어서 하고, 다른 지시를 내려도 됩니다. 엉뚱한 방향으로 갈 때 기다리지 말고 멈추는 것이 요령입니다.</p>
+          <div class="screen">이런 것들을 찾아내면 성공
+<span class="ok">중복</span>     공문 (1).pdf · 학급사진 (1).jpg · 채점기준표 3개 버전
+<span class="ok">압축</span>     연수자료_모음.zip  ← 같은 이름 폴더에 이미 풀려 있음
+<span class="ok">오래됨</span>   2024년, 2025년 파일들 · 무제.txt · 새 텍스트 문서.txt
+<span class="bad">개인정보</span> 3학년2반_명렬표.xlsx · 학부모_상담신청_명단.xlsx</div>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">3-2</span>파일 짚어 주기 · 화면 보여 주기</h3>
+          <p>어떤 파일을 말하는지 정확히 알려 주는 방법은 두 가지입니다.</p>
+          <ul class="plain">
+            <li><b>@ 쓰기</b>: <code class="i">@</code>를 치고 파일 이름 몇 글자를 치면 목록이 뜹니다. 골라서 <kbd>Enter</kbd>.</li>
+            <li><b>끌어 놓기</b>: 탐색기에서 파일을 PowerShell 창으로 끌어 놓으면 파일 경로가 입력됩니다.</li>
+          </ul>
+          <div class="cmd prompt"><span class="lbl">에이전트에게 · 파일은 @나 끌어 놓기로</span><pre>@downloads/회의록_20250312.txt 이 파일 내용을 두 줄로 요약해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p><b>화면 보여 주기</b>: 에러 창이나 화면을 말로 설명하기 어려울 때 캡처해서 보여 줍니다. <kbd>⊞ Win</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd>로 탐색기 창을 캡처한 뒤 붙여 넣으세요.</p>
+          <ul class="plain">
+            <li>붙여 넣기: <b data-t="paste">Alt+V</b>. <kbd>Ctrl</kbd>+<kbd>V</kbd>로는 이미지가 안 들어가는 경우가 많습니다.</li>
+            <li>어느 도구든 되는 방법: 캡처는 <b>사진 → 스크린샷</b> 폴더에 자동 저장되니, 그 파일을 PowerShell 창으로 끌어 놓습니다.</li>
+          </ul>
+          <div class="cmd prompt"><span class="lbl">캡처를 붙인 뒤</span><pre>이 화면에서 제일 먼저 정리해야 할 파일 세 개만 골라줘.</pre><button class="copy" type="button">복사</button></div>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">3-3</span>계획 모드로 계획부터 받기</h3>
+          <p>계획 모드에서는 에이전트가 <b>파일을 건드리지 않고 계획만</b> 세웁니다. 켜는 법: <b data-t="plan">Shift+Tab을 눌러 화면 아래에 plan mode가 보이게</b></p>
+          <div class="cmd prompt"><span class="lbl">에이전트에게 · 계획 모드에서</span><pre>downloads 폴더를 정리할 계획을 세워줘. 문서, 사진, 압축파일로 폴더를 나누고, 중복 파일은 '중복_확인' 폴더로, 개인정보가 든 파일은 '개인정보' 폴더로, 1년 넘은 파일은 '오래된_파일' 폴더로 옮기는 계획이야. 지우는 파일은 하나도 없게 해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>계획을 읽고 마음에 안 드는 곳은 말로 고칩니다. 계획이 끝나면 에이전트가 "이대로 진행할까요?"라고 묻습니다. 고칠 게 없으면 진행을 고르세요.</p>
+          <div class="cmd prompt"><span class="lbl">고쳐 말하기 예</span><pre>채점기준표는 '진짜최종'만 문서 폴더에 두고, 나머지 두 개는 '중복_확인'으로 보내줘. 이제 진행해.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: 탐색기에서 downloads 폴더가 깔끔하게 나뉘었나요? 작업이 끝나면 규칙대로 <b>세 줄 요약</b>이 나오는지도 보세요.</p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">3-4</span>되돌리기</h3>
+          <p>되돌리기 메뉴를 열어 보세요: <b data-t="rewind">Esc 두 번 (또는 /rewind)</b>. 지금까지 보낸 메시지 목록이 나오고, 고른 시점으로 <b>대화</b>를 돌려 다른 지시를 내릴 수 있습니다. 둘러보기만 하고 <kbd>Esc</kbd>로 닫습니다.</p>
+          <div class="note">
+            <b class="t">대화를 되돌려도 파일은 그대로일 수 있어요</b>
+            <p>PowerShell 명령으로 옮긴 파일은 되돌리기 메뉴로 돌아오지 않는 경우가 많고, 도구마다 다릅니다. 파일을 확실히 되돌리는 방법은 <b>말로 시키기</b>입니다.</p>
+          </div>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>방금 옮긴 파일을 전부 원래 자리로 되돌려줘. 비게 되는 폴더는 정리해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p><b>지켜볼 점</b>: 빈 폴더를 지우기 전에 에이전트가 <b>먼저 물어보나요?</b> 2단계 규칙 2번이 일하는 장면입니다.</p>
+          <div class="tip"><b>그래도 꼬였다면</b>: 탐색기에서 downloads 폴더를 지우고 0-2의 명령을 다시 실행하면 처음 상태로 돌아옵니다. 실제 업무에서는 이 역할을 <b>원본 백업</b>이 합니다.</div>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">3-5</span>더 해보기 · 모델과 생각 수준 바꾸기</h3>
+          <ul class="plain">
+            <li><b data-t="model">/model</b>: 모델을 바꿉니다. 빠르고 가벼운 모델, 느리지만 똑똑한 모델 중에 고릅니다.</li>
+            <li><b data-t="effort">/effort</b>: 생각을 얼마나 깊게 할지 정합니다. 간단한 일은 낮게, 까다로운 일은 높게.</li>
+          </ul>
+          <p>바꾼 뒤 3-1의 점검 질문을 다시 해 보고 답의 속도와 꼼꼼함을 비교해 보세요. 높은 모델과 높은 생각 수준은 <b>사용량을 더 많이</b> 씁니다.</p>
+        </div>
+        <button class="done-btn" type="button" data-done="s3" aria-pressed="false">정리와 되돌리기 완료</button>
+      </section>
+
+      <!-- 4 -->
+      <section class="step" id="s4" data-step="s4">
+        <div class="step-head"><span class="n">4</span><h2>이어 하기와 새 대화</h2><span class="time">10분</span></div>
+        <p class="lead">에이전트를 껐다 켜면 기본적으로 <b>새 대화</b>로 시작합니다. 어제 하던 일을 이어 가려면 이어 하기를 씁니다.</p>
+
+        <div class="sub">
+          <h3><span class="k">4-1</span>끄고 이어 하기</h3>
+          <p><code class="i">/exit</code>로 끈 뒤, 같은 폴더에서 아래처럼 부르면 <b>이 폴더의 마지막 대화</b>가 열립니다.</p>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre><span data-t="cont">claude -c</span></pre><button class="copy" type="button">복사</button></div>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>우리 방금 무슨 작업 했었지?</pre><button class="copy" type="button">복사</button></div>
+          <p>예전 대화 중에서 골라 열고 싶으면 에이전트 안에서 <code class="i">/resume</code>을 입력합니다. 목록이 나오면 화살표로 고르고 <kbd>Enter</kbd>.</p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">4-2</span>새 대화로 시작하기</h3>
+          <div class="cmd"><span class="lbl">에이전트 안에서</span><pre>/clear</pre><button class="copy" type="button">복사</button></div>
+          <p>같은 질문 "우리 방금 무슨 작업 했었지?"를 다시 해 보세요. 이번에는 모릅니다. 그런데 <b>규칙은 그대로</b> 지킵니다. 규칙은 대화가 아니라 파일에 있기 때문입니다.</p>
+          <div class="tip"><b>언제 새 대화를?</b> 주제가 바뀔 때입니다. 대화가 길어지면 에이전트가 앞의 내용과 헷갈리기 쉽고, 매번 긴 대화를 다시 읽느라 사용량도 많이 듭니다.</div>
+        </div>
+        <button class="done-btn" type="button" data-done="s4" aria-pressed="false">이어 하기 성공</button>
+      </section>
+
+      <!-- 5 -->
+      <section class="step" id="s5" data-step="s5">
+        <div class="step-head"><span class="n">5</span><h2>마무리 &amp; 다음 준비</h2><span class="time">5분</span></div>
+        <div class="sub">
+          <h3><span class="k">5-1</span>사용량과 명령 목록</h3>
+          <ul class="plain">
+            <li><code class="i" data-t="usage">/usage</code>: 구독 사용량이 얼마나 남았는지 봅니다.</li>
+            <li><code class="i">/</code>만 치면 쓸 수 있는 명령 목록이 뜹니다. 잊어버렸을 때 이것만 기억하세요.</li>
+          </ul>
+        </div>
+        <div class="sub">
+          <h3><span class="k">5-2</span>소감 남기기</h3>
+          <p>오른쪽 아래 <b>💬 채팅</b>에 오늘 가장 쓸모 있었던 명령 하나를 남겨 주세요.</p>
+        </div>
+        <div class="sub">
+          <h3><span class="k">5-3</span>다음 시간 준비: 파이썬 설치</h3>
+          <p>다음 시간에는 공문 PDF와 한글(HWPX) 파일을 읽으려고 <b>파이썬</b>을 씁니다. 미리 설치해 오면 시간을 아낄 수 있어요. 못 해 와도 수업 시간에 합니다.</p>
+          <div class="cmd"><span class="lbl">PowerShell · 설치되어 있는지 확인</span><pre>python --version</pre><button class="copy" type="button">복사</button></div>
+          <div class="cmd"><span class="lbl">PowerShell · 버전이 안 나오면 설치</span><pre>winget install -e --id Python.Python.3.12 --accept-source-agreements --accept-package-agreements</pre><button class="copy" type="button">복사</button></div>
+          <p>설치 후에는 PowerShell 창을 닫고 새로 연 뒤 <code class="i">python --version</code>을 다시 확인합니다.</p>
+        </div>
+        <button class="done-btn" type="button" data-done="s5" aria-pressed="false">오늘 실습 완료!</button>
+      </section>
+
+      <!-- 명령 모음 -->
+      <section class="step" id="keys">
+        <div class="step-head"><span class="n">⌘</span><h2>명령 모음</h2><span class="time" id="keysTool">Claude</span></div>
+        <p class="lead">0단계에서 고른 도구 기준입니다. 도구를 바꾸려면 0단계에서 다시 고르세요.</p>
+        <table class="keys">
+          <thead><tr><th>하고 싶은 일</th><th>입력</th></tr></thead>
+          <tbody>
+            <tr class="sec"><td colspan="2">일하는 중에</td></tr>
+            <tr><td>멈추기</td><td>Esc</td></tr>
+            <tr><td>되돌리기 (대화)</td><td data-t="rewind">Esc 두 번 (또는 /rewind)</td></tr>
+            <tr><td>계획 모드</td><td data-t="plan">Shift+Tab</td></tr>
+            <tr><td>모드 바꾸기 (허락 방식)</td><td data-t="mode">Shift+Tab</td></tr>
+            <tr><td>파일 짚어 주기</td><td>@파일이름 · 끌어 놓기</td></tr>
+            <tr><td>캡처 붙여 넣기</td><td data-t="paste">Alt+V</td></tr>
+            <tr><td>줄 바꾸기</td><td>Shift+Enter</td></tr>
+            <tr><td>방금 보낸 말 다시 불러오기</td><td>↑</td></tr>
+            <tr class="sec"><td colspan="2">대화</td></tr>
+            <tr><td>새 대화</td><td data-t="clear">/clear</td></tr>
+            <tr><td>예전 대화 골라 열기</td><td>/resume</td></tr>
+            <tr><td>마지막 대화 이어 켜기 (PowerShell에서)</td><td data-t="cont">claude -c</td></tr>
+            <tr><td>끝내기</td><td>/exit</td></tr>
+            <tr class="sec"><td colspan="2">설정</td></tr>
+            <tr><td>모델 바꾸기</td><td data-t="model">/model</td></tr>
+            <tr><td>생각 수준</td><td data-t="effort">/effort</td></tr>
+            <tr><td>규칙 파일</td><td data-t="rules">CLAUDE.md</td></tr>
+            <tr><td>사용량 보기</td><td data-t="usage">/usage</td></tr>
+            <tr><td>명령 목록</td><td>/</td></tr>
+          </tbody>
+        </table>
+        <div class="tip"><b>확인 범위</b>: Claude는 직접 써서 확인했습니다. Codex, Antigravity, Grok은 각 프로그램에 들어 있는 안내문에서 확인한 것이라 화면이 조금 다를 수 있습니다. 모를 때는 <code class="i">/</code>만 쳐서 목록을 보세요.</div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="step" id="faq">
+        <div class="step-head"><span class="n">?</span><h2>막혔을 때</h2><span class="time">언제든</span></div>
+        <details>
+          <summary>규칙을 적었는데 안 지켜요</summary>
+          <div class="body"><p>① 에이전트를 <b>껐다 다시 켰는지</b> 확인하세요. 규칙은 켤 때 읽습니다. ② 파일 이름이 내 도구에 맞는지 보세요(Claude는 CLAUDE.md, 나머지는 AGENTS.md). ③ 그래도 놓칠 수 있습니다. 허락을 물을 때 경로를 보고 No를 고르는 것이 진짜 안전장치입니다.</p></div>
+        </details>
+        <details>
+          <summary>/ 명령을 쳤는데 그냥 메시지로 보내져요</summary>
+          <div class="body"><p><code class="i">/</code>가 <b>맨 앞</b>에 와야 합니다. 앞에 빈칸이나 다른 글자가 있으면 일반 메시지가 됩니다. <code class="i">/</code>를 치면 뜨는 목록에서 골라도 됩니다.</p></div>
+        </details>
+        <details>
+          <summary>Alt+V로 캡처가 안 붙어요</summary>
+          <div class="body"><p>캡처 파일을 끌어 놓는 방법을 쓰세요. <kbd>⊞ Win</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd>로 찍은 캡처는 <b>사진 → 스크린샷</b> 폴더에 저장됩니다. 그 파일을 PowerShell 창으로 끌어 놓으면 됩니다.</p></div>
+        </details>
+        <details>
+          <summary>Esc를 눌러도 안 멈춰요</summary>
+          <div class="body"><p>한 번 더 눌러 보세요. 그래도 안 되면 <kbd>Ctrl</kbd> + <kbd>C</kbd>를 <b>한 번만</b> 누릅니다. 두 번 누르면 에이전트가 꺼지는데, 그때는 4-1의 이어 하기로 다시 열면 됩니다.</p></div>
+        </details>
+        <details>
+          <summary>이어 하기를 했는데 엉뚱한 대화가 열려요 / 아무것도 없대요</summary>
+          <div class="body"><p>이어 하기는 <b>지금 폴더</b>의 마지막 대화를 엽니다. PowerShell의 <code class="i">PS C:\…&gt;</code>가 <code class="i">C:\projects\02_agent</code>인지 확인하세요. 아니면 <code class="i">cd C:\projects\02_agent</code>로 이동한 뒤 다시 합니다.</p></div>
+        </details>
+        <details>
+          <summary>실습 폴더가 엉망이 됐어요</summary>
+          <div class="body"><p>가짜 자료라 괜찮습니다. 에이전트를 끄고, 탐색기에서 <b>downloads</b> 폴더를 지운 뒤 0-2의 명령을 다시 실행하면 처음 상태가 됩니다.</p></div>
+        </details>
+        <details>
+          <summary>압축을 풀었더니 파일 이름이 깨져 보여요</summary>
+          <div class="body"><p>탐색기의 "압축 풀기"로 풀면 생길 수 있습니다. 0-2의 PowerShell 명령으로 다시 받아 주세요.</p></div>
+        </details>
+      </section>
+
+      <nav class="pager" aria-label="자료 이동">
+        <a href="01.html"><small>← 이전 자료</small><b>01. AI 에이전트 시작하기</b></a>
+        <a class="next dim" href="./"><small>다음 자료 · 준비 중 →</small><b>03. 공문 폴더 정리</b></a>
+      </nav>
+    </main>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+  };
+
+  /* ---------- 도구별 명령 (01과 같은 선택값 사용) ---------- */
+  const AGY = { cmd: "agy", rules: "AGENTS.md", cont: "agy -c", clear: "/clear", rewind: "/rewind",
+    paste: "Alt+V", mode: "Shift+Tab", plan: "Shift+Tab을 눌러 plan이 보이게 (또는 /plan)", model: "/model", effort: "/effort", usage: "/usage" };
+  const TOOLS = [
+    { id: "claude", tab: "Claude", sub: "Claude Code", cmd: "claude", rules: "CLAUDE.md", cont: "claude -c", clear: "/clear",
+      rewind: "Esc 두 번 (또는 /rewind)", paste: "Alt+V", mode: "Shift+Tab", plan: "Shift+Tab을 눌러 화면 아래에 plan mode가 보이게",
+      model: "/model", effort: "/effort", usage: "/usage" },
+    { id: "codex", tab: "ChatGPT", sub: "Codex CLI", cmd: "codex", rules: "AGENTS.md", cont: "codex resume --last", clear: "/clear (또는 /new)",
+      rewind: "Esc 두 번 (이전 메시지 고치기)", paste: "아직 확인 중 (아래 끌어 놓기 방법을 쓰세요)", mode: "/permissions", plan: "/plan 입력",
+      model: "/model", effort: "/model 안에서 함께 고르기", usage: "/usage" },
+    { id: "gemini", tab: "Gemini", sub: "Antigravity CLI", ...AGY },
+    { id: "grok", tab: "Grok", sub: "Grok Build", cmd: "grok", rules: "AGENTS.md", cont: "grok -c", clear: "/clear (또는 /new)",
+      rewind: "Esc 두 번 (또는 /rewind)", paste: "Alt+V", mode: "Shift+Tab", plan: "Shift+Tab을 눌러 plan이 보이게 (또는 /plan)",
+      model: "/model", effort: "/effort", usage: "/usage" },
+    { id: "free", tab: "구독 없음", sub: "Antigravity CLI (무료)", ...AGY }
+  ];
+  const pick = $("#pick");
+  TOOLS.forEach(t => {
+    const b = document.createElement("button"); b.type = "button"; b.setAttribute("role", "tab"); b.id = "pick-" + t.id;
+    const s = document.createElement("small"); s.textContent = t.sub;
+    b.append(document.createTextNode(t.tab), s);
+    b.addEventListener("click", () => select(t.id));
+    pick.append(b);
+  });
+  function select(id) {
+    const t = TOOLS.find(x => x.id === id);
+    TOOLS.forEach(x => { const b = $("#pick-" + x.id); b.setAttribute("aria-selected", x.id === id ? "true" : "false"); b.tabIndex = x.id === id ? 0 : -1; });
+    $$("[data-t]").forEach(e => { e.textContent = t[e.dataset.t]; });
+    $("#keysTool").textContent = t.tab;
+    store.set("wab-l1-tool", id);
+  }
+  pick.addEventListener("keydown", (e) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    const ids = TOOLS.map(t => t.id); const cur = ids.indexOf(store.get("wab-l1-tool", ids[0]));
+    const next = ids[(cur + (e.key === "ArrowRight" ? 1 : ids.length - 1)) % ids.length];
+    select(next); $("#pick-" + next).focus();
+  });
+  select(TOOLS.some(t => t.id === store.get("wab-l1-tool")) ? store.get("wab-l1-tool") : "claude");
+
+  /* ---------- 복사 버튼 ---------- */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".copy"); if (!b) return;
+    const pre = b.parentElement.querySelector("pre"); const text = pre.textContent;
+    const done = (msg) => { b.textContent = msg; b.classList.add("ok"); setTimeout(() => { b.textContent = "복사"; b.classList.remove("ok"); }, 1600); };
+    const selectIt = () => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); done("Ctrl+C"); };
+    try { navigator.clipboard.writeText(text).then(() => done("복사됨 ✓"), selectIt); } catch { selectIt(); }
+  });
+
+  /* ---------- 진행 체크 ---------- */
+  const STEPS = ["s0", "s1", "s2", "s3", "s4", "s5"];
+  const KEY = "wab-l2-done";
+  let done = store.get(KEY, []);
+  function paint() {
+    $$(".done-btn").forEach(b => b.setAttribute("aria-pressed", done.includes(b.dataset.done) ? "true" : "false"));
+    $$("#toc a").forEach(a => { const id = a.getAttribute("href").slice(1); a.classList.toggle("done", done.includes(id)); });
+    const n = STEPS.filter(s => done.includes(s)).length;
+    $("#progText").textContent = n + " / " + STEPS.length + " 완료";
+    $("#progBar").style.width = (n / STEPS.length * 100) + "%";
+  }
+  $$(".done-btn").forEach(b => b.addEventListener("click", () => {
+    const id = b.dataset.done;
+    done = done.includes(id) ? done.filter(x => x !== id) : done.concat(id);
+    store.set(KEY, done); paint();
+  }));
+  paint();
+})();
+</script>
+<script src="../assets/toc.js" defer></script>
+<script src="../assets/chat.js" data-room="02" defer></script>
+</body>
+</html>

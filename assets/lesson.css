@@ -147,6 +147,13 @@ ol.plain, ul.plain { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; }
 .tabs button[aria-selected="true"] { background: var(--surface); color: var(--ink); border-color: var(--ink); }
 .tabs button small { display: block; font: 400 11px var(--mono); color: var(--muted); }
 .panel { display: grid; gap: 16px; padding-top: 6px; min-width: 0; }
+.keys { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.keys th, .keys td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.keys th { font: 600 12.5px var(--mono); color: var(--muted); border-bottom: 1.5px solid var(--ink); }
+.keys td:last-child { font: 500 14px var(--mono); }
+.keys tr.sec td { font: 700 13px var(--body); color: var(--green); padding-top: 16px; }
+.pick { border-bottom: 0; margin-bottom: 4px; }
+.pick button { border: 1.5px solid var(--line); border-radius: 10px; margin: 0; }
 .who { display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px; }
 .who span { border-radius: 6px; padding: 3px 10px; background: color-mix(in srgb, var(--green) 12%, transparent); }
 .who span.no { background: color-mix(in srgb, var(--danger) 12%, transparent); }
