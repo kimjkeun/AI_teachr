@@ -33,14 +33,14 @@
   const form = el("form", "chat-form");
   const nameRow = el("div", "chat-name");
   const nameIn = el("input"); nameIn.type = "text"; nameIn.maxLength = 20; nameIn.placeholder = "이름 (예: 김선생)"; nameIn.setAttribute("aria-label", "이름");
-  nameRow.append(nameIn);
-  const ta = el("textarea"); ta.rows = 2; ta.maxLength = 1000; ta.placeholder = "메시지 입력 · Enter 보내기, Shift+Enter 줄바꿈"; ta.setAttribute("aria-label", "메시지");
+  const ta = el("textarea"); ta.rows = 1; ta.maxLength = 1000; ta.placeholder = "메시지 (Enter 전송 · Shift+Enter 줄바꿈)"; ta.setAttribute("aria-label", "메시지");
   const opts = el("div", "chat-opts");
   const kindSel = el("select"); kindSel.setAttribute("aria-label", "보내는 형식");
-  [["msg", "일반 메시지"], ["code", "복사용 블록 (명령·에러)"], ["notice", "📌 공지 (강사)"]].forEach(([v, t]) => { const o = el("option", null, t); o.value = v; kindSel.append(o); });
+  [["msg", "💬 메시지"], ["code", "⌨️ 복사용 블록"], ["notice", "📌 공지"]].forEach(([v, t]) => { const o = el("option", null, t); o.value = v; kindSel.append(o); });
   const send = el("button", "btn chat-send", "보내기"); send.type = "submit";
-  opts.append(kindSel, send);
-  form.append(nameRow, ta, opts);
+  nameRow.append(nameIn, kindSel);
+  opts.append(ta, send);
+  form.append(nameRow, opts);
 
   const foot = el("div", "chat-foot");
   const adminBtn = el("button", "linkbtn"); adminBtn.type = "button";
@@ -76,7 +76,7 @@
     const item = el("div", "chat-msg " + m.kind + (m.admin ? " admin" : "") + (m.pending ? " pending" : ""));
     const meta = el("div", "chat-meta");
     meta.append(el("b", null, m.name));
-    if (m.admin) meta.append(el("span", "chat-tag", "강사"));
+    if (m.admin) { const tag = el("span", "chat-tag", "🧑‍🏫"); tag.title = "강사"; tag.setAttribute("aria-label", "강사"); meta.append(tag); }
     meta.append(el("time", null, m.pending ? "보내는 중…" : fmtTime(m.t)));
     if (adminKey() && !m.pending) {
       const del = el("button", "chat-del", "지우기"); del.type = "button";
@@ -158,6 +158,8 @@
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && isOpen()) toggle(false); });
   document.addEventListener("visibilitychange", () => { if (!document.hidden) load(); schedule(); });
 
+  const grow = () => { ta.style.height = "auto"; ta.style.height = Math.min(ta.scrollHeight + 2, 130) + "px"; };
+  ta.addEventListener("input", grow);
   ta.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); }
   });
@@ -169,7 +171,7 @@
     store.set(K.name, name);
     busy = true; send.disabled = true;
     const temp = { id: Infinity, kind, name, text, t: Date.now(), admin: !!adminKey(), pending: true };
-    messages = messages.concat([temp]); ta.value = ""; render(); list.scrollTop = list.scrollHeight;
+    messages = messages.concat([temp]); ta.value = ""; grow(); render(); list.scrollTop = list.scrollHeight;
     try {
       const data = await post({ action: "chat", name, text, kind, adminKey: adminKey() });
       if (data.ok) { messages = data.messages; setStatus(""); if (kind !== "msg") kindSel.value = "msg"; }

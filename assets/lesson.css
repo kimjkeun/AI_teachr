@@ -302,12 +302,13 @@ details.alt > p, details.alt > .cmd { margin: 0 16px 14px; }
 .chat-badge { min-width: 20px; height: 20px; padding: 0 6px; border-radius: 99px; background: var(--accent); color: var(--accent-ink); font: 700 12px/20px var(--mono); text-align: center; }
 .chat-panel { position: fixed; z-index: 21; right: 0; top: 0; bottom: 0; width: min(380px, 100vw); display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto auto auto;
   background: var(--surface); border-left: 1px solid var(--line); box-shadow: -8px 0 30px rgba(0,0,0,.08); padding-top: env(safe-area-inset-top, 0px); }
-.chat-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.chat-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
 .chat-head b { display: block; font: 700 16px var(--body); }
 .chat-head small { display: block; font: 12px var(--body); color: var(--muted); margin-top: 2px; }
 .chat-x { border: 0; background: none; font-size: 18px; color: var(--muted); cursor: pointer; padding: 6px 8px; border-radius: 8px; }
 .chat-x:hover { background: var(--paper); }
-.chat-pinned { padding: 10px 12px; border-bottom: 1px solid var(--line); background: var(--warn-bg); max-height: 38vh; overflow: auto; }
+.chat-pinned { padding: 8px 12px; border-bottom: 1px solid var(--line); background: var(--warn-bg); max-height: 20vh; overflow: auto; }
+.chat-pinned .chat-msg p { padding: 6px 10px; font-size: 13.5px; }
 .chat-list { overflow-y: auto; padding: 12px; display: grid; align-content: start; gap: 10px; overscroll-behavior: contain; }
 .chat-empty { color: var(--muted); font-size: 14px; text-align: center; padding: 24px 8px; }
 .chat-msg { display: grid; gap: 4px; min-width: 0; }
@@ -322,19 +323,24 @@ details.alt > p, details.alt > .cmd { margin: 0 16px 14px; }
 .chat-meta { display: flex; align-items: baseline; gap: 6px; font-size: 12.5px; color: var(--muted); }
 .chat-meta b { color: var(--ink); font-weight: 600; }
 .chat-meta time { font: 11.5px var(--mono); }
-.chat-tag { font: 600 10.5px var(--body); color: var(--paper); background: var(--green); border-radius: 99px; padding: 2px 7px; }
+.chat-tag { font-size: 14px; line-height: 1; }
 .chat-del { margin-left: auto; border: 0; background: none; color: var(--danger); font: 12px var(--body); cursor: pointer; padding: 0; }
 .chat-status { margin: 0; padding: 0 16px; font-size: 12.5px; color: var(--muted); min-height: 0; }
 .chat-status:empty { display: none; }
 .chat-status.bad { color: var(--danger); }
-.chat-form { display: grid; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--line); }
+.chat-form { display: grid; gap: 6px; padding: 8px 10px; border-top: 1px solid var(--line); }
+.chat-name { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; }
+
 .chat-form input, .chat-form textarea, .chat-form select, .chat-adminbox input { width: 100%; font: 15px/1.45 var(--body); color: var(--ink); background: var(--paper); border: 1.5px solid var(--line); border-radius: 10px; padding: 9px 11px; }
-.chat-form textarea { resize: none; }
+.chat-form textarea { resize: none; min-height: 42px; max-height: 130px; }
+.chat-form .chat-name input, .chat-form .chat-name select { font-size: 13px; padding: 5px 9px; border-radius: 8px; height: 32px; }
+.chat-form .chat-name select { width: auto; max-width: 150px; }
+.chat-form textarea { font-size: 14px; overflow-y: auto; scrollbar-width: thin; }
 .chat-form input:focus, .chat-form textarea:focus, .chat-form select:focus, .chat-adminbox input:focus { outline: none; border-color: var(--green); }
-.chat-opts { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
-.chat-send { padding: 10px 16px; }
+.chat-opts { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: end; }
+.chat-send { padding: 0 14px; height: 42px; font-size: 14px; }
 .chat-send:disabled { opacity: .5; cursor: default; }
-.chat-foot { display: grid; gap: 8px; padding: 0 12px calc(10px + env(safe-area-inset-bottom, 0px)); }
+.chat-foot { display: grid; gap: 6px; padding: 0 10px calc(6px + env(safe-area-inset-bottom, 0px)); }
 .chat-adminbox { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
 .chat-adminbox .btn { padding: 10px 14px; }
 .linkbtn { background: none; border: 0; padding: 0; font: 500 12.5px var(--body); color: var(--muted); text-decoration: underline; cursor: pointer; justify-self: start; }
