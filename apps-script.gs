@@ -5,6 +5,9 @@
  *
  * 한 사람 = 한 줄. 이름 + 비밀번호 4자리로 본인 응답을 불러오고 고칩니다.
  * 비밀번호는 해시로만 저장하며, B열을 비우면 그 사람의 비밀번호가 초기화됩니다.
+ *
+ * 강의자료 채팅은 '채팅' 시트에 저장합니다. 공지 올리기와 메시지 지우기는 강사 키가 있어야 하며,
+ * 강사 키는 프로젝트 설정 > 스크립트 속성에 ADMIN_KEY 로 넣습니다.
  */
 const SHEET_NAME = '응답';
 const HEADERS = ['key', 'pin', '이름', '기대하는 것', '구독 AI', '참여 가능일', '하고 싶은 말', '처음 제출', '마지막 수정'];
@@ -76,8 +79,80 @@ function clearFails_(key) {
   CacheService.getScriptCache().remove('fail:' + key);
 }
 
-// 결과판: 비밀번호를 뺀 모든 응답
-function doGet() {
+/* ---------- 강의자료 채팅 ---------- */
+const CHAT_SHEET = '채팅';
+const CHAT_HEADERS = ['id', 'room', 'kind', '이름', '내용', '시각', '강사', '삭제'];
+const CHAT_LIMITS = { name: 20, text: 1000, keep: 80 };
+const CHAT_KINDS = ['msg', 'code', 'notice'];
+
+function chatSheet_() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sh = ss.getSheetByName(CHAT_SHEET);
+  if (!sh) {
+    sh = ss.insertSheet(CHAT_SHEET);
+    sh.getRange('A:H').setNumberFormat('@');
+    sh.appendRow(CHAT_HEADERS);
+    sh.setFrozenRows(1);
+  }
+  return sh;
+}
+function isAdmin_(k) {
+  const real = PropertiesService.getScriptProperties().getProperty('ADMIN_KEY');
+  return !!real && String(k || '') === real;
+}
+// 방마다 최근 메시지를 캐시에 두고, 새 글이 올라오거나 지워질 때만 시트를 다시 읽음
+function chatList_(room) {
+  const cache = CacheService.getScriptCache();
+  const hit = cache.get('chat:' + room);
+  if (hit) return JSON.parse(hit);
+  const rows = chatSheet_().getDataRange().getDisplayValues().slice(1)
+    .filter(r => r[1] === room && r[7] !== 'Y')
+    .slice(-CHAT_LIMITS.keep)
+    .map(r => ({ id: Number(r[0]), kind: r[2], name: unquote_(r[3]), text: unquote_(r[4]), t: Number(r[5]), admin: r[6] === 'Y' }));
+  try { cache.put('chat:' + room, JSON.stringify(rows), 21600); } catch (err) {}
+  return rows;
+}
+function chatPost_(d) {
+  const room = String(d.room || '');
+  if (!/^[0-9a-z]{1,8}$/.test(room)) return json_({ ok: false, error: 'bad_input' });
+  const admin = isAdmin_(d.adminKey);
+  if (d.action === 'chat_admin') return json_({ ok: admin, error: admin ? undefined : 'bad_key' });
+
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(10000);
+    const sh = chatSheet_();
+    if (d.action === 'chat_delete') {
+      if (!admin) return json_({ ok: false, error: 'bad_key' });
+      const ids = sh.getRange(2, 1, Math.max(sh.getLastRow() - 1, 1), 1).getDisplayValues();
+      const i = ids.findIndex(r => r[0] === String(d.id));
+      if (i !== -1) sh.getRange(i + 2, 8).setValue('Y');
+    } else {
+      const name = clean_(d.name, CHAT_LIMITS.name);
+      const text = clean_(d.text, CHAT_LIMITS.text);
+      const kind = CHAT_KINDS.indexOf(d.kind) !== -1 ? d.kind : 'msg';
+      if (!name || !text) return json_({ ok: false, error: 'bad_input' });
+      if (kind === 'notice' && !admin) return json_({ ok: false, error: 'bad_key' });
+      const cache = CacheService.getScriptCache();
+      const rk = 'chatrate:' + key_(name);
+      if (!admin && cache.get(rk)) return json_({ ok: false, error: 'too_fast' });
+      cache.put(rk, '1', 3);
+      const id = sh.getLastRow(); // 머리글이 1행이라 첫 메시지 id 는 1
+      sh.appendRow([String(id), room, kind, name, text, String(Date.now()), admin ? 'Y' : '', '']);
+    }
+    CacheService.getScriptCache().remove('chat:' + room);
+    return json_({ ok: true, messages: chatList_(room) });
+  } catch (err) {
+    return json_({ ok: false, error: 'server' });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// 결과판: 비밀번호를 뺀 모든 응답 (?chat=방이름 이면 그 방의 채팅)
+function doGet(e) {
+  const room = e && e.parameter && e.parameter.chat;
+  if (room) return /^[0-9a-z]{1,8}$/.test(room) ? json_({ ok: true, messages: chatList_(room) }) : json_({ ok: false, error: 'bad_input' });
   const values = sheet_().getDataRange().getDisplayValues().slice(1);
   return json_({ ok: true, rows: values.filter(r => r[0]).map(toRow_) });
 }
@@ -85,6 +160,7 @@ function doGet() {
 function doPost(e) {
   let d;
   try { d = JSON.parse(e.postData.contents); } catch (err) { return json_({ ok: false, error: 'bad_input' }); }
+  if (/^chat/.test(String(d.action || ''))) return chatPost_(d);
   const name = clean_(d.name, LIMITS.name);
   const pin = String(d.pin || '');
   const key = key_(name);
