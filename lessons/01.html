@@ -262,8 +262,8 @@
         </div>
 
         <div class="sub">
-          <h3><span class="k">3-3</span>다음에 배울 것</h3>
-          <p>오늘은 탐색기에서 마우스로 폴더를 만들었지만, 5단계에서는 <code class="i">mkdir 폴더이름</code> 한 줄로 PowerShell에서 바로 만드는 법을 연습합니다.</p>
+          <h3><span class="k">3-3</span>참고: 명령으로 폴더 만들기</h3>
+          <p>폴더는 앞으로도 탐색기에서 마우스로 만듭니다. 참고로 PowerShell에서 <code class="i">mkdir 폴더이름</code> 한 줄을 쳐도 지금 위치에 새 폴더가 생깁니다. 지금은 외우지 않아도 됩니다.</p>
         </div>
         <button class="done-btn" type="button" data-done="sf" aria-pressed="false">폴더 이동 익힘</button>
       </section>
@@ -284,14 +284,12 @@
 
         <div class="sub">
           <h3><span class="k">5-0</span>연습용 폴더 01_tutorial 만들기</h3>
-          <p>4단계에서 켠 에이전트는 먼저 끝냅니다. <code class="i">/exit</code>를 입력하거나 <kbd>Ctrl</kbd> + <kbd>C</kbd>를 두 번 누르세요. <code class="i">PS C:\projects&gt;</code>가 보이면 아래를 한 줄씩 입력합니다.</p>
-          <div class="cmd"><span class="lbl">PowerShell</span><pre>cd C:\projects
-mkdir 01_tutorial
-cd 01_tutorial</pre><button class="copy" type="button">복사</button></div>
-          <ul class="plain">
-            <li><code class="i">mkdir 이름</code>: 지금 위치에 새 폴더를 만듭니다. 탐색기에서 '새 폴더'를 누르는 것과 같습니다.</li>
-            <li><code class="i">cd 이름</code>: 그 폴더 안으로 들어갑니다. <code class="i">cd ..</code>는 한 칸 위로 나옵니다.</li>
-          </ul>
+          <p>4단계에서 켠 에이전트는 먼저 끝냅니다. <code class="i">/exit</code>를 입력하거나 <kbd>Ctrl</kbd> + <kbd>C</kbd>를 두 번 누르세요. <code class="i">PS C:\projects&gt;</code>가 보이면 준비 끝입니다.</p>
+          <ol class="plain">
+            <li>열어 둔 탐색기에서 <b>C:\projects</b> 폴더 안의 빈 곳을 마우스 오른쪽 클릭 → <b>새로 만들기 → 폴더</b>. (단축키 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd>)</li>
+            <li>이름을 <b>01_tutorial</b>로 적고 <kbd>Enter</kbd>.</li>
+          </ol>
+          <div class="tip"><b>참고 · mkdir</b>: PowerShell에서 <code class="i">mkdir 01_tutorial</code>이라고 쳐도 같은 폴더가 만들어집니다. 오늘은 탐색기로 만들고, 명령은 이런 게 있다는 것만 알아 두세요.</div>
           <p>오늘 실습이 끝나면 폴더가 이렇게 쌓입니다.</p>
           <div class="screen">C:\projects
 └─ 01_tutorial
@@ -299,7 +297,7 @@ cd 01_tutorial</pre><button class="copy" type="button">복사</button></div>
    ├─ 02_students   ← 5-2
    ├─ 03_welcome    ← 5-3
    └─ 04_photos     ← 5-4</div>
-          <div class="tip"><b>실습 하나가 끝날 때마다</b>: 에이전트를 끝내고(<code class="i">/exit</code>) → <code class="i">cd ..</code>로 01_tutorial로 나온 뒤 → 다음 폴더를 만듭니다. 폴더 이름은 한/영 전환 없이 치도록 영어로 짓습니다. 명령의 <code class="i">claude</code> 자리는 4단계에서 고른 도구 이름으로 자동으로 바뀝니다.</div>
+          <div class="tip"><b>실습 하나가 끝날 때마다</b>: 에이전트를 끝내고(<code class="i">/exit</code>) → 탐색기에서 01_tutorial 안에 다음 폴더를 만들고 → PowerShell에서 <code class="i">cd</code>로 그 폴더에 들어가 에이전트를 부릅니다. 폴더 이름은 <code class="i">cd</code>로 칠 때 한/영 전환이 필요 없도록 영어로 짓습니다. 명령의 <code class="i">claude</code> 자리는 4단계에서 고른 도구 이름으로 자동으로 바뀝니다.</div>
         </div>
 
         <div class="note">
@@ -311,8 +309,8 @@ cd 01_tutorial</pre><button class="copy" type="button">복사</button></div>
 
         <div class="sub">
           <h3><span class="k">5-1</span>파일 만들기</h3>
-          <div class="cmd"><span class="lbl">PowerShell · 연습 폴더 준비</span><pre>mkdir 01_hello
-cd 01_hello
+          <p class="prep">📁 탐색기에서 <b>01_tutorial</b> 안에 새 폴더 <b>01_hello</b>를 만든 뒤, PowerShell에서:</p>
+          <div class="cmd"><span class="lbl">PowerShell · 연습 폴더로 이동</span><pre>cd C:\projects\01_tutorial\01_hello
 <span class="agent-cmd">claude</span></pre><button class="copy" type="button">복사</button></div>
           <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>이 폴더에 '환영합니다.txt' 파일을 만들고, 안에 오늘 날짜와 "수요 AI 에이전트 빌더스 첫 실습 출석!"이라고 적어줘.</pre><button class="copy" type="button">복사</button></div>
           <p>확인: 열어 둔 탐색기 창에서 <b>01_tutorial → 01_hello</b> 폴더를 열어 보세요. <b>환영합니다.txt</b>가 생겼나요? 더블클릭해서 내용을 열어 보세요.</p>
@@ -320,9 +318,8 @@ cd 01_hello
 
         <div class="sub">
           <h3><span class="k">5-2</span>학생 10명 폴더 한 번에 만들기</h3>
-          <div class="cmd"><span class="lbl">PowerShell · 연습 폴더 준비</span><pre>cd ..
-mkdir 02_students
-cd 02_students
+          <p class="prep">📁 탐색기에서 <b>01_tutorial</b> 안에 새 폴더 <b>02_students</b>를 만든 뒤, PowerShell에서:</p>
+          <div class="cmd"><span class="lbl">PowerShell · 연습 폴더로 이동</span><pre>cd C:\projects\01_tutorial\02_students
 <span class="agent-cmd">claude</span></pre><button class="copy" type="button">복사</button></div>
           <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>가상의 학생 10명의 폴더를 '01_김민지'처럼 '번호_이름' 형식으로 만들어줘. 이름은 실제 인물이 아닌 가명으로 해 주고, 각 폴더 안에 '학생정보.txt'를 만들어서 번호, 이름, 생일, 좋아하는 과목, 장래 희망을 간단히 적어줘.</pre><button class="copy" type="button">복사</button></div>
           <p>확인: 탐색기에서 <b>02_students</b>를 열면 폴더 10개가 번호순으로 보이나요? 아무 폴더나 열어 학생정보.txt를 확인해 보세요. 웹 챗봇은 폴더를 만들 수 없지만, 에이전트는 10개를 한 번에 만듭니다.</p>
@@ -331,9 +328,8 @@ cd 02_students
 
         <div class="sub">
           <h3><span class="k">5-3</span>브라우저 띄우기 <small style="font:400 13px var(--body);color:var(--muted)">오늘의 하이라이트</small></h3>
-          <div class="cmd"><span class="lbl">PowerShell · 연습 폴더 준비</span><pre>cd ..
-mkdir 03_welcome
-cd 03_welcome
+          <p class="prep">📁 탐색기에서 <b>01_tutorial</b> 안에 새 폴더 <b>03_welcome</b>를 만든 뒤, PowerShell에서:</p>
+          <div class="cmd"><span class="lbl">PowerShell · 연습 폴더로 이동</span><pre>cd C:\projects\01_tutorial\03_welcome
 <span class="agent-cmd">claude</span></pre><button class="copy" type="button">복사</button></div>
           <div class="cmd prompt"><span class="lbl">에이전트에게 · ○○○ 자리에 내 이름</span><pre>'○○○ 선생님, 환영합니다!'라는 문구가 들어간 환영 카드 웹페이지를 welcome.html로 예쁘게 만들고, 브라우저로 열어줘. 가을 느낌의 색으로 해줘.</pre><button class="copy" type="button">복사</button></div>
           <p>브라우저에 내 이름이 들어간 카드가 뜨면 성공입니다. 마음에 안 드는 부분은 그대로 말해 보세요.</p>
@@ -342,9 +338,8 @@ cd 03_welcome
 
         <div class="sub">
           <h3><span class="k">5-4</span>미션: 폴더 만들고 웹에서 사진 모아 오기</h3>
-          <div class="cmd"><span class="lbl">PowerShell · 연습 폴더 준비</span><pre>cd ..
-mkdir 04_photos
-cd 04_photos
+          <p class="prep">📁 탐색기에서 <b>01_tutorial</b> 안에 새 폴더 <b>04_photos</b>를 만든 뒤, PowerShell에서:</p>
+          <div class="cmd"><span class="lbl">PowerShell · 연습 폴더로 이동</span><pre>cd C:\projects\01_tutorial\04_photos
 <span class="agent-cmd">claude</span></pre><button class="copy" type="button">복사</button></div>
           <p>이번에는 <b>폴더 만들기 → 인터넷 검색 → 내려받기 → 정리</b>를 한 문장으로 맡깁니다. 웹 챗봇이라면 사진을 하나씩 찾아 '다른 이름으로 저장'을 반복해야 하는 일입니다.</p>
           <div class="cmd prompt"><span class="lbl">에이전트에게 · '가을 단풍' 자리는 원하는 주제로</span><pre>'가을 단풍 사진' 폴더를 만들고, 가을 단풍과 관련된 사진 5장을 웹에서 찾아서 그 폴더에 내려받아줘. 파일 이름은 단풍_01.jpg처럼 번호를 붙여줘. 각 사진의 출처 주소와 라이선스는 같은 폴더의 출처.txt에 정리해줘.</pre><button class="copy" type="button">복사</button></div>
@@ -691,7 +686,7 @@ cd 04_photos
       return;
     }
     if (/^explorer\s+\.$/i.test(cmd)) { say(cmd, "실제 PowerShell이라면 지금 폴더(" + pathStr(cwd) + ")가 탐색기 창으로 열립니다.", "ok"); return; }
-    if (/^mkdir\b/i.test(cmd)) { say(cmd, "mkdir는 5단계에서 실제 PowerShell로 연습해요. 지금은 탐색기에서 만든 projects 폴더로 이동만 해 보세요.", "warn"); return; }
+    if (/^mkdir\b/i.test(cmd)) { say(cmd, "mkdir 폴더이름 은 폴더를 만드는 명령이에요. 참고만 하고, 폴더는 탐색기에서 만듭니다.", "warn"); return; }
     if (/^(claude|codex|agy|grok)$/i.test(cmd)) {
       if (atProjects()) say(cmd, "좋아요! 실제 PowerShell에서는 이 위치에서 에이전트가 시작됩니다.", "ok");
       else say(cmd, "에이전트를 부르기 전에 먼저 cd C:\\projects 로 이동하세요.", "warn");
