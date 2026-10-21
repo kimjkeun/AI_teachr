@@ -340,10 +340,8 @@
         </details>
         <details>
           <summary>Codex를 winget으로 설치했는데 'codex'를 못 찾아요</summary>
-          <div class="body"><p>winget용 Codex는 실행 파일 이름이 <code class="i">codex-x86_64-pc-windows-msvc.exe</code>라서, Windows 설정에 따라 'codex'라는 이름이 연결되지 않습니다. 지우고 공식 스크립트로 다시 설치하세요.</p>
-            <div class="cmd"><pre>winget uninstall -e --id OpenAI.Codex</pre><button class="copy" type="button">복사</button></div>
-            <div class="cmd"><pre>powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"</pre><button class="copy" type="button">복사</button></div>
-            <p>설치가 끝나면 PowerShell 창을 닫고 새로 연 뒤 <code class="i">codex --version</code>으로 확인합니다.</p></div>
+          <div class="body"><p>winget용 Codex는 실행 파일 이름이 <code class="i">codex-x86_64-pc-windows-msvc.exe</code>라서, Windows 설정에 따라 'codex'라는 이름이 연결되지 않습니다. 지우고 4-1의 npm 방법으로 다시 설치하세요.</p>
+            <div class="cmd"><pre>winget uninstall -e --id OpenAI.Codex</pre><button class="copy" type="button">복사</button></div></div>
         </details>
         <details>
           <summary>"이 시스템에서 스크립트를 실행할 수 없으므로…" 오류</summary>
@@ -359,6 +357,10 @@
           <summary>설치 명령을 넣었는데 아무 반응이 없어요</summary>
           <div class="body"><p><b>winget 명령</b>은 진행 막대가 보여서 멈췄는지 알 수 있습니다. 막대가 몇 분째 그대로면 <b>Ctrl+C</b>로 멈추고 다시 실행하세요.</p>
             <p>보조 방법(<code class="i">irm … | iex</code>)은 진행 표시 없이 내려받습니다. <b>1~2분 기다려</b> 보고, 새 줄에 <code class="i">PS C:\…&gt;</code>가 다시 나타나면 끝난 것입니다.</p></div>
+        </details>
+        <details>
+          <summary>Codex 공식 설치 스크립트가 "Downloading Codex CLI"에서 멈춰요</summary>
+          <div class="body"><p>Ctrl+C로 멈추고 4-1의 npm 방법(Node.js → 실행 허용 → <code class="i">npm install -g @openai/codex</code>)으로 설치하세요.</p></div>
         </details>
         <details>
           <summary>'winget' 용어가 … 인식되지 않습니다</summary>
@@ -410,8 +412,12 @@
       login: ["처음 실행하면 화면 색상(테마)을 고르라고 합니다. 화살표 키로 고르고 Enter.", "로그인 방법에서 'Claude account with subscription'을 고릅니다.", "브라우저가 열리면 Claude 계정으로 로그인하고 '승인'을 누릅니다.", "폴더를 믿을 수 있는지 물으면 'Yes'를 고릅니다."] },
     { id: "codex", tab: "ChatGPT", sub: "Codex CLI", cmd: "codex",
       who: [["ChatGPT Plus · Pro · Business · Edu"]],
-      install: 'powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"',
-      installNote: "Codex는 winget으로 설치하면 'codex' 명령이 안 잡히는 경우가 있어 공식 설치 스크립트를 씁니다. 진행 표시 없이 1~2분 걸릴 수 있으니 기다려 주세요.",
+      steps: [
+        ["① Node.js 설치 (npm이라는 설치 도구가 함께 들어옵니다)", "winget install -e --id OpenJS.NodeJS.LTS --accept-source-agreements --accept-package-agreements"],
+        ["② PowerShell 창을 닫고 새로 연 뒤, 스크립트 실행 허용 (내 계정에만 적용)", "Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force"],
+        ["③ Codex 설치", "npm install -g @openai/codex"]
+      ],
+      installNote: "Codex는 Node.js의 설치 도구(npm)로 설치합니다. 공식 설치 스크립트는 다운로드 중에 멈추는 경우가 있고, winget판은 'codex' 명령이 연결되지 않는 경우가 있었습니다.",
       login: ["처음 실행하면 로그인 방법을 고르라고 합니다. 'Sign in with ChatGPT'를 고릅니다.", "브라우저가 열리면 ChatGPT 계정으로 로그인합니다.", "작업 폴더 권한을 물으면 이 폴더에서 작업을 허용하는 항목을 고릅니다."] },
     { id: "gemini", tab: "Gemini", sub: "Antigravity CLI", cmd: "agy",
       who: [["Google AI Pro · Ultra"], ["구글 계정 필요"]],
@@ -455,7 +461,7 @@
     const alt = t.alt ? el("details", "alt") : null;
     if (alt) { alt.append(el("summary", null, "winget이 없다고 나오거나 설치가 안 될 때"),
       el("p", null, "공식 설치 스크립트로 설치합니다. 진행 표시 없이 1~2분 걸릴 수 있으니 기다려 주세요."), cmdBlock(t.alt, "PowerShell")); }
-    s1.append(h1, el("p", null, t.installNote || "PowerShell에 붙여 넣고 Enter. Windows에 들어 있는 설치 도구(winget)가 진행 막대를 보여 주며 설치합니다. 'Successfully installed(설치 성공)'가 나오고 다시 PS C:\\…> 가 나타나면 끝입니다."), cmdBlock(t.install, "PowerShell"));
+    s1.append(h1, el("p", null, t.installNote || "PowerShell에 붙여 넣고 Enter. Windows에 들어 있는 설치 도구(winget)가 진행 막대를 보여 주며 설치합니다. 'Successfully installed(설치 성공)'가 나오고 다시 PS C:\\…> 가 나타나면 끝입니다."), ...(t.steps ? t.steps.flatMap(([label, c]) => [el("p", null, label), cmdBlock(c, "PowerShell")]) : [cmdBlock(t.install, "PowerShell")]));
     if (alt) s1.append(alt);
 
     const s2 = el("div", "sub"); const h2 = el("h3"); h2.append(el("span", "k", "4-2"), document.createTextNode("설치 확인"));
