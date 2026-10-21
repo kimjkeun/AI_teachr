@@ -96,6 +96,11 @@ function chatSheet_() {
   }
   return sh;
 }
+// 시트가 '01'을 숫자 1로 바꿔 저장해도 같은 방으로 봄
+function room_(v) {
+  const r = String(v == null ? '' : v).replace(/^'/, '').trim();
+  return /^[0-9]+$/.test(r) ? r.padStart(2, '0') : r;
+}
 function isAdmin_(k) {
   const real = PropertiesService.getScriptProperties().getProperty('ADMIN_KEY');
   return !!real && String(k || '') === real;
@@ -103,12 +108,14 @@ function isAdmin_(k) {
 // 방마다 최근 메시지를 캐시에 두고, 새 글이 올라오거나 지워질 때만 시트를 다시 읽음
 function chatList_(room) {
   const cache = CacheService.getScriptCache();
+  room = room_(room);
   const hit = cache.get('chat:' + room);
   if (hit) return JSON.parse(hit);
-  const rows = chatSheet_().getDataRange().getDisplayValues().slice(1)
-    .filter(r => r[1] === room && r[7] !== 'Y')
+  const want = room_(room);
+  const rows = chatSheet_().getDataRange().getValues().slice(1)
+    .filter(r => room_(r[1]) === want && String(r[7]).trim().toUpperCase() !== 'Y')
     .slice(-CHAT_LIMITS.keep)
-    .map(r => ({ id: Number(r[0]), kind: r[2], name: unquote_(r[3]), text: unquote_(r[4]), t: Number(r[5]), admin: r[6] === 'Y' }));
+    .map(r => ({ id: Number(r[0]), kind: String(r[2]), name: unquote_(r[3]), text: unquote_(r[4]), t: Number(r[5]), admin: String(r[6]) === 'Y' }));
   try { cache.put('chat:' + room, JSON.stringify(rows), 21600); } catch (err) {}
   return rows;
 }
@@ -125,7 +132,7 @@ function chatPost_(d) {
     if (d.action === 'chat_delete') {
       if (!admin) return json_({ ok: false, error: 'bad_key' });
       const ids = sh.getRange(2, 1, Math.max(sh.getLastRow() - 1, 1), 1).getDisplayValues();
-      const i = ids.findIndex(r => r[0] === String(d.id));
+      const i = ids.findIndex(r => Number(r[0]) === Number(d.id));
       if (i !== -1) sh.getRange(i + 2, 8).setValue('Y');
     } else {
       const name = clean_(d.name, CHAT_LIMITS.name);
@@ -140,7 +147,7 @@ function chatPost_(d) {
       const id = sh.getLastRow(); // 머리글이 1행이라 첫 메시지 id 는 1
       sh.appendRow([String(id), room, kind, name, text, String(Date.now()), admin ? 'Y' : '', '']);
     }
-    CacheService.getScriptCache().remove('chat:' + room);
+    CacheService.getScriptCache().remove('chat:' + room_(room));
     return json_({ ok: true, messages: chatList_(room) });
   } catch (err) {
     return json_({ ok: false, error: 'server' });
