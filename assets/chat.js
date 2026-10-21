@@ -3,7 +3,9 @@
    설문과 같은 Apps Script 웹 앱에 저장합니다(apps-script.gs의 채팅 부분). */
 (() => {
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzBzOWLDKIdaii6RfsVCCfTP_Y6iZdXvEomOXg24KZXOLiCLfA1CleFa_nKMykmwf91/exec";
-  const ROOM = (document.currentScript && document.currentScript.dataset.room) || "lobby";
+  const LABEL = (document.currentScript && document.currentScript.dataset.room) || "00";
+  // 시트가 '01'을 숫자 1로 바꾸지 않도록 글자를 붙인 방 이름을 씀
+  const ROOM = "lesson" + LABEL;
   const OPEN_MS = 5000, CLOSED_MS = 30000;
 
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
@@ -21,7 +23,7 @@
 
   const panel = el("aside", "chat-panel"); panel.hidden = true; panel.setAttribute("aria-label", "강의자료 채팅");
   const head = el("div", "chat-head");
-  const title = el("div"); title.append(el("b", null, "같이 보는 채팅"), el("small", null, "강의자료 " + ROOM + " · 공지와 복사용 명령도 여기에"));
+  const title = el("div"); title.append(el("b", null, "같이 보는 채팅"), el("small", null, "강의자료 " + LABEL + " · 공지와 복사용 명령도 여기에"));
   const close = el("button", "chat-x", "✕"); close.type = "button"; close.setAttribute("aria-label", "채팅 닫기");
   head.append(title, close);
   const pinned = el("div", "chat-pinned");
