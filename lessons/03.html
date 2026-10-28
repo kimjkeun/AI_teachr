@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>과제 파일 정리 & PDF 합치기·나누기 | 수요 AI 에이전트 빌더스</title>
+<meta name="description" content="수요 AI 에이전트 빌더스 강의자료 03: 이름이 제각각인 과제 파일을 한 번에 정리하고, PDF를 합치고 나누는 실습.">
+<meta property="og:title" content="과제 파일 정리 & PDF 합치기·나누기 | 수요 AI 에이전트 빌더스">
+<meta property="og:description" content="웹 AI로는 못 하는 일: 폴더 통째로 정리하고 진짜 파일로 결과 받기.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700;900&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="home" href="./">← 강의자료 목록</a>
+    <div class="prog" aria-live="polite"><span id="progText">0 / 7 완료</span><span class="trk"><i id="progBar"></i></span></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="lesson-hero">
+    <div class="meta"><span><b>강의자료 03</b></span><span>실무 자동화</span><span>약 60분</span><span>Windows · PowerShell 기준</span><span>파이썬 필요</span></div>
+    <h1>과제 파일 정리 &amp; PDF 합치기·나누기</h1>
+    <p class="goal">오늘의 목표: <span class="mark">웹 AI로는 할 수 없는 일</span>을 해 봅니다. 폴더를 통째로 맡기고, 결과를 진짜 파일로 받습니다.</p>
+    <div class="takeaways">
+      <span><b>①</b>과제 21개 이름 한 번에 정리</span>
+      <span><b>②</b>미제출자 명단 엑셀</span>
+      <span><b>③</b>PDF 합치기·나누기</span>
+    </div>
+  </section>
+
+  <div class="layout">
+    <nav class="toc" aria-label="오늘의 순서" id="toc">
+      <a href="#s0"><b><span>0</span></b>웹 AI와 뭐가 달라?<small>5분</small></a>
+      <a href="#s1"><b><span>1</span></b>파이썬 준비<small>10분</small></a>
+      <a href="#s2"><b><span>2</span></b>실습 파일 받기<small>5분</small></a>
+      <a href="#s3"><b><span>3</span></b>과제 이름 정리<small>15분</small></a>
+      <a href="#s4"><b><span>4</span></b>PDF 합치기<small>8분</small></a>
+      <a href="#s5"><b><span>5</span></b>PDF 나누기<small>12분</small></a>
+      <a href="#s6"><b><span>6</span></b>도구로 남기기<small>5분</small></a>
+      <a href="#faq" class="faq-link"><b>?</b>막혔을 때<small>상시</small></a>
+    </nav>
+
+    <main>
+      <!-- 0 -->
+      <section class="step" id="s0" data-step="s0">
+        <div class="step-head"><span class="n">0</span><h2>웹 AI로 하면 어떻게 될까?</h2><span class="time">5분</span></div>
+        <p class="lead">과제 21개의 파일 이름을 "번호_이름"으로 바꾸는 일을 웹 챗봇에 맡긴다고 해 볼게요.</p>
+        <div class="compare">
+          <div>
+            <p class="verdict">웹 챗봇</p>
+            <h3>할 수 있는 건 "이름 목록 제안"까지</h3>
+            <ol>
+              <li>파일 21개를 나눠서 업로드 (개수 제한)</li>
+              <li>"이렇게 바꾸세요" 목록을 받음</li>
+              <li>파일 이름은 <b>내가 하나씩 직접</b> 바꿈</li>
+              <li>PDF 합치기는 별도 프로그램이나 사이트 필요</li>
+            </ol>
+          </div>
+          <div>
+            <p class="verdict">CLI 에이전트</p>
+            <h3>폴더를 맡기면 끝</h3>
+            <ol>
+              <li>폴더 안 파일을 직접 열어서 누구 과제인지 확인</li>
+              <li>이름을 실제로 바꾸고, 미제출자 엑셀까지 생성</li>
+              <li>PDF 합치기·나누기도 직접 실행해서 파일로 저장</li>
+            </ol>
+          </div>
+        </div>
+        <button class="done-btn" type="button" data-done="s0" aria-pressed="false">차이를 알겠어요</button>
+      </section>
+
+      <!-- 1 -->
+      <section class="step" id="s1" data-step="s1">
+        <div class="step-head"><span class="n">1</span><h2>파이썬 준비</h2><span class="time">10분</span></div>
+        <p class="lead">엑셀과 PDF를 다루려면 <b>파이썬</b>이 있어야 합니다. 선생님이 파이썬을 배울 필요는 없어요. 설치만 해 두면 에이전트가 필요한 코드를 직접 쓰고 실행합니다.</p>
+
+        <div class="sub">
+          <h3><span class="k">1-1</span>이미 설치되어 있는지 확인</h3>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre>python --version</pre><button class="copy" type="button">복사</button></div>
+          <div class="screen"><span class="ok">Python 3.12.10</span>                         ← 버전이 나오면 1-2를 건너뛰세요
+<span class="bad">Microsoft Store가 열리거나 아무것도 안 나옴</span>   ← 1-2로 설치</div>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">1-2</span>설치하기</h3>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre>winget install -e --id Python.Python.3.12</pre><button class="copy" type="button">복사</button></div>
+          <p>설치가 끝나면 <b>PowerShell 창을 닫고 새로 연 뒤</b> 1-1을 다시 해 보세요.</p>
+          <div class="tip"><b>에이전트에게 맡겨도 됩니다.</b> 에이전트를 켜고 "파이썬이 설치되어 있는지 확인하고, 없으면 설치해줘"라고 말하면 설치 명령을 실행하기 전에 허용을 물어봅니다.</div>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">1-3</span>PDF·엑셀 부품은?</h3>
+          <p>PDF는 <code class="i">pypdf</code>, 엑셀은 <code class="i">openpyxl</code>이라는 파이썬 부품(라이브러리)을 씁니다. <b>따로 설치하지 않아도</b> 에이전트가 필요할 때 "pip install pypdf를 실행할까요?"라고 물어봅니다. 허용하면 됩니다.</p>
+        </div>
+        <button class="done-btn" type="button" data-done="s1" aria-pressed="false">파이썬 준비 완료</button>
+      </section>
+
+      <!-- 2 -->
+      <section class="step" id="s2" data-step="s2">
+        <div class="step-head"><span class="n">2</span><h2>실습 파일 받기</h2><span class="time">5분</span></div>
+        <p class="lead">가명으로 만든 3학년 2반 실습 파일입니다. 아래 한 줄이 <code class="i">C:\projects\homework</code> 폴더에 내려받아 압축까지 풀어 줍니다.</p>
+        <div class="cmd"><span class="lbl">PowerShell</span><pre>cd C:\projects; Invoke-WebRequest https://kimjkeun.github.io/AI_teachr/assets/samples/homework-sample.zip -OutFile homework.zip; Expand-Archive homework.zip -DestinationPath . -Force; Remove-Item homework.zip; cd homework; explorer .</pre><button class="copy" type="button">복사</button></div>
+        <div class="screen">C:\projects\homework
+├─ 명렬표.xlsx            3학년 2반 25명 (가명)
+├─ 과제_제출\              제출된 과제 21개. 이름이 제각각
+│   ├─ 김민지 과제.pdf
+│   ├─ 03김서준_수행평가.pdf
+│   ├─ KakaoTalk_20261103_154210.pdf   ← 누구 것일까요?
+│   ├─ 이도현_최종.pdf · 이도현_최종2.pdf
+│   ├─ 윤서아 과제 사진.jpg
+│   └─ …
+├─ 스캔_학습지_묶음.pdf   복합기로 10명 학습지를 한꺼번에 스캔
+└─ 읽어주세요.txt</div>
+        <p>탐색기 창은 옆에 띄워 두고, <code class="i">PS C:\projects\homework&gt;</code>가 보이면 에이전트를 부릅니다 (<code class="i">claude</code>, <code class="i">codex</code>, <code class="i">agy</code>, <code class="i">grok</code>).</p>
+        <button class="done-btn" type="button" data-done="s2" aria-pressed="false">실습 파일 준비 완료</button>
+      </section>
+
+      <!-- 3 -->
+      <section class="step" id="s3" data-step="s3">
+        <div class="step-head"><span class="n">3</span><h2>실습 1 · 과제 파일 이름 정리</h2><span class="time">15분</span></div>
+        <div class="note">
+          <b class="t">시작 전에: 원본부터 지키기</b>
+          <p>에이전트는 진짜 파일을 진짜로 바꿉니다. 실제 업무에서도 <b>항상 복사본을 먼저 만들게</b> 하는 습관을 들이세요.</p>
+        </div>
+        <div class="cmd prompt"><span class="lbl">에이전트에게 ①</span><pre>과제_제출 폴더를 통째로 복사해서 '과제_제출_원본' 폴더로 백업해줘.</pre><button class="copy" type="button">복사</button></div>
+
+        <div class="sub">
+          <h3><span class="k">3-1</span>계획부터 보기</h3>
+          <p>바로 바꾸지 말고 <b>바뀔 이름 목록을 먼저</b> 받아 봅니다. Claude Code라면 <kbd>Shift</kbd> + <kbd>Tab</kbd>으로 계획 모드를 켜도 되고, 아래처럼 말로 해도 됩니다.</p>
+          <div class="cmd prompt"><span class="lbl">에이전트에게 ②</span><pre>명렬표.xlsx를 보고, 과제_제출 폴더의 파일 이름을 '번호_이름.pdf' 형식으로 바꾸려고 해. 번호는 01처럼 두 자리로.
+바로 바꾸지 말고, 지금 이름 → 바뀔 이름을 표로 먼저 보여줘.
+파일 이름만으로 누구 과제인지 모르겠으면 파일을 열어서 이름을 확인해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p><b>지켜볼 점</b>: <code class="i">KakaoTalk_….pdf</code>, <code class="i">스캔_0001.pdf</code>는 이름이 없죠. 에이전트가 <b>파일을 직접 열어</b> 누구 과제인지 찾아냅니다. 사진(jpg)도 읽습니다.</p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">3-2</span>애매한 것 정해 주기</h3>
+          <p>표를 보면 에이전트가 물어볼 거예요. "이도현은 파일이 2개인데요?" 이럴 땐 정해 주면 됩니다.</p>
+          <div class="cmd prompt"><span class="lbl">에이전트에게 ③</span><pre>이도현은 최종2가 마지막 제출이니까 그걸 쓰고, 최종은 '14_이도현_이전제출.pdf'로 남겨줘.
+윤서아 사진은 PDF로 바꿔서 같은 형식으로 저장해줘. 이제 진행해.</pre><button class="copy" type="button">복사</button></div>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">3-3</span>미제출자 명단</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게 ④</span><pre>명렬표와 비교해서 미제출자 명단을 '미제출자.xlsx'로 만들어줘. 번호, 이름 열로.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: 탐색기에서 <code class="i">미제출자.xlsx</code>를 열어 보세요. 4명이 나오면 정답입니다.</p>
+        </div>
+        <button class="done-btn" type="button" data-done="s3" aria-pressed="false">이름 정리 완료</button>
+      </section>
+
+      <!-- 4 -->
+      <section class="step" id="s4" data-step="s4">
+        <div class="step-head"><span class="n">4</span><h2>실습 2 · PDF 합치기</h2><span class="time">8분</span></div>
+        <p class="lead">채점하거나 출력할 때 한 파일로 모아 두면 편합니다. 학생마다 <b>책갈피</b>를 달아 두면 원하는 학생으로 바로 이동할 수 있어요.</p>
+        <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>정리한 과제를 번호순으로 하나의 PDF로 합쳐서 '3학년2반_수행평가_모음.pdf'로 저장해줘.
+학생마다 책갈피를 '01 강도윤'처럼 달아주고, 이전제출 파일은 빼줘.</pre><button class="copy" type="button">복사</button></div>
+        <p>확인: 합친 PDF를 크롬이나 엣지로 열고 왼쪽 <b>목차(책갈피)</b>를 눌러 보세요. 학생 이름을 누르면 그 쪽으로 이동합니다.</p>
+        <button class="done-btn" type="button" data-done="s4" aria-pressed="false">합치기 완료</button>
+      </section>
+
+      <!-- 5 -->
+      <section class="step" id="s5" data-step="s5">
+        <div class="step-head"><span class="n">5</span><h2>실습 3 · PDF 나누기</h2><span class="time">12분</span></div>
+        <p class="lead"><code class="i">스캔_학습지_묶음.pdf</code>는 1~10번 학습지를 복합기에 한꺼번에 넣고 스캔한 파일입니다. 20쪽짜리 한 파일을 학생별로 나눠 보겠습니다.</p>
+        <div class="note">
+          <b class="t">함정이 있습니다</b>
+          <p>학생마다 쪽수가 다릅니다. 3번은 추가 답안지까지 3쪽, 6번은 1쪽만 냈어요. <b>"2쪽씩 자르기"로는 엉망이 됩니다.</b> 에이전트가 각 쪽에 적힌 이름을 읽어서 나누게 해 보세요.</p>
+        </div>
+        <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>스캔_학습지_묶음.pdf는 10명의 학습지를 한꺼번에 스캔한 파일이야. 학생마다 쪽수가 다를 수 있어.
+각 쪽에 적힌 번호와 이름을 읽어서 학생별 PDF로 나누고, '학습지_나눔' 폴더에 '번호_이름.pdf'로 저장해줘.
+끝나면 학생별 쪽수를 표로 보여줘.</pre><button class="copy" type="button">복사</button></div>
+        <div class="screen">결과 확인
+03_김서준.pdf   <span class="ok">3쪽</span>   ← 추가 답안지까지 함께
+06_박지호.pdf   <span class="ok">1쪽</span>
+그 외 8명       <span class="ok">2쪽씩</span></div>
+        <div class="tip"><b>더 해보기</b>: "합친 PDF에서 홀수 쪽만 뽑아줘", "모든 쪽을 오른쪽으로 90도 돌려줘", "5쪽부터 8쪽까지만 따로 저장해줘"</div>
+        <button class="done-btn" type="button" data-done="s5" aria-pressed="false">나누기 완료</button>
+      </section>
+
+      <!-- 6 -->
+      <section class="step" id="s6" data-step="s6">
+        <div class="step-head"><span class="n">6</span><h2>보너스 · 더블클릭 도구로 남기기</h2><span class="time">5분</span></div>
+        <p class="lead">웹 AI와의 대화는 그때뿐이지만, 에이전트에게는 <b>다음에도 쓸 도구</b>를 만들어 달라고 할 수 있습니다.</p>
+        <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>방금 한 PDF 합치기를 다음에도 쓸 수 있게 만들어줘.
+바탕화면에 'PDF합치기' 폴더를 만들고, 그 안에 PDF들을 넣은 뒤 'PDF합치기.bat'을 더블클릭하면
+파일 이름순으로 합쳐서 '합친파일.pdf'가 생기게 해줘. 사용법도 txt로 같이 넣어줘.</pre><button class="copy" type="button">복사</button></div>
+        <p>확인: 바탕화면의 <code class="i">PDF합치기</code> 폴더에 아무 PDF나 2개 넣고 <code class="i">PDF합치기.bat</code>을 더블클릭해 보세요. 이제 <b>AI 없이도</b> 언제든 쓸 수 있습니다.</p>
+        <button class="done-btn" type="button" data-done="s6" aria-pressed="false">오늘 실습 완료!</button>
+      </section>
+
+      <!-- 안전 -->
+      <section class="step" id="safety">
+        <div class="step-head"><span class="n">!</span><h2>실제 학생 자료로 할 때</h2><span class="time">꼭 읽기</span></div>
+        <ul class="plain">
+          <li><b>파일 내용은 AI 회사 서버로 전송됩니다.</b> 에이전트가 파일을 "열어서 확인"하면 그 내용이 AI에게 보내집니다. 학교와 교육청의 개인정보 지침을 먼저 확인하세요.</li>
+          <li>이름만으로 정리할 수 있는 작업이라면 <b>"파일 내용은 열지 말고 파일 이름만 보고 처리해줘"</b>라고 지시하세요.</li>
+          <li>성적, 상담 기록처럼 민감한 자료는 맡기지 않습니다.</li>
+          <li>작업 전에는 언제나 <b>원본 백업</b>을 먼저 합니다.</li>
+        </ul>
+      </section>
+
+      <!-- FAQ -->
+      <section class="step" id="faq">
+        <div class="step-head"><span class="n">?</span><h2>막혔을 때</h2><span class="time">언제든</span></div>
+        <details>
+          <summary>python을 입력하면 Microsoft Store가 열려요</summary>
+          <div class="body"><p>Windows에 들어 있는 "가짜 바로가기"입니다. 1-2의 설치 명령으로 파이썬을 설치한 뒤 <b>PowerShell 창을 새로 열면</b> 해결됩니다. 그래도 Store가 열리면 Windows 설정 → 앱 → 고급 앱 설정 → <b>앱 실행 별칭</b>에서 python.exe, python3.exe를 끕니다.</p></div>
+        </details>
+        <details>
+          <summary>pip install 중에 오류가 나요</summary>
+          <div class="body"><p>오류 메시지를 그대로 두고 에이전트에게 "방금 오류 고쳐줘"라고 말하세요. 에이전트가 오류를 읽고 다른 방법으로 다시 시도합니다.</p></div>
+        </details>
+        <details>
+          <summary>압축을 풀었더니 파일 이름이 깨져 보여요</summary>
+          <div class="body"><p>탐색기의 "압축 풀기"로 풀면 생길 수 있습니다. 2단계의 PowerShell 명령으로 다시 받아 주세요. 또는 에이전트에게 "homework 폴더 파일 이름이 깨졌어, 고쳐줘"라고 해도 됩니다.</p></div>
+        </details>
+        <details>
+          <summary>"파일이 사용 중"이라며 이름이 안 바뀌어요</summary>
+          <div class="body"><p>그 PDF가 크롬, 엣지, 한글 등에서 열려 있으면 바꿀 수 없습니다. 열린 창을 닫고 에이전트에게 "다시 해줘"라고 말하세요.</p></div>
+        </details>
+        <details>
+          <summary>잘못 바꿨어요. 되돌리고 싶어요</summary>
+          <div class="body"><p>처음에 만든 <code class="i">과제_제출_원본</code> 폴더가 있으니 걱정 없습니다. "과제_제출 폴더를 지우고 원본에서 다시 복사해줘"라고 말하면 처음 상태로 돌아갑니다. Claude Code는 입력창이 빈 상태에서 <kbd>Esc</kbd>를 두 번 눌러 되돌리기 메뉴를 열 수도 있습니다.</p></div>
+        </details>
+      </section>
+
+      <nav class="pager" aria-label="자료 이동">
+        <a href="02.html"><small>← 이전 자료</small><b>02. 에이전트 길들이기</b></a>
+        <a class="next" href="./"><small>목록으로 →</small><b>강의자료 전체 보기</b></a>
+      </nav>
+    </main>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+  };
+
+  /* ---------- 복사 버튼 ---------- */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".copy"); if (!b) return;
+    const pre = b.parentElement.querySelector("pre"); const text = pre.textContent;
+    const done = (msg) => { b.textContent = msg; b.classList.add("ok"); setTimeout(() => { b.textContent = "복사"; b.classList.remove("ok"); }, 1600); };
+    const selectIt = () => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); done("Ctrl+C"); };
+    try { navigator.clipboard.writeText(text).then(() => done("복사됨 ✓"), selectIt); } catch { selectIt(); }
+  });
+
+  /* ---------- 진행 체크 ---------- */
+  const STEPS = ["s0", "s1", "s2", "s3", "s4", "s5", "s6"];
+  const KEY = "wab-l4-done";
+  let done = store.get(KEY, []);
+  function paint() {
+    $$(".done-btn").forEach(b => b.setAttribute("aria-pressed", done.includes(b.dataset.done) ? "true" : "false"));
+    $$("#toc a").forEach(a => { const id = a.getAttribute("href").slice(1); a.classList.toggle("done", done.includes(id)); });
+    const n = STEPS.filter(s => done.includes(s)).length;
+    $("#progText").textContent = n + " / " + STEPS.length + " 완료";
+    $("#progBar").style.width = (n / STEPS.length * 100) + "%";
+  }
+  $$(".done-btn").forEach(b => b.addEventListener("click", () => {
+    const id = b.dataset.done;
+    done = done.includes(id) ? done.filter(x => x !== id) : done.concat(id);
+    store.set(KEY, done); paint();
+  }));
+  paint();
+})();
+</script>
+<script src="../assets/toc.js" defer></script>
+<script src="../assets/chat.js" data-room="04" defer></script>
+</body>
+</html>
