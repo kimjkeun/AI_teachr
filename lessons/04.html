@@ -1,5 +1,322 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>자료 이동 | 수요 AI 에이전트 빌더스</title>
-<meta http-equiv="refresh" content="0; url=03.html"><link rel="canonical" href="03.html"></head>
-<body><p>이 자료는 <a href="03.html">03. 과제 파일 정리 &amp; PDF 합치기·나누기</a>로 옮겼습니다.</p></body></html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MCP로 노션·캔바 연결하기 | 수요 AI 에이전트 빌더스</title>
+<meta name="description" content="수요 AI 에이전트 빌더스 강의자료 04: MCP가 무엇인지 알고, 에이전트에 노션과 캔바를 연결해 폴더의 파일을 노션 페이지와 캔바 디자인으로 만들어 봅니다.">
+<meta property="og:title" content="MCP로 노션·캔바 연결하기 | 수요 AI 에이전트 빌더스">
+<meta property="og:description" content="에이전트에 노션과 캔바를 연결하는 플러그, MCP.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700;900&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="home" href="./">← 강의자료 목록</a>
+    <div class="prog" aria-live="polite"><span id="progText">0 / 6 완료</span><span class="trk"><i id="progBar"></i></span></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="lesson-hero">
+    <div class="meta"><span><b>강의자료 04</b></span><span>바깥 서비스 연결</span><span>약 60분</span><span>Windows · PowerShell 기준</span><span>노션 · 캔바 계정</span></div>
+    <h1>MCP로 노션·캔바 연결하기</h1>
+    <p class="goal">오늘의 목표: 내 폴더 안에서만 일하던 에이전트에 <span class="mark">노션과 캔바를 연결</span>해서, 폴더의 파일을 읽고 그 결과를 바로 노션 페이지와 캔바 디자인으로 만들어 봅니다.</p>
+    <div class="takeaways">
+      <span><b>①</b>MCP가 무엇인지</span>
+      <span><b>②</b>노션 · 캔바 연결하기</span>
+      <span><b>③</b>연결 보기 · 끊기 · 안전</span>
+    </div>
+  </section>
+
+  <div class="layout">
+    <nav class="toc" aria-label="오늘의 순서" id="toc">
+      <a href="#s0"><b><span>0</span></b>MCP가 뭐예요?<small>10분</small></a>
+      <a href="#s1"><b><span>1</span></b>준비<small>5분</small></a>
+      <a href="#s2"><b><span>2</span></b>노션 연결<small>10분</small></a>
+      <a href="#s3"><b><span>3</span></b>노션에 정리하기<small>12분</small></a>
+      <a href="#s4"><b><span>4</span></b>캔바 연결 · 만들기<small>15분</small></a>
+      <a href="#s5"><b><span>5</span></b>연결 관리 · 안전<small>8분</small></a>
+      <a href="#keys" class="faq-link"><b>⌘</b>명령 모음<small>표</small></a>
+      <a href="#faq" class="faq-link"><b>?</b>막혔을 때<small>상시</small></a>
+    </nav>
+
+    <main>
+      <!-- 0 -->
+      <section class="step" id="s0" data-step="s0">
+        <div class="step-head"><span class="n">0</span><h2>MCP가 뭐예요?</h2><span class="time">10분</span></div>
+        <p class="lead">지금까지 에이전트는 <b>내 컴퓨터의 작업 폴더</b> 안에서만 일했습니다. 노션 페이지나 캔바 디자인은 손댈 수 없었죠. <b>MCP</b>는 에이전트를 다른 서비스에 꽂는 <b>연결 플러그</b>입니다.</p>
+        <div class="screen">[내 작업 폴더]  ←  에이전트  →  <span class="ok">MCP</span>  →  [노션]
+                                    <span class="ok">MCP</span>  →  [캔바]</div>
+        <ul class="plain">
+          <li><b>USB처럼 규격이 정해져 있습니다.</b> 서비스 회사가 MCP를 만들어 두면, Claude든 Codex든 같은 방법으로 꽂아 쓸 수 있습니다.</li>
+          <li><b>연결 = 내 계정을 빌려주는 것</b>입니다. 처음 연결할 때 서비스에 로그인하고 "허용"을 누르면, 에이전트가 <b>내 이름으로</b> 페이지를 읽고 만듭니다.</li>
+          <li><b>웹 AI와 다른 점</b>: 내 폴더의 파일과 바깥 서비스를 <b>한 번에</b> 다룹니다. "이 폴더 공문을 읽고 노션에 정리해줘"가 한 문장으로 됩니다.</li>
+        </ul>
+        <div class="tip"><b>노션·캔바만 있는 게 아닙니다.</b> 요즘은 많은 서비스가 MCP를 내놓고 있습니다. 오늘 연결하는 방법은 다른 서비스에도 거의 그대로 쓰입니다.</div>
+        <button class="done-btn" type="button" data-done="s0" aria-pressed="false">이해했어요</button>
+      </section>
+
+      <!-- 1 -->
+      <section class="step" id="s1" data-step="s1">
+        <div class="step-head"><span class="n">1</span><h2>준비</h2><span class="time">5분</span></div>
+        <p class="lead">먼저 내가 쓰는 도구를 고르세요. 이 페이지의 명령이 그 도구에 맞게 바뀝니다.</p>
+        <div class="tabs pick" role="tablist" id="pick"></div>
+
+        <div class="sub">
+          <h3><span class="k">1-1</span>계정 확인</h3>
+          <ul class="plain">
+            <li><b>노션</b> 계정 (무료 계정이면 충분합니다)</li>
+            <li><b>캔바</b> 계정 (선생님은 캔바 교육용을 무료로 쓸 수 있습니다)</li>
+            <li>학교 업무용 워크스페이스보다 <b>개인 연습용 계정</b>을 권합니다. 이유는 5단계에서 이야기합니다.</li>
+          </ul>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">1-2</span>작업 폴더와 실습 파일</h3>
+          <p>03에서 쓴 가짜 공문 자료를 새 폴더에 받습니다.</p>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre>mkdir C:\projects\04_mcp -Force; cd C:\projects\04_mcp; Invoke-WebRequest https://kimjkeun.github.io/AI_teachr/assets/samples/tools-sample.zip -OutFile s.zip; Expand-Archive s.zip -DestinationPath . -Force; Remove-Item s.zip; explorer .</pre><button class="copy" type="button">복사</button></div>
+          <p><code class="i">PS C:\projects\04_mcp&gt;</code>가 보이는 상태로 2단계로 갑니다. 에이전트는 아직 켜지 않습니다.</p>
+        </div>
+        <button class="done-btn" type="button" data-done="s1" aria-pressed="false">준비 완료</button>
+      </section>
+
+      <!-- 2 -->
+      <section class="step" id="s2" data-step="s2">
+        <div class="step-head"><span class="n">2</span><h2>노션 연결하기</h2><span class="time">10분</span></div>
+        <p class="lead">연결은 두 번에 끝납니다. <b>① 플러그 꽂기</b>(명령 한 줄) → <b>② 로그인하고 허용</b>.</p>
+
+        <div class="sub">
+          <h3><span class="k">2-1</span>플러그 꽂기</h3>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre><span data-t="notionAdd">claude mcp add --transport http notion https://mcp.notion.com/mcp</span></pre><button class="copy" type="button">복사</button></div>
+          <p>주소 <code class="i">mcp.notion.com</code>은 <b>노션이 직접 운영하는 공식 MCP</b>입니다.</p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">2-2</span>로그인하고 허용</h3>
+          <p><b data-t="loginN">에이전트를 켜고 /mcp 입력 → notion 고르기 → Authenticate</b></p>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre><span data-t="cmd">claude</span></pre><button class="copy" type="button">복사</button></div>
+          <p>브라우저에 노션 화면이 뜨면 로그인하고, <b>어떤 권한을 주는지 읽은 뒤</b> 허용을 누릅니다. 창을 닫고 터미널로 돌아옵니다.</p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">2-3</span>연결됐는지 확인</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>노션 연결됐어? 내 노션에 있는 페이지 제목 몇 개만 알려줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>내 노션의 페이지 제목이 나오면 성공입니다. 에이전트가 노션 도구를 써도 되는지 물으면 허락하세요.</p>
+        </div>
+        <button class="done-btn" type="button" data-done="s2" aria-pressed="false">노션 연결 성공</button>
+      </section>
+
+      <!-- 3 -->
+      <section class="step" id="s3" data-step="s3">
+        <div class="step-head"><span class="n">3</span><h2>노션에 정리하기</h2><span class="time">12분</span></div>
+        <p class="lead">내 폴더의 파일을 읽고, 결과를 노션에 바로 씁니다. 웹 AI였다면 파일 올리기 → 답 복사 → 노션에 붙여 넣기를 했을 일입니다.</p>
+
+        <div class="sub">
+          <h3><span class="k">3-1</span>폴더 → 노션</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>공문 폴더의 PDF 3개를 읽고, 노션에 'AI 연습장' 페이지를 만들어서 할 일과 마감일을 표로 정리해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: 노션을 열어 보세요. 왼쪽 목록에 <b>AI 연습장</b> 페이지가 생기고, 공문 3건의 할 일과 마감일이 표로 들어 있나요?</p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">3-2</span>노션 → 에이전트</h3>
+          <p>이번에는 거꾸로, 노션에 있는 내용을 읽게 합니다.</p>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>노션 'AI 연습장' 페이지를 읽고, 마감이 제일 빠른 일이 뭔지 알려줘.</pre><button class="copy" type="button">복사</button></div>
+          <div class="tip"><b>더 해보기</b>: 노션에서 표에 줄 하나를 <b>직접</b> 추가한 뒤 3-2를 다시 물어보세요. 에이전트가 내가 고친 내용까지 읽습니다.</div>
+        </div>
+        <button class="done-btn" type="button" data-done="s3" aria-pressed="false">노션 정리 완료</button>
+      </section>
+
+      <!-- 4 -->
+      <section class="step" id="s4" data-step="s4">
+        <div class="step-head"><span class="n">4</span><h2>캔바 연결하고 만들기</h2><span class="time">15분</span></div>
+        <p class="lead">방법은 노션과 같습니다. 이번에는 <b>스스로</b> 해 보세요.</p>
+
+        <div class="sub">
+          <h3><span class="k">4-1</span>꽂고, 로그인하기</h3>
+          <p>에이전트를 <code class="i">/exit</code>로 끄고 PowerShell에서:</p>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre><span data-t="canvaAdd">claude mcp add --transport http canva https://mcp.canva.com/mcp</span></pre><button class="copy" type="button">복사</button></div>
+          <p>로그인: <b data-t="loginC">에이전트를 켜고 /mcp 입력 → canva 고르기 → Authenticate</b></p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">4-2</span>폴더 → 캔바</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>공문 폴더의 체험학습 안내 PDF를 읽고, 캔바에서 학부모님께 보낼 안내 카드를 만들어줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: 캔바를 열어 <b>최근 디자인</b>에 새 카드가 있나요? 날짜, 장소, 준비물이 맞게 들어갔는지 <b>내 눈으로</b> 확인합니다.</p>
+          <div class="cmd prompt"><span class="lbl">고쳐 말하기 예</span><pre>제목을 더 크게 하고, 준비물은 눈에 띄게 바꿔줘.</pre><button class="copy" type="button">복사</button></div>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">4-3</span>노션 + 캔바 함께</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>노션 'AI 연습장'에 있는 할 일 중 하나를 골라서 캔바로 알림 포스터를 만들어줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>두 서비스를 오가는 일도 한 문장이면 됩니다.</p>
+        </div>
+        <button class="done-btn" type="button" data-done="s4" aria-pressed="false">캔바 디자인 완성</button>
+      </section>
+
+      <!-- 5 -->
+      <section class="step" id="s5" data-step="s5">
+        <div class="step-head"><span class="n">5</span><h2>연결 관리와 안전</h2><span class="time">8분</span></div>
+
+        <div class="sub">
+          <h3><span class="k">5-1</span>연결 목록 보기 · 끊기</h3>
+          <div class="cmd"><span class="lbl">PowerShell · 목록</span><pre><span data-t="list">claude mcp list</span></pre><button class="copy" type="button">복사</button></div>
+          <div class="cmd"><span class="lbl">PowerShell · 끊기 (예: 노션)</span><pre><span data-t="remove">claude mcp remove notion</span></pre><button class="copy" type="button">복사</button></div>
+          <p>에이전트 쪽에서 끊어도 <b>서비스 쪽 허용</b>은 남아 있을 수 있습니다. 완전히 끊으려면 노션은 <b>설정 → 연결</b>, 캔바는 <b>설정 → 연결된 앱</b>에서도 해제하세요.</p>
+          <div class="tip"><b data-t="scope">Claude는 연결을 이 폴더(04_mcp)에만 저장합니다. 다른 폴더에서 켜면 노션·캔바가 연결되어 있지 않습니다.</b></div>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">5-2</span>안전 수칙</h3>
+          <ul class="plain">
+            <li><b>연결하면 서비스 내용도 AI 회사 서버로 갑니다.</b> 에이전트가 읽은 노션 페이지는 내 파일과 마찬가지로 AI에게 전송됩니다.</li>
+            <li><b>학생 개인정보가 있는 워크스페이스는 연결하지 않습니다.</b> 그래서 1단계에서 개인 연습용 계정을 권했습니다.</li>
+            <li><b>공식 MCP만 꽂습니다.</b> 주소가 그 회사 이름(<code class="i">notion.com</code>, <code class="i">canva.com</code>)인지 봅니다. 이름 모를 사람이 만든 MCP는 03의 "가짜 부품"과 같은 위험이 있습니다.</li>
+            <li><b>지우기·공유는 꼭 내가 확인합니다.</b> 에이전트가 페이지를 지우거나 공유하려고 하면, 자동 모드여도 한 번 더 읽고 허락하세요.</li>
+          </ul>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">5-3</span>더 해보기 · 내가 쓰는 서비스는?</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게 · 서비스 이름만 바꿔서</span><pre>구글 캘린더에 연결할 수 있는 MCP가 있어? 공식인지도 알려줘. 아직 연결하지는 마.</pre><button class="copy" type="button">복사</button></div>
+          <p>오른쪽 아래 <b>💬 채팅</b>에 "연결해 보고 싶은 서비스"를 한 줄 남겨 주세요.</p>
+        </div>
+        <button class="done-btn" type="button" data-done="s5" aria-pressed="false">오늘 실습 완료!</button>
+      </section>
+
+      <!-- 명령 모음 -->
+      <section class="step" id="keys">
+        <div class="step-head"><span class="n">⌘</span><h2>명령 모음</h2><span class="time" id="keysTool">Claude</span></div>
+        <table class="keys">
+          <thead><tr><th>하고 싶은 일</th><th>명령</th></tr></thead>
+          <tbody>
+            <tr><td>노션 꽂기</td><td data-t="notionAdd">claude mcp add --transport http notion https://mcp.notion.com/mcp</td></tr>
+            <tr><td>캔바 꽂기</td><td data-t="canvaAdd">claude mcp add --transport http canva https://mcp.canva.com/mcp</td></tr>
+            <tr><td>로그인하고 허용 (노션)</td><td data-t="loginN">에이전트를 켜고 /mcp 입력 → notion 고르기 → Authenticate</td></tr>
+            <tr><td>연결 목록</td><td data-t="list">claude mcp list</td></tr>
+            <tr><td>연결 끊기</td><td data-t="remove">claude mcp remove notion</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- FAQ -->
+      <section class="step" id="faq">
+        <div class="step-head"><span class="n">?</span><h2>막혔을 때</h2><span class="time">언제든</span></div>
+        <details>
+          <summary>브라우저 로그인 창이 안 떠요</summary>
+          <div class="body"><p>터미널에 주소(https://…)가 보이면 그 주소를 복사해 브라우저에 직접 붙여 넣으세요. 로그인과 허용이 끝나면 터미널로 돌아옵니다.</p></div>
+        </details>
+        <details>
+          <summary>연결했는데 에이전트가 노션을 모른대요</summary>
+          <div class="body"><p>① 에이전트를 <b>껐다 다시 켜세요.</b> 연결은 켤 때 읽습니다. ② 연결 목록 명령으로 notion이 있는지 보세요. ③ Claude라면 <b>04_mcp 폴더에서</b> 켰는지 확인하세요.</p></div>
+        </details>
+        <details>
+          <summary>노션 페이지를 못 찾는대요</summary>
+          <div class="body"><p>로그인할 때 고른 <b>워크스페이스</b>가 맞는지 보세요. 노션 계정이 여러 개면 다른 워크스페이스로 들어갔을 수 있습니다. 연결을 끊고 다시 로그인하면 고칠 수 있습니다.</p></div>
+        </details>
+        <details>
+          <summary>학교 구글 계정으로 로그인이 막혀요</summary>
+          <div class="body"><p>학교 계정은 관리자가 외부 앱 연결을 막아 둔 경우가 있습니다. 개인 계정으로 연습하세요.</p></div>
+        </details>
+        <details>
+          <summary>캔바 디자인이 마음에 안 들어요</summary>
+          <div class="body"><p>말로 고치면 됩니다. "글씨를 줄여줘", "색을 차분하게 바꿔줘". 마지막 손질은 캔바에서 직접 하는 편이 빠를 때도 많습니다.</p></div>
+        </details>
+      </section>
+
+      <nav class="pager" aria-label="자료 이동">
+        <a href="03.html"><small>← 이전 자료</small><b>03. 도구 찾아 쓰기</b></a>
+        <a class="next" href="./"><small>목록으로 →</small><b>강의자료 전체 보기</b></a>
+      </nav>
+    </main>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+  };
+
+  /* ---------- 도구별 MCP 명령 (01과 같은 선택값 사용) ---------- */
+  const MCP = (c, n, add) => ({ cmd: c,
+    notionAdd: add("notion", "https://mcp.notion.com/mcp"), canvaAdd: add("canva", "https://mcp.canva.com/mcp"),
+    list: c + " mcp list", remove: c + " mcp remove notion" });
+  const AGY = { ...MCP("agy", 0, (n, u) => `agy mcp add ${n} ${u}`),
+    loginN: "에이전트를 켜고 노션을 처음 쓰려 할 때 브라우저가 열리면 로그인하고 허용",
+    loginC: "에이전트를 켜고 캔바를 처음 쓰려 할 때 브라우저가 열리면 로그인하고 허용",
+    scope: "연결은 이 컴퓨터의 모든 폴더에 적용됩니다. 다 쓴 뒤에는 5-1처럼 끊어 두세요." };
+  const TOOLS = [
+    { id: "claude", tab: "Claude", sub: "Claude Code", ...MCP("claude", 0, (n, u) => `claude mcp add --transport http ${n} ${u}`),
+      loginN: "에이전트를 켜고 /mcp 입력 → notion 고르기 → Authenticate", loginC: "에이전트를 켜고 /mcp 입력 → canva 고르기 → Authenticate",
+      scope: "Claude는 연결을 이 폴더(04_mcp)에만 저장합니다. 다른 폴더에서 켜면 노션·캔바가 연결되어 있지 않습니다." },
+    { id: "codex", tab: "ChatGPT", sub: "Codex CLI", ...MCP("codex", 0, (n, u) => `codex mcp add ${n} --url ${u}`),
+      loginN: "PowerShell에서 codex mcp login notion 입력 → 브라우저에서 로그인하고 허용", loginC: "PowerShell에서 codex mcp login canva 입력 → 브라우저에서 로그인하고 허용",
+      scope: "연결은 이 컴퓨터의 모든 폴더에 적용됩니다. 다 쓴 뒤에는 5-1처럼 끊어 두세요." },
+    { id: "gemini", tab: "Gemini", sub: "Antigravity CLI", ...AGY },
+    { id: "grok", tab: "Grok", sub: "Grok Build", ...MCP("grok", 0, (n, u) => `grok mcp add ${n} ${u}`),
+      loginN: AGY.loginN, loginC: AGY.loginC, scope: AGY.scope },
+    { id: "free", tab: "구독 없음", sub: "Antigravity CLI (무료)", ...AGY }
+  ];
+  const pick = $("#pick");
+  TOOLS.forEach(t => {
+    const b = document.createElement("button"); b.type = "button"; b.setAttribute("role", "tab"); b.id = "pick-" + t.id;
+    const s = document.createElement("small"); s.textContent = t.sub;
+    b.append(document.createTextNode(t.tab), s);
+    b.addEventListener("click", () => select(t.id));
+    pick.append(b);
+  });
+  function select(id) {
+    const t = TOOLS.find(x => x.id === id);
+    TOOLS.forEach(x => { const b = $("#pick-" + x.id); b.setAttribute("aria-selected", x.id === id ? "true" : "false"); b.tabIndex = x.id === id ? 0 : -1; });
+    $$("[data-t]").forEach(e => { e.textContent = t[e.dataset.t]; });
+    $("#keysTool").textContent = t.tab;
+    store.set("wab-l1-tool", id);
+  }
+  pick.addEventListener("keydown", (e) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    const ids = TOOLS.map(t => t.id); const cur = ids.indexOf(store.get("wab-l1-tool", ids[0]));
+    const next = ids[(cur + (e.key === "ArrowRight" ? 1 : ids.length - 1)) % ids.length];
+    select(next); $("#pick-" + next).focus();
+  });
+  select(TOOLS.some(t => t.id === store.get("wab-l1-tool")) ? store.get("wab-l1-tool") : "claude");
+
+  /* ---------- 복사 버튼 ---------- */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".copy"); if (!b) return;
+    const pre = b.parentElement.querySelector("pre"); const text = pre.textContent;
+    const done = (msg) => { b.textContent = msg; b.classList.add("ok"); setTimeout(() => { b.textContent = "복사"; b.classList.remove("ok"); }, 1600); };
+    const selectIt = () => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); done("Ctrl+C"); };
+    try { navigator.clipboard.writeText(text).then(() => done("복사됨 ✓"), selectIt); } catch { selectIt(); }
+  });
+
+  /* ---------- 진행 체크 ---------- */
+  const STEPS = ["s0", "s1", "s2", "s3", "s4", "s5"];
+  const KEY = "wab-l4mcp-done";
+  let done = store.get(KEY, []);
+  function paint() {
+    $$(".done-btn").forEach(b => b.setAttribute("aria-pressed", done.includes(b.dataset.done) ? "true" : "false"));
+    $$("#toc a").forEach(a => { const id = a.getAttribute("href").slice(1); a.classList.toggle("done", done.includes(id)); });
+    const n = STEPS.filter(s => done.includes(s)).length;
+    $("#progText").textContent = n + " / " + STEPS.length + " 완료";
+    $("#progBar").style.width = (n / STEPS.length * 100) + "%";
+  }
+  $$(".done-btn").forEach(b => b.addEventListener("click", () => {
+    const id = b.dataset.done;
+    done = done.includes(id) ? done.filter(x => x !== id) : done.concat(id);
+    store.set(KEY, done); paint();
+  }));
+  paint();
+})();
+</script>
+<script src="../assets/toc.js" defer></script>
+<script src="../assets/chat.js" data-room="mcp" defer></script>
+</body>
+</html>
