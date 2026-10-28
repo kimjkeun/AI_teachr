@@ -82,7 +82,7 @@
           <h3><span class="k">1-2</span>설치하기</h3>
           <div class="cmd"><span class="lbl">PowerShell</span><pre>winget install -e --id Python.Python.3.12 --accept-source-agreements --accept-package-agreements</pre><button class="copy" type="button">복사</button></div>
           <p>설치가 끝나면 <b>PowerShell 창을 닫고 새로 연 뒤</b> 1-1을 다시 해 보세요.</p>
-          <div class="tip"><b>에이전트에게 맡겨도 됩니다.</b> "파이썬이 설치되어 있는지 확인하고, 없으면 설치해줘"라고 말하면 설치 전에 물어봅니다.</div>
+          <div class="tip"><b>에이전트에게 맡겨도 됩니다.</b> "파이썬 있는지 보고, 없으면 설치해줘"라고 말하면 설치 전에 물어봅니다.</div>
         </div>
 
         <div class="sub">
@@ -116,8 +116,8 @@
 
         <div class="sub">
           <h3><span class="k">3-1</span>② 도구 찾기 · 설치하지 말고 후보부터</h3>
-          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>공문 폴더의 PDF 3개를 하나로 합치고 싶어. 이 일을 할 수 있는 도구(파이썬 라이브러리나 프로그램) 후보 3개를 찾아서 표로 비교해줘. 무료인지, 최근까지 관리되는지, 인터넷 연결이 필요한지, 설치가 쉬운지. 아직 아무것도 설치하지 말고, 마지막에 어떤 걸 추천하는지 한 줄로 말해줘.</pre><button class="copy" type="button">복사</button></div>
-          <div class="screen">Claude로 미리 해 본 결과 (줄임)
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>공문 폴더의 PDF 3개를 하나로 합치고 싶어. 쓸 수 있는 도구를 비교해서 추천해줘. 설치는 아직 하지 마.</pre><button class="copy" type="button">복사</button></div>
+          <div class="screen">이런 식으로 비교해 줍니다 (Claude로 미리 해 본 결과, 줄임)
            pypdf          PyMuPDF              PDFsam Basic
 무료       무료           무료 (배포 시 조건)  무료 (광고 있음)
 관리       활발함         활발함               관리 중
@@ -138,16 +138,17 @@
             <li><b>내 파일이 밖으로 나가나</b>: "PDF 합치기 사이트"처럼 파일을 올리는 방식은 피합니다</li>
             <li><b>다음에도 쓸 수 있나</b>: 한 번 깔면 계속 쓸 수 있는지</li>
           </ul>
+          <p>표에 안 나와 있으면 그냥 물어보세요. "이거 무료야?", "내 파일이 인터넷으로 올라가?"</p>
           <div class="note">
             <b class="t">이름이 비슷한 가짜 부품을 조심하세요</b>
-            <p>부품 가게(PyPI)에는 누구나 올릴 수 있어서, 이름만 비슷한 수상한 부품도 있습니다. 예를 들어 한글 파일용 부품은 <code class="i">python-hwpx</code>인데, 이름이 <code class="i">hwpx</code>뿐인 다른 부품도 있습니다. 설치 전에 <b>"이 부품이 공식 이름이 맞는지, 누가 만들었는지, 최근 업데이트가 언제인지 확인해줘"</b>라고 한 번 더 물어보세요.</p>
+            <p>부품 가게(PyPI)에는 누구나 올릴 수 있어서, 이름만 비슷한 수상한 부품도 있습니다. 예를 들어 한글 파일용 부품은 <code class="i">python-hwpx</code>인데, 이름이 <code class="i">hwpx</code>뿐인 다른 부품도 있습니다. 설치 전에 <b>"이거 믿을 만한 거야?"</b>라고 한 번 더 물어보세요. 에이전트가 공식 이름, 만든 곳, 최근 업데이트를 확인해 줍니다.</p>
           </div>
         </div>
 
         <div class="sub">
           <h3><span class="k">3-3</span>④ 만들기 · ⑤ 확인</h3>
-          <div class="cmd prompt"><span class="lbl">에이전트에게 · 고른 도구 이름으로 바꿔서</span><pre>pypdf로 하자. 설치하고, 공문 폴더의 PDF를 파일 이름 순서로 합쳐서 '공문_모음.pdf'로 저장해줘. 공문마다 책갈피도 달아줘.</pre><button class="copy" type="button">복사</button></div>
-          <p>확인: <code class="i">공문_모음.pdf</code>를 엣지로 열어 4쪽인지, 왼쪽 목차(책갈피)에 공문 3개가 보이는지 보세요. 마음에 안 들면 ②로 돌아가 다른 도구를 골라도 됩니다. 처음 보는 일이 생겨도 이 순서 그대로 하면 됩니다.</p>
+          <div class="cmd prompt"><span class="lbl">에이전트에게 · 고른 도구 이름으로 바꿔서</span><pre>pypdf로 합쳐줘. 파일 이름은 공문_모음.pdf로 해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: <code class="i">공문_모음.pdf</code>를 엣지로 열어 공문 3개가 모두 들어 있는지(4쪽) 보세요. 마음에 안 들면 ②로 돌아가 다른 도구를 골라도 됩니다. 처음 보는 일이 생겨도 이 순서 그대로 하면 됩니다.</p>
         </div>
         <button class="done-btn" type="button" data-done="s3" aria-pressed="false">한 바퀴 돌았어요</button>
       </section>
@@ -155,7 +156,7 @@
       <!-- 4 -->
       <section class="step" id="s4" data-step="s4">
         <div class="step-head"><span class="n">4</span><h2>혼자 해 보기 · 미션 카드</h2><span class="time">15분</span></div>
-        <p class="lead">하나를 골라 <b>같은 순서</b>(목적 → 도구 찾기 → 고르기 → 만들기 → 확인)로 해 보세요. 카드에는 하고 싶은 일만 적혀 있고, 도구는 에이전트와 함께 찾습니다.</p>
+        <p class="lead">하나를 골라 <b>같은 순서</b>(목적 → 도구 찾기 → 고르기 → 만들기 → 확인)로 해 보세요. 카드에는 하고 싶은 일만 적혀 있고, 도구는 에이전트와 함께 찾습니다. 질문은 3-1처럼 짧게 하면 됩니다. 예: "명렬표를 반별로 나누고 싶어. 쓸 수 있는 도구를 비교해서 추천해줘. 설치는 아직 하지 마."</p>
 
         <div class="sub">
           <h3><span class="k">A</span>엑셀 · 반별로 나누기</h3>
@@ -172,7 +173,7 @@
         <div class="sub">
           <h3><span class="k">C</span>PDF · 몇 쪽만 떼기</h3>
           <p><b>목적</b>: <code class="i">연수교재_전체.pdf</code>(12쪽)에서 "개인정보 보호" 장만 따로 PDF로 저장하고 싶다. 몇 쪽인지는 모른다.</p>
-          <details><summary>참고 · 에이전트가 흔히 내놓는 후보</summary><div class="body"><p>pypdf, PyMuPDF. 쪽 번호를 모르니 "각 쪽 제목을 읽어서 찾아줘"라고 하면 됩니다.</p></div></details>
+          <details><summary>참고 · 에이전트가 흔히 내놓는 후보</summary><div class="body"><p>pypdf, PyMuPDF. 쪽 번호를 모르니 "몇 쪽인지 찾아서 해줘"라고 하면 됩니다.</p></div></details>
         </div>
 
         <div class="sub">
@@ -187,10 +188,8 @@
       <!-- 5 -->
       <section class="step" id="s5" data-step="s5">
         <div class="step-head"><span class="n">5</span><h2>내 목적으로 해 보기 &amp; 마무리</h2><span class="time">10분</span></div>
-        <p class="lead">이제 카드 대신 <b>선생님의 목적</b>을 넣습니다. 아래 주문서를 복사해 두고, 하고 싶은 일이 생길 때마다 빈칸만 바꿔 쓰세요.</p>
-        <div class="cmd prompt"><span class="lbl">도구 찾기 주문서</span><pre>하고 싶은 일: (예: 학급 사진 100장에 날짜를 넣고 싶다)
-조건: 무료, 내 파일이 인터넷으로 올라가지 않을 것, 다음에도 쓸 수 있을 것
-이 일을 할 수 있는 도구 후보 3개를 찾아 표로 비교해줘. 설치는 내가 고른 뒤에 해줘.</pre><button class="copy" type="button">복사</button></div>
+        <p class="lead">이제 카드 대신 <b>선생님의 목적</b>을 넣습니다. 아래 질문을 복사해 두고, 첫 문장만 내 일로 바꿔 쓰세요.</p>
+        <div class="cmd prompt"><span class="lbl">도구 찾기 질문 · 첫 문장만 바꿔서</span><pre>학급 사진 100장에 날짜를 넣고 싶어. 쓸 수 있는 도구를 비교해서 추천해줘. 설치는 아직 하지 마.</pre><button class="copy" type="button">복사</button></div>
         <div class="sub">
           <h3><span class="k">5-1</span>소감 남기기</h3>
           <p>오른쪽 아래 <b>💬 채팅</b>에 <b>"내가 해결하고 싶은 일" 한 줄</b>을 남겨 주세요. 다음 모임에서 함께 도구를 찾아봅니다.</p>
@@ -198,7 +197,7 @@
         <div class="sub">
           <h3><span class="k">5-2</span>더 해보기 · 다음에도 쓰게 남기기</h3>
           <p>만든 것을 매번 에이전트에게 부탁하지 않고 쓰고 싶다면, 그것도 목적입니다.</p>
-          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>방금 한 일을 다음에도 쓸 수 있게 이 폴더에 더블클릭하면 실행되는 파일로 만들어줘. 사용법도 txt로 같이 넣어줘.</pre><button class="copy" type="button">복사</button></div>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>방금 한 걸 다음에도 쓸 수 있게 더블클릭하면 되는 파일로 만들어줘.</pre><button class="copy" type="button">복사</button></div>
         </div>
         <button class="done-btn" type="button" data-done="s5" aria-pressed="false">오늘 실습 완료!</button>
       </section>
@@ -228,11 +227,11 @@
         </details>
         <details>
           <summary>후보가 너무 많거나 무슨 말인지 모르겠어요</summary>
-          <div class="body"><p>"선생님이 쓰기에 제일 쉬운 것 하나만 골라서 이유를 쉬운 말로 설명해줘"라고 하세요. 고르는 연습은 두세 번째부터 해도 됩니다.</p></div>
+          <div class="body"><p>"제일 쉬운 걸로 하나만 골라줘"라고 하세요. 고르는 연습은 두세 번째부터 해도 됩니다.</p></div>
         </details>
         <details>
           <summary>이 부품이 믿을 만한지 어떻게 알아요?</summary>
-          <div class="body"><p>에이전트에게 "PyPI에서 이 부품의 정확한 이름, 만든 곳, 최근 업데이트 날짜, 많이 쓰이는지 확인해줘"라고 하세요. 이름이 비슷한 부품이 여러 개면 <b>설명과 만든 곳</b>이 분명한 것을 고릅니다.</p></div>
+          <div class="body"><p>에이전트에게 "이거 믿을 만한 거야?"라고 물어보세요. 공식 이름, 만든 곳, 최근 업데이트를 확인해 줍니다. 이름이 비슷한 부품이 여러 개면 <b>설명과 만든 곳</b>이 분명한 것을 고릅니다.</p></div>
         </details>
         <details>
           <summary>압축을 풀었더니 파일 이름이 깨져 보여요</summary>
