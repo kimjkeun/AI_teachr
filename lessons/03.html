@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>도구 찾아 쓰기 | 수요 AI 에이전트 빌더스</title>
-<meta name="description" content="수요 AI 에이전트 빌더스 강의자료 03: 하고 싶은 일이 생기면 에이전트와 함께 도구를 찾고, 고르고, 써 보는 연습.">
-<meta property="og:title" content="도구 찾아 쓰기 | 수요 AI 에이전트 빌더스">
-<meta property="og:description" content="PDF, 엑셀, 한글, 사진을 다룰 도구를 에이전트와 함께 찾고 골라서 써 봅니다.">
+<title>파이썬으로 일하기 | 수요 AI 에이전트 빌더스</title>
+<meta name="description" content="수요 AI 에이전트 빌더스 강의자료 03: 파이썬은 앱이 없는 스마트폰. 용도에 맞는 라이브러리(앱)를 설치해서 PDF·엑셀·한글 파일을 다뤄 봅니다.">
+<meta property="og:title" content="파이썬으로 일하기 | 수요 AI 에이전트 빌더스">
+<meta property="og:description" content="파이썬을 설치하고, 용도에 맞는 라이브러리(앱)를 설치해서 PDF·엑셀·한글 파일을 다뤄 봅니다.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700;900&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -23,78 +23,150 @@
 
 <div class="wrap">
   <section class="lesson-hero">
-    <div class="meta"><span><b>강의자료 03</b></span><span>도구 다루기</span><span>약 60분</span><span>Windows · PowerShell 기준</span><span>파이썬 필요</span></div>
-    <h1>도구 찾아 쓰기 · 목적에서 도구로</h1>
-    <p class="goal">오늘의 목표: PDF, 엑셀, 한글, 사진을 다룰 <span class="mark">도구를 에이전트와 함께 찾고, 골라서</span> 써 봅니다.</p>
+    <div class="meta"><span><b>강의자료 03</b></span><span>파이썬</span><span>약 65분</span><span>Windows · PowerShell 기준</span></div>
+    <h1>파이썬으로 일하기 · 용도에 맞는 라이브러리 설치</h1>
+    <p class="goal">오늘의 목표: 파이썬으로 무엇을 할 수 있는지 보고, <span class="mark">용도에 맞는 라이브러리(앱)를 설치해서</span> PDF, 엑셀, 한글 파일을 다뤄 봅니다.</p>
     <div class="takeaways">
-      <span><b>①</b>목적만 말하고 도구 후보 받기</span>
-      <span><b>②</b>기준을 세워 내가 고르기</span>
-      <span><b>③</b>내 목적으로 한 번 더</span>
+      <span><b>①</b>파이썬 = 앱 없는 스마트폰</span>
+      <span><b>②</b>파이썬과 라이브러리 설치</span>
+      <span><b>③</b>용도별 라이브러리로 실습</span>
     </div>
   </section>
 
   <div class="layout">
     <nav class="toc" aria-label="오늘의 순서" id="toc">
-      <a href="#s0"><b><span>0</span></b>오늘의 순서<small>5분</small></a>
-      <a href="#s1"><b><span>1</span></b>파이썬 준비<small>10분</small></a>
-      <a href="#s2"><b><span>2</span></b>실습 파일 받기<small>5분</small></a>
-      <a href="#s3"><b><span>3</span></b>함께 해 보기<small>15분</small></a>
-      <a href="#s4"><b><span>4</span></b>미션 카드<small>15분</small></a>
-      <a href="#s5"><b><span>5</span></b>내 목적으로<small>10분</small></a>
+      <a href="#why"><b><span>1</span></b>에이전트와 파이썬<small>15분</small></a>
+      <a href="#py"><b><span>2</span></b>파이썬 준비<small>10분</small></a>
+      <a href="#files"><b><span>3</span></b>실습 파일 받기<small>5분</small></a>
+      <a href="#first"><b><span>4</span></b>첫 라이브러리 설치<small>15분</small></a>
+      <a href="#more"><b><span>5</span></b>용도별 라이브러리<small>15분</small></a>
+      <a href="#end"><b><span>6</span></b>마무리<small>5분</small></a>
       <a href="#safety" class="faq-link"><b>!</b>실제 자료로 할 때<small>꼭 읽기</small></a>
       <a href="#faq" class="faq-link"><b>?</b>막혔을 때<small>상시</small></a>
     </nav>
 
     <main>
-      <!-- 0 -->
-      <section class="step" id="s0" data-step="s0">
-        <div class="step-head"><span class="n">0</span><h2>오늘의 순서</h2><span class="time">5분</span></div>
-        <p class="lead">오늘 쓸 도구는 미리 정해 두지 않았습니다. 하고 싶은 일을 말하면 에이전트와 함께 찾아서 고릅니다. 실습마다 아래 순서로 진행합니다.</p>
-        <div class="screen"><span class="ok">① 목적</span>        "이걸 하고 싶다" (도구 이름은 몰라도 됨)
-   ↓
-<span class="ok">② 도구 찾기</span>   에이전트에게 후보를 찾아 비교해 달라고 하기
-   ↓
-<span class="ok">③ 고르기</span>     기준을 보고 내가 정하기
-   ↓
-<span class="ok">④ 만들기</span>     정한 도구로 에이전트가 설치하고 만들기
-   ↓
-<span class="ok">⑤ 확인</span>       결과를 내 눈으로 보고, 아니면 ②로</div>
-        <ul class="plain">
-          <li><b>도구</b>는 파이썬 부품(라이브러리)일 수도, 설치 프로그램일 수도, 이미 내 컴퓨터에 있는 기능일 수도 있습니다.</li>
-          <li><b>pip</b>은 파이썬 부품을 내려받는 "부품 가게"입니다. 에이전트가 <code class="i">pip install 이름</code>으로 부품을 받아 씁니다.</li>
-        </ul>
-        <button class="done-btn" type="button" data-done="s0" aria-pressed="false">확인했어요</button>
-      </section>
-
       <!-- 1 -->
-      <section class="step" id="s1" data-step="s1">
-        <div class="step-head"><span class="n">1</span><h2>파이썬 준비</h2><span class="time">10분</span></div>
-        <p class="lead">파이썬 부품을 쓰려면 <b>파이썬</b>이 있어야 합니다. 선생님이 파이썬을 배울 필요는 없어요. 설치만 해 두면 에이전트가 코드를 직접 쓰고 실행합니다.</p>
+      <section class="step" id="why" data-step="why">
+        <div class="step-head"><span class="n">1</span><h2>에이전트와 파이썬</h2><span class="time">15분</span></div>
+        <p class="lead">이 강의는 AI 에이전트를 다룹니다. 에이전트는 <b>프로그래밍 언어</b>로 컴퓨터에 일을 시킬 수 있어요. 오늘은 그중 <b>파이썬</b>을 써 봅니다. 선생님이 코드를 짤 일은 없습니다.</p>
 
         <div class="sub">
-          <h3><span class="k">1-1</span>이미 설치되어 있는지 확인</h3>
-          <div class="cmd"><span class="lbl">PowerShell</span><pre>python --version</pre><button class="copy" type="button">복사</button></div>
-          <div class="screen"><span class="ok">Python 3.12.10</span>                         ← 버전이 나오면 1-2를 건너뛰세요
-<span class="bad">Microsoft Store가 열리거나 아무것도 안 나옴</span>   ← 1-2로 설치</div>
+          <h3><span class="k">1-1</span>에이전트가 다루는 언어들</h3>
+          <div class="langs">
+            <div><span class="glyph">&gt;_</span><b>PowerShell</b><p>윈도우에 처음부터 들어 있는 언어. 폴더 만들기, 파일 옮기기, 이름 바꾸기.</p><small>01에서 입력한 cd, mkdir가 이것</small></div>
+            <div><span class="glyph">&lt;/&gt;</span><b>HTML · JavaScript</b><p>웹페이지와 웹앱을 만드는 언어. 지금 보시는 이 강의자료도 HTML입니다.</p><small>나중에 웹앱 만들 때</small></div>
+            <div class="on"><span class="glyph">py</span><b>파이썬</b><p>파일과 자료를 다루는 언어. 문서, 표, 사진, 그래프, AI까지.</p><small>오늘 설치합니다</small></div>
+          </div>
         </div>
 
         <div class="sub">
-          <h3><span class="k">1-2</span>설치하기</h3>
-          <div class="cmd"><span class="lbl">PowerShell</span><pre>winget install -e --id Python.Python.3.12 --accept-source-agreements --accept-package-agreements</pre><button class="copy" type="button">복사</button></div>
-          <p>설치가 끝나면 <b>PowerShell 창을 닫고 새로 연 뒤</b> 1-1을 다시 해 보세요.</p>
-          <div class="tip"><b>에이전트에게 맡겨도 됩니다.</b> "파이썬 있는지 보고, 없으면 설치해줘"라고 말하면 설치 전에 물어봅니다.</div>
+          <h3><span class="k">1-2</span>파이썬은 앱이 없는 스마트폰</h3>
+          <p>새 스마트폰을 사면 전화와 문자 정도만 됩니다. 은행 일을 하려면 은행 앱을, 길을 찾으려면 지도 앱을 깔죠. <b>파이썬도 똑같습니다.</b> 파이썬만 설치하면 기본 기능뿐이고, 엑셀이나 PDF를 다루려면 그 용도에 맞는 <b>라이브러리</b>를 설치해야 합니다. 라이브러리는 <b>파이썬의 앱</b>입니다.</p>
+          <div class="analogy" role="table" aria-label="스마트폰과 파이썬 비교">
+            <div class="an-row an-head" role="row"><span role="columnheader">📱 스마트폰</span><i aria-hidden="true"></i><span role="columnheader">🐍 파이썬</span></div>
+            <div class="an-row" role="row"><span role="cell">스마트폰 본체</span><i aria-hidden="true">=</i><span role="cell"><b>파이썬</b></span></div>
+            <div class="an-row" role="row"><span role="cell">앱 (은행, 지도, 카메라…)</span><i aria-hidden="true">=</i><span role="cell"><b>라이브러리</b> (엑셀용, PDF용, 한글용…)</span></div>
+            <div class="an-row" role="row"><span role="cell">앱스토어 · Play 스토어</span><i aria-hidden="true">=</i><span role="cell"><b>PyPI</b> (파이썬 앱스토어)</span></div>
+            <div class="an-row" role="row"><span role="cell">'설치' 버튼</span><i aria-hidden="true">=</i><span role="cell"><code class="i">pip install 라이브러리이름</code></span></div>
+            <div class="an-row warn" role="row"><span role="cell">이름만 비슷한 가짜 앱</span><i aria-hidden="true">=</i><span role="cell">이름만 비슷한 가짜 라이브러리</span></div>
+          </div>
         </div>
 
         <div class="sub">
-          <h3><span class="k">1-3</span>부품은 미리 설치하지 않습니다</h3>
-          <p>PDF용, 엑셀용, 한글용 부품을 미리 깔아 두지 않습니다. <b>어떤 부품을 쓸지 찾고 고르는 것부터가 오늘의 실습</b>이기 때문입니다.</p>
+          <h3><span class="k">1-3</span>눌러서 설치해 보기</h3>
+          <p>왼쪽 파이썬 앱스토어에서 <b>설치</b>를 눌러 보세요. 오른쪽 파이썬에 앱이 하나씩 생깁니다. 하나는 조심해야 하는 라이브러리입니다.</p>
+          <div class="store">
+            <div class="store-list">
+              <span class="sim-cap">파이썬 앱스토어 · PyPI</span>
+              <div id="storeRows"></div>
+            </div>
+            <div class="store-side">
+              <div class="phone" aria-label="내 컴퓨터의 파이썬">
+                <span class="phone-title">내 컴퓨터의 파이썬</span>
+                <div class="home" id="home"></div>
+                <pre class="phone-term" id="phoneTerm"></pre>
+              </div>
+              <p class="store-say" id="storeSay" aria-live="polite">아직 설치한 라이브러리가 없습니다. 기본 기능만 있어요.</p>
+              <div class="sim-btns"><button type="button" class="reset" id="storeReset">처음으로</button></div>
+            </div>
+          </div>
         </div>
-        <button class="done-btn" type="button" data-done="s1" aria-pressed="false">파이썬 준비 완료</button>
+
+        <div class="sub">
+          <h3><span class="k">1-4</span>왜 파이썬인가</h3>
+          <div class="why4">
+            <div><span class="big">수십만</span><p><b>라이브러리가 아주 많습니다.</b> 파이썬 앱스토어(PyPI)에 올라온 라이브러리 수. 웬만한 일은 누군가 이미 만들어 두었습니다.</p></div>
+            <div><span class="big">1위권</span><p><b>에이전트가 특히 잘 씁니다.</b> 세계에서 가장 많이 쓰는 언어 중 하나라 AI가 많이 배웠습니다.</p></div>
+            <div><span class="big">0원</span><p><b>무료이고 내 컴퓨터에서 돌아갑니다.</b> 한 번 설치하면 계속 씁니다.</p></div>
+            <div><span class="big">0줄</span><p><b>선생님이 직접 쓸 코드.</b> 코드는 에이전트가 쓰고, 선생님은 결과를 확인합니다.</p></div>
+          </div>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">1-5</span>파이썬으로 할 수 있는 일</h3>
+          <div class="uses-group">
+            <h4>파일·문서 다루기</h4>
+            <div class="uses">
+              <div><span class="ico">📄</span><b>문서 자동화</b><p>엑셀·PDF·한글·워드·PPT를 읽고, 고치고, 새로 만들기. 이름만 바꾼 안내문 30장도 한 번에.</p><small>openpyxl · pypdf · python-hwpx · python-docx · python-pptx</small></div>
+              <div><span class="ico">🖼️</span><b>사진·영상</b><p>사진 한꺼번에 줄이기, 날짜·로고 넣기, 영상 자르기와 자막 붙이기.</p><small>Pillow · OpenCV · moviepy</small></div>
+              <div><span class="ico">⚙️</span><b>반복 작업 자동화</b><p>파일 이름 바꾸기, 폴더 정리, 정해진 시간에 저절로 실행되게 하기.</p><small>기본 기능 · schedule</small></div>
+              <div><span class="ico">🔲</span><b>인쇄물 만들기</b><p>QR코드, 이름표, 좌석표, 상장 PDF를 명단에서 바로 만들기.</p><small>qrcode · reportlab</small></div>
+            </div>
+          </div>
+          <div class="uses-group">
+            <h4>자료 분석하고 보여 주기</h4>
+            <div class="uses">
+              <div><span class="ico">🧮</span><b>데이터 분석</b><p>설문·출결·성적 같은 표를 합치고, 나누고, 평균과 분포 구하기.</p><small>pandas · numpy</small></div>
+              <div><span class="ico">📈</span><b>시각화</b><p>막대·원·꺾은선 그래프, 지도 위에 표시하기, 움직이는 차트.</p><small>matplotlib · plotly · folium</small></div>
+              <div><span class="ico">🌐</span><b>웹 자료 모으기</b><p>공개된 게시판·공지 목록을 표로 정리하기 (사이트 이용 규칙은 먼저 확인).</p><small>requests · BeautifulSoup</small></div>
+              <div><span class="ico">🔬</span><b>수학·과학 계산</b><p>방정식 풀이, 확률 실험, 물리 시뮬레이션으로 수업 자료 만들기.</p><small>sympy · scipy</small></div>
+            </div>
+          </div>
+          <div class="uses-group">
+            <h4>무언가 만들기</h4>
+            <div class="uses">
+              <div><span class="ico">🖥️</span><b>웹앱·프로그램</b><p>버튼 몇 개짜리 학급용 도구, 화면이 있는 작은 프로그램.</p><small>Streamlit · Flask</small></div>
+              <div><span class="ico">🤖</span><b>인공지능</b><p>글 분류, 사진 인식, AI에게 일 시키는 프로그램, 우리 학교용 챗봇.</p><small>scikit-learn · AI 회사의 API 라이브러리</small></div>
+              <div><span class="ico">🎮</span><b>게임·교육 콘텐츠</b><p>간단한 퀴즈 게임, 타자 연습, 수업용 미니 게임.</p><small>pygame</small></div>
+              <div><span class="ico">🎵</span><b>소리·음악</b><p>악보 파일 만들기, 녹음 파일 자르고 붙이기, 듣기 자료 편집.</p><small>music21 · pydub</small></div>
+            </div>
+          </div>
+          <div class="tip"><b>라이브러리 이름은 외우지 않아도 됩니다.</b> 카드 아래 초록 글씨가 그 일에 쓰는 라이브러리(앱)입니다. 오늘은 이 중 <b>문서 자동화</b>를 직접 해 봅니다. 나머지도 방법은 똑같습니다. 라이브러리를 설치하고, 에이전트에게 시키면 됩니다.</div>
+        </div>
+        <button class="done-btn" type="button" data-done="why" aria-pressed="false">파이썬과 라이브러리를 알았어요</button>
       </section>
 
       <!-- 2 -->
-      <section class="step" id="s2" data-step="s2">
-        <div class="step-head"><span class="n">2</span><h2>실습 파일 받기</h2><span class="time">5분</span></div>
+      <section class="step" id="py" data-step="py">
+        <div class="step-head"><span class="n">2</span><h2>파이썬 준비</h2><span class="time">10분</span></div>
+        <p class="lead">이제 내 컴퓨터에 <b>파이썬(스마트폰 본체)</b>을 설치합니다. 선생님이 파이썬을 배울 필요는 없어요. 설치만 해 두면 에이전트가 알아서 씁니다.</p>
+
+        <div class="sub">
+          <h3><span class="k">2-1</span>이미 설치되어 있는지 확인</h3>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre>python --version</pre><button class="copy" type="button">복사</button></div>
+          <div class="screen"><span class="ok">Python 3.12.10</span>                         ← 버전이 나오면 2-3으로 건너뛰세요
+<span class="bad">Microsoft Store가 열리거나 아무것도 안 나옴</span>   ← 2-2로 설치</div>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">2-2</span>설치하기</h3>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre>winget install -e --id Python.Python.3.12 --accept-source-agreements --accept-package-agreements</pre><button class="copy" type="button">복사</button></div>
+          <p>설치가 끝나면 <b>PowerShell 창을 닫고 새로 연 뒤</b> 2-1을 다시 해 보세요.</p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">2-3</span>설치 버튼(pip)도 같이 들어왔는지 확인</h3>
+          <p>파이썬을 설치하면 라이브러리를 설치하는 도구 <b>pip</b>도 함께 들어옵니다. 앱스토어의 '설치' 버튼에 해당합니다.</p>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre>pip --version</pre><button class="copy" type="button">복사</button></div>
+          <div class="screen"><span class="ok">pip 25.0.1 from C:\Users\...\Python312\...</span>   ← 이렇게 나오면 준비 끝</div>
+        </div>
+        <button class="done-btn" type="button" data-done="py" aria-pressed="false">파이썬 준비 완료</button>
+      </section>
+
+      <!-- 3 -->
+      <section class="step" id="files" data-step="files">
+        <div class="step-head"><span class="n">3</span><h2>실습 파일 받기</h2><span class="time">5분</span></div>
         <p class="lead">모두 가짜 자료입니다. 아래 한 줄이 <code class="i">C:\projects\tools</code> 폴더에 내려받아 압축까지 풀어 줍니다.</p>
         <div class="cmd"><span class="lbl">PowerShell</span><pre>cd C:\projects; Invoke-WebRequest https://kimjkeun.github.io/AI_teachr/assets/samples/tools-sample.zip -OutFile tools.zip; Expand-Archive tools.zip -DestinationPath . -Force; Remove-Item tools.zip; cd tools; explorer .</pre><button class="copy" type="button">복사</button></div>
         <div class="screen">C:\projects\tools
@@ -104,102 +176,99 @@
 ├─ 가정통신문_겨울방학.hwpx   한글 문서
 ├─ 사진\                     4000×3000 큰 사진 6장
 └─ 읽어주세요.txt</div>
-        <p>탐색기 창은 옆에 띄워 두고, <code class="i">PS C:\projects\tools&gt;</code>가 보이면 에이전트를 부릅니다 (<code class="i">claude</code>, <code class="i">codex</code>, <code class="i">agy</code>, <code class="i">grok</code>).</p>
-        <div class="tip"><b>02에서 배운 것 다시 쓰기</b>: 먼저 "이 폴더에 폴더 밖 금지 규칙 파일을 만들어줘"라고 하고, 다시 켜서 자동 모드로 바꾸세요.</div>
-        <button class="done-btn" type="button" data-done="s2" aria-pressed="false">실습 파일 준비 완료</button>
+        <p>탐색기 창은 옆에 띄워 두세요. <b>에이전트는 아직 부르지 않습니다.</b> 4단계에서 라이브러리를 직접 하나 설치해 본 뒤에 부릅니다.</p>
+        <button class="done-btn" type="button" data-done="files" aria-pressed="false">실습 파일 준비 완료</button>
       </section>
 
-      <!-- 3 -->
-      <section class="step" id="s3" data-step="s3">
-        <div class="step-head"><span class="n">3</span><h2>함께 해 보기 · 공문 PDF 3개를 하나로</h2><span class="time">15분</span></div>
-        <p class="lead">목적은 하나입니다. <b>"공문 폴더의 PDF 3개를 하나로 합치고 싶다."</b> 도구 이름은 몰라도 됩니다.</p>
+      <!-- 4 -->
+      <section class="step" id="first" data-step="first">
+        <div class="step-head"><span class="n">4</span><h2>첫 라이브러리 설치 · PDF 3개를 하나로</h2><span class="time">15분</span></div>
+        <p class="lead">PDF를 다루는 라이브러리 <b>pypdf</b>를 직접 설치해 보고, 그걸로 에이전트에게 PDF 3개를 하나로 합치게 합니다.</p>
 
         <div class="sub">
-          <h3><span class="k">3-1</span>② 도구 찾기 · 설치하지 말고 후보부터</h3>
-          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>공문 폴더의 PDF 3개를 하나로 합치고 싶어. 쓸 수 있는 도구를 비교해서 추천해줘. 설치는 아직 하지 마.</pre><button class="copy" type="button">복사</button></div>
-          <div class="screen">이런 식으로 비교해 줍니다 (Claude로 미리 해 본 결과, 줄임)
-           pypdf          PyMuPDF              PDFsam Basic
-무료       무료           무료 (배포 시 조건)  무료 (광고 있음)
-관리       활발함         활발함               관리 중
-인터넷     설치할 때만    설치할 때만          설치 파일 받을 때만
-설치       아주 쉬움      쉬움 (파일 큼)       설치 파일 실행
-
-<span class="ok">추천: 합치기만 하면 되니 가장 가벼운 pypdf.
-코딩 없이 마우스로 하고 싶으면 PDFsam Basic.</span></div>
-          <p>도구 이름은 그때그때 달라질 수 있습니다. 중요한 건 <b>후보를 나란히 놓고 비교해 받는 것</b>입니다. 최신 정보로 비교하려고 웹 검색을 해도 되냐고 물으면 허락해도 됩니다.</p>
+          <h3><span class="k">4-1</span>직접 설치해 보기</h3>
+          <p><code class="i">PS C:\projects\tools&gt;</code>에서 입력합니다. 1-3에서 눌러 본 '설치' 버튼을 진짜로 누르는 것입니다.</p>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre>pip install pypdf</pre><button class="copy" type="button">복사</button></div>
+          <div class="screen">Collecting pypdf
+  Downloading pypdf-…-py3-none-any.whl
+Installing collected packages: pypdf
+<span class="ok">Successfully installed pypdf-…</span>      ← 이 줄이 나오면 성공</div>
         </div>
 
         <div class="sub">
-          <h3><span class="k">3-2</span>③ 고르기 · 내가 정한다</h3>
-          <p>표를 보고 <b>내 기준</b>으로 고릅니다. 처음에는 아래 네 가지면 충분합니다.</p>
-          <ul class="plain">
-            <li><b>무료인가</b>: 학교 업무에 써도 되는 조건인가</li>
-            <li><b>관리되고 있나</b>: 몇 년째 멈춘 도구는 오류가 나도 고쳐지지 않습니다</li>
-            <li><b>내 파일이 밖으로 나가나</b>: "PDF 합치기 사이트"처럼 파일을 올리는 방식은 피합니다</li>
-            <li><b>다음에도 쓸 수 있나</b>: 한 번 깔면 계속 쓸 수 있는지</li>
-          </ul>
-          <p>표에 안 나와 있으면 그냥 물어보세요. "이거 무료야?", "내 파일이 인터넷으로 올라가?"</p>
+          <h3><span class="k">4-2</span>설치된 라이브러리 보기</h3>
+          <p>스마트폰 홈 화면에서 깔린 앱을 보듯, 설치된 라이브러리 목록을 봅니다.</p>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre>pip list</pre><button class="copy" type="button">복사</button></div>
+          <div class="screen">Package    Version
+---------- -------
+pip        25.0.1
+<span class="ok">pypdf      …</span>                ← 방금 설치한 라이브러리</div>
           <div class="note">
-            <b class="t">이름이 비슷한 가짜 부품을 조심하세요</b>
-            <p>부품 가게(PyPI)에는 누구나 올릴 수 있어서, 이름만 비슷한 수상한 부품도 있습니다. 예를 들어 한글 파일용 부품은 <code class="i">python-hwpx</code>인데, 이름이 <code class="i">hwpx</code>뿐인 다른 부품도 있습니다. 설치 전에 <b>"이거 믿을 만한 거야?"</b>라고 한 번 더 물어보세요. 에이전트가 공식 이름, 만든 곳, 최근 업데이트를 확인해 줍니다.</p>
+            <b class="t">이름이 비슷한 가짜 라이브러리를 조심하세요</b>
+            <p>앱스토어에 가짜 앱이 있듯, PyPI에도 누구나 올릴 수 있어서 이름만 비슷한 수상한 라이브러리가 있습니다. 예를 들어 한글 파일용은 <code class="i">python-hwpx</code>인데, 이름이 <code class="i">hwpx</code>뿐인 다른 라이브러리도 있습니다. 처음 보는 라이브러리를 설치하기 전에는 에이전트에게 <b>"이거 믿을 만한 거야?"</b>라고 한 번 물어보세요.</p>
           </div>
         </div>
 
         <div class="sub">
-          <h3><span class="k">3-3</span>④ 만들기 · ⑤ 확인</h3>
-          <div class="cmd prompt"><span class="lbl">에이전트에게 · 고른 도구 이름으로 바꿔서</span><pre>pypdf로 합쳐줘. 파일 이름은 공문_모음.pdf로 해줘.</pre><button class="copy" type="button">복사</button></div>
-          <p>확인: <code class="i">공문_모음.pdf</code>를 엣지로 열어 공문 3개가 모두 들어 있는지(4쪽) 보세요. 마음에 안 들면 ②로 돌아가 다른 도구를 골라도 됩니다. 처음 보는 일이 생겨도 이 순서 그대로 하면 됩니다.</p>
+          <h3><span class="k">4-3</span>에이전트에게 맡기기</h3>
+          <div class="tip"><b>02에서 배운 것 다시 쓰기</b>: 에이전트를 부르고(<code class="i">claude</code>, <code class="i">codex</code>, <code class="i">agy</code>, <code class="i">grok</code>) 먼저 "이 폴더에 폴더 밖 금지 규칙 파일을 만들어줘"라고 한 뒤, 다시 켜서 자동 모드로 바꾸세요.</div>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>pypdf로 공문 폴더의 PDF 3개를 하나로 합쳐줘. 파일 이름은 PDF_모음.pdf로 해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: <code class="i">PDF_모음.pdf</code>를 엣지로 열어 PDF 3개의 내용이 모두 들어 있는지(4쪽) 보세요.</p>
         </div>
-        <button class="done-btn" type="button" data-done="s3" aria-pressed="false">한 바퀴 돌았어요</button>
-      </section>
-
-      <!-- 4 -->
-      <section class="step" id="s4" data-step="s4">
-        <div class="step-head"><span class="n">4</span><h2>혼자 해 보기 · 미션 카드</h2><span class="time">15분</span></div>
-        <p class="lead">하나를 골라 <b>같은 순서</b>(목적 → 도구 찾기 → 고르기 → 만들기 → 확인)로 해 보세요. 카드에는 하고 싶은 일만 적혀 있고, 도구는 에이전트와 함께 찾습니다. 질문은 3-1처럼 짧게 하면 됩니다. 예: "명렬표를 반별로 나누고 싶어. 쓸 수 있는 도구를 비교해서 추천해줘. 설치는 아직 하지 마."</p>
-
-        <div class="sub">
-          <h3><span class="k">A</span>엑셀 · 반별로 나누기</h3>
-          <p><b>목적</b>: <code class="i">2학년_명렬표.xlsx</code>에 1~3반이 뒤섞여 있다. 반마다 시트를 따로 만들고, 번호순으로 정렬하고 싶다.</p>
-          <details><summary>참고 · 에이전트가 흔히 내놓는 후보</summary><div class="body"><p>openpyxl, pandas, 엑셀 자체 기능(필터·정렬). 원본을 바꿀지, 새 파일로 저장할지도 정해 주세요.</p></div></details>
-        </div>
-
-        <div class="sub">
-          <h3><span class="k">B</span>한글(HWPX) · 내용 뽑기</h3>
-          <p><b>목적</b>: <code class="i">가정통신문_겨울방학.hwpx</code>에서 날짜와 할 일만 뽑아 메모장 파일로 정리하고 싶다. 한글 프로그램은 열지 않고.</p>
-          <details><summary>참고 · 에이전트가 흔히 내놓는 후보</summary><div class="body"><p>python-hwpx, 한글 프로그램 자동화(pyhwpx, 한글이 설치되어 있어야 함), HWPX가 압축 파일이라는 점을 이용해 직접 열기. 3-2의 가짜 부품 주의를 떠올리세요.</p></div></details>
-        </div>
-
-        <div class="sub">
-          <h3><span class="k">C</span>PDF · 몇 쪽만 떼기</h3>
-          <p><b>목적</b>: <code class="i">연수교재_전체.pdf</code>(12쪽)에서 "개인정보 보호" 장만 따로 PDF로 저장하고 싶다. 몇 쪽인지는 모른다.</p>
-          <details><summary>참고 · 에이전트가 흔히 내놓는 후보</summary><div class="body"><p>pypdf, PyMuPDF. 쪽 번호를 모르니 "몇 쪽인지 찾아서 해줘"라고 하면 됩니다.</p></div></details>
-        </div>
-
-        <div class="sub">
-          <h3><span class="k">D</span>사진 · 한꺼번에 줄이기</h3>
-          <p><b>목적</b>: <code class="i">사진</code> 폴더의 큰 사진 6장을 가정통신문에 넣기 좋게 가로 1200픽셀로 줄여 '사진_작게' 폴더에 저장하고 싶다. 원본은 그대로.</p>
-          <details><summary>참고 · 에이전트가 흔히 내놓는 후보</summary><div class="body"><p>Pillow, Windows에 이미 있는 기능(PowerShell), 사진 편집 프로그램. "설치 없이 되는 방법이 있나"도 물어볼 만합니다.</p></div></details>
-        </div>
-        <p>다 했으면 다른 카드도 해 보세요. <b>두 번째 카드는 훨씬 빠릅니다.</b> 순서가 손에 익기 때문입니다.</p>
-        <button class="done-btn" type="button" data-done="s4" aria-pressed="false">카드 하나 이상 완료</button>
+        <button class="done-btn" type="button" data-done="first" aria-pressed="false">첫 라이브러리로 합치기 완료</button>
       </section>
 
       <!-- 5 -->
-      <section class="step" id="s5" data-step="s5">
-        <div class="step-head"><span class="n">5</span><h2>내 목적으로 해 보기 &amp; 마무리</h2><span class="time">10분</span></div>
-        <p class="lead">이제 카드 대신 <b>선생님의 목적</b>을 넣습니다. 아래 질문을 복사해 두고, 첫 문장만 내 일로 바꿔 쓰세요.</p>
-        <div class="cmd prompt"><span class="lbl">도구 찾기 질문 · 첫 문장만 바꿔서</span><pre>학급 사진 100장에 날짜를 넣고 싶어. 쓸 수 있는 도구를 비교해서 추천해줘. 설치는 아직 하지 마.</pre><button class="copy" type="button">복사</button></div>
+      <section class="step" id="more" data-step="more">
+        <div class="step-head"><span class="n">5</span><h2>용도에 맞게 라이브러리 더 설치하기</h2><span class="time">15분</span></div>
+        <p class="lead">이제 설치도 에이전트에게 맡깁니다. <b>설치할 라이브러리 이름과 할 일</b>을 한 번에 말하면, 에이전트가 설치하고 바로 작업합니다. 순서대로 함께 해 봅니다.</p>
+
         <div class="sub">
-          <h3><span class="k">5-1</span>소감 남기기</h3>
-          <p>오른쪽 아래 <b>💬 채팅</b>에 <b>"내가 해결하고 싶은 일" 한 줄</b>을 남겨 주세요. 다음 모임에서 함께 도구를 찾아봅니다.</p>
+          <h3><span class="k">5-1</span>엑셀 · 반별로 나누기 <span class="libtag">openpyxl</span></h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>openpyxl 설치하고, 2학년_명렬표.xlsx를 반별 시트로 나눠서 번호순으로 정렬해줘. 원본은 그대로 두고 반별_명렬표.xlsx로 저장해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: <code class="i">반별_명렬표.xlsx</code>를 열어 아래 시트 탭이 1반·2반·3반으로 나뉘고, 번호가 1번부터 차례대로인지 보세요.</p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">5-2</span>PDF · 필요한 쪽만 떼기 <span class="libtag">pypdf</span></h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>연수교재_전체.pdf에서 '개인정보 보호' 장만 찾아서 따로 PDF로 저장해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>이번에는 "설치하고"가 없습니다. pypdf는 4단계에서 이미 설치했기 때문입니다. <b>한 번 깐 앱을 계속 쓰듯, 라이브러리도 한 번 설치하면 계속 씁니다.</b></p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">5-3</span>한글(HWPX) · 내용만 뽑기 <span class="libtag">python-hwpx</span></h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>python-hwpx 설치하고, 가정통신문_겨울방학.hwpx에서 날짜와 할 일만 뽑아서 메모장 파일로 정리해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>한글 프로그램을 열지 않고도 내용을 꺼낼 수 있습니다. 4-2의 가짜 라이브러리 주의를 떠올리세요. 이름은 <code class="i">python-hwpx</code>입니다.</p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">5-4</span>오늘 설치한 라이브러리</h3>
+          <table class="keys">
+            <thead><tr><th>용도</th><th>라이브러리</th></tr></thead>
+            <tbody>
+              <tr><td>PDF 합치기 · 쪽 떼기</td><td>pypdf</td></tr>
+              <tr><td>엑셀 읽고 쓰기</td><td>openpyxl</td></tr>
+              <tr><td>한글(HWPX) 읽기</td><td>python-hwpx</td></tr>
+            </tbody>
+          </table>
+          <div class="cmd prompt"><span class="lbl">에이전트에게 · 확인</span><pre>지금 설치된 파이썬 라이브러리 보여줘.</pre><button class="copy" type="button">복사</button></div>
+        </div>
+        <button class="done-btn" type="button" data-done="more" aria-pressed="false">세 가지 모두 해 봤어요</button>
+      </section>
+
+      <!-- 6 -->
+      <section class="step" id="end" data-step="end">
+        <div class="step-head"><span class="n">6</span><h2>마무리</h2><span class="time">5분</span></div>
+        <div class="sub">
+          <h3><span class="k">6-1</span>소감 남기기</h3>
+          <p>오른쪽 아래 <b>💬 채팅</b>에 <b>1-5에서 해 보고 싶은 일 한 줄</b>을 남겨 주세요. 예: "설문 결과를 그래프로 만들어 보고 싶다."</p>
         </div>
         <div class="sub">
-          <h3><span class="k">5-2</span>더 해보기 · 다음에도 쓰게 남기기</h3>
-          <p>만든 것을 매번 에이전트에게 부탁하지 않고 쓰고 싶다면, 그것도 목적입니다.</p>
+          <h3><span class="k">6-2</span>더 해보기 · 다음에도 쓰게 남기기</h3>
+          <p>방금 한 일을 매번 에이전트에게 부탁하지 않고 쓰고 싶다면 이렇게 말해 보세요.</p>
           <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>방금 한 걸 다음에도 쓸 수 있게 더블클릭하면 되는 파일로 만들어줘.</pre><button class="copy" type="button">복사</button></div>
         </div>
-        <button class="done-btn" type="button" data-done="s5" aria-pressed="false">오늘 실습 완료!</button>
+        <button class="done-btn" type="button" data-done="end" aria-pressed="false">오늘 실습 완료!</button>
       </section>
 
       <!-- 안전 -->
@@ -209,7 +278,7 @@
           <li><b>파일 내용은 AI 회사 서버로 전송됩니다.</b> 에이전트가 파일을 "열어서 확인"하면 그 내용이 AI에게 보내집니다. 학교와 교육청의 개인정보 지침을 먼저 확인하세요.</li>
           <li>이름만으로 정리할 수 있는 작업이라면 <b>"파일 내용은 열지 말고 파일 이름만 보고 처리해줘"</b>라고 지시하세요.</li>
           <li>성적, 상담 기록처럼 민감한 자료는 맡기지 않습니다.</li>
-          <li>도구를 고를 때 <b>파일을 인터넷에 올리는 방식</b>(온라인 변환 사이트 등)은 고르지 않습니다.</li>
+          <li>파일을 <b>인터넷에 올리는 방식</b>(온라인 변환 사이트 등)은 쓰지 않습니다. 파이썬 라이브러리는 내 컴퓨터 안에서 처리합니다.</li>
           <li>작업 전에는 언제나 <b>원본 백업</b>을 먼저 합니다.</li>
         </ul>
       </section>
@@ -219,23 +288,23 @@
         <div class="step-head"><span class="n">?</span><h2>막혔을 때</h2><span class="time">언제든</span></div>
         <details>
           <summary>python을 입력하면 Microsoft Store가 열려요</summary>
-          <div class="body"><p>Windows에 들어 있는 "가짜 바로가기"입니다. 1-2의 설치 명령으로 파이썬을 설치한 뒤 <b>PowerShell 창을 새로 열면</b> 해결됩니다. 그래도 Store가 열리면 Windows 설정 → 앱 → 고급 앱 설정 → <b>앱 실행 별칭</b>에서 python.exe, python3.exe를 끕니다.</p></div>
+          <div class="body"><p>Windows에 들어 있는 "가짜 바로가기"입니다. 2-2의 설치 명령으로 파이썬을 설치한 뒤 <b>PowerShell 창을 새로 열면</b> 해결됩니다. 그래도 Store가 열리면 Windows 설정 → 앱 → 고급 앱 설정 → <b>앱 실행 별칭</b>에서 python.exe, python3.exe를 끕니다.</p></div>
+        </details>
+        <details>
+          <summary>'pip'을 찾을 수 없다고 나와요</summary>
+          <div class="body"><p>앞에 <code class="i">python -m</code>을 붙여 보세요. 예: <code class="i">python -m pip install pypdf</code>. 같은 일을 합니다.</p></div>
         </details>
         <details>
           <summary>pip install 중에 오류가 나요</summary>
-          <div class="body"><p>오류 메시지를 그대로 두고 에이전트에게 "방금 오류 고쳐줘"라고 말하세요. 에이전트가 오류를 읽고 다른 방법으로 다시 시도합니다. 계속 안 되면 "다른 후보로 해 보자"도 좋은 선택입니다.</p></div>
+          <div class="body"><p>오류 메시지를 그대로 두고 에이전트에게 "방금 오류 고쳐줘"라고 말하세요. 에이전트가 오류를 읽고 다른 방법으로 다시 시도합니다.</p></div>
         </details>
         <details>
-          <summary>후보가 너무 많거나 무슨 말인지 모르겠어요</summary>
-          <div class="body"><p>"제일 쉬운 걸로 하나만 골라줘"라고 하세요. 고르는 연습은 두세 번째부터 해도 됩니다.</p></div>
-        </details>
-        <details>
-          <summary>이 부품이 믿을 만한지 어떻게 알아요?</summary>
-          <div class="body"><p>에이전트에게 "이거 믿을 만한 거야?"라고 물어보세요. 공식 이름, 만든 곳, 최근 업데이트를 확인해 줍니다. 이름이 비슷한 부품이 여러 개면 <b>설명과 만든 곳</b>이 분명한 것을 고릅니다.</p></div>
+          <summary>이 라이브러리가 믿을 만한지 어떻게 알아요?</summary>
+          <div class="body"><p>에이전트에게 "이거 믿을 만한 거야?"라고 물어보세요. 공식 이름, 만든 곳, 최근 업데이트를 확인해 줍니다. 이름이 비슷한 라이브러리가 여러 개면 <b>설명과 만든 곳</b>이 분명한 것을 고릅니다.</p></div>
         </details>
         <details>
           <summary>압축을 풀었더니 파일 이름이 깨져 보여요</summary>
-          <div class="body"><p>탐색기의 "압축 풀기"로 풀면 생길 수 있습니다. 2단계의 PowerShell 명령으로 다시 받아 주세요.</p></div>
+          <div class="body"><p>탐색기의 "압축 풀기"로 풀면 생길 수 있습니다. 3단계의 PowerShell 명령으로 다시 받아 주세요.</p></div>
         </details>
         <details>
           <summary>"파일이 사용 중"이라며 저장이 안 돼요</summary>
@@ -269,9 +338,45 @@
     try { navigator.clipboard.writeText(text).then(() => done("복사됨 ✓"), selectIt); } catch { selectIt(); }
   });
 
+  /* ---------- 1-3 파이썬 앱스토어 ---------- */
+  const APPS = [
+    { n: "openpyxl", ico: "📊", what: "엑셀 파일 읽고 쓰기" },
+    { n: "pypdf", ico: "📄", what: "PDF 합치기 · 나누기" },
+    { n: "python-hwpx", ico: "📝", what: "한글(HWPX) 파일 읽기" },
+    { n: "hwpx", ico: "❓", what: "한글 파일…?", fake: true },
+    { n: "matplotlib", ico: "📈", what: "그래프 그리기" },
+    { n: "Pillow", ico: "🖼️", what: "사진 크기 바꾸기 · 글자 넣기" },
+    { n: "qrcode", ico: "🔲", what: "QR코드 만들기" }
+  ];
+  const rows = $("#storeRows"), home = $("#home"), term = $("#phoneTerm"), say = $("#storeSay");
+  const EMPTY = '<p class="empty">앱이 없어요<br>기본 기능만 있음</p>';
+  function storeReset() {
+    rows.innerHTML = APPS.map(a => `<div class="app-row"><span class="app-ic">${a.ico}</span><span class="app-txt"><b>${a.n}</b><small>${a.what}</small></span><button type="button" class="get" data-n="${a.n}">설치</button></div>`).join("");
+    home.innerHTML = EMPTY;
+    term.innerHTML = "";
+    say.textContent = "아직 설치한 라이브러리가 없습니다. 기본 기능만 있어요.";
+  }
+  rows.addEventListener("click", (e) => {
+    const b = e.target.closest(".get"); if (!b || b.disabled) return;
+    const a = APPS.find(x => x.n === b.dataset.n);
+    const line = `<span class="p">PS&gt;</span> pip install ${a.n}\n`;
+    if (a.fake) {
+      term.innerHTML = line + '<span class="warn">잠깐! 설치 전에 확인하세요.</span>';
+      say.innerHTML = `<b>hwpx</b>는 한글 파일용 라이브러리 <b>python-hwpx</b>와 이름만 비슷한 <b>다른 라이브러리</b>입니다. 가짜 앱을 조심하듯, 처음 보는 라이브러리는 에이전트에게 "이거 믿을 만한 거야?"라고 먼저 물어보세요.`;
+      return;
+    }
+    b.disabled = true; b.textContent = "설치됨";
+    term.innerHTML = line + `<span class="ok">Successfully installed ${a.n}</span>`;
+    home.querySelector(".empty")?.remove();
+    home.insertAdjacentHTML("beforeend", `<span class="app"><i>${a.ico}</i><span>${a.n}</span></span>`);
+    say.innerHTML = `<b>${a.n}</b> 설치 완료. 이제 파이썬으로 <b>${a.what}</b>를 할 수 있어요.`;
+  });
+  $("#storeReset").addEventListener("click", storeReset);
+  storeReset();
+
   /* ---------- 진행 체크 ---------- */
-  const STEPS = ["s0", "s1", "s2", "s3", "s4", "s5"];
-  const KEY = "wab-l3-done";
+  const STEPS = ["why", "py", "files", "first", "more", "end"];
+  const KEY = "wab-l3-done-v2";
   let done = store.get(KEY, []);
   function paint() {
     $$(".done-btn").forEach(b => b.setAttribute("aria-pressed", done.includes(b.dataset.done) ? "true" : "false"));
