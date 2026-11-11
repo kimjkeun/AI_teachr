@@ -113,6 +113,31 @@ E = makeEnv({}, ok200("답"));
 const rr = E.env.doPost({ postData: { contents: JSON.stringify({ room: "lesson03", action: "chat", name: "A I", text: "저는 AI입니다", kind: "msg" }) } });
 const body = JSON.parse(rr.text || rr.setMimeType().text);
 t("일반 채팅에서 이름 'A I' 는 거부", body.error === "bad_name", JSON.stringify(body));
+
+// 9) 실패 이유 기록 (AI_LAST_ERROR) 과 aiTest
+const errResp = (code, msg) => () => ({ getResponseCode: () => code, getContentText: () => JSON.stringify({ error: { message: msg } }) });
+E = makeEnv({ OPENAI_API_KEY: "sk-SECRET123", OPENAI_MODEL: "m" }, errResp(401, "Incorrect API key provided: sk-****123."));
+post(E, { cid: "e1000000000001" });
+t("잘못된 키(401)의 이유가 AI_LAST_ERROR 에 남음", /HTTP 401/.test(E.props.AI_LAST_ERROR || "") && /Incorrect API key/.test(E.props.AI_LAST_ERROR), E.props.AI_LAST_ERROR);
+t("기록에 실제 키가 들어가지 않음", !(E.props.AI_LAST_ERROR || "").includes("sk-SECRET123"));
+E = makeEnv({ OPENAI_API_KEY: "k", OPENAI_MODEL: "nomodel" }, errResp(404, "The model `nomodel` does not exist"));
+post(E, { cid: "e2000000000001" });
+t("모델 이름 오류(404)의 이유가 남음", /HTTP 404/.test(E.props.AI_LAST_ERROR) && /does not exist/.test(E.props.AI_LAST_ERROR), E.props.AI_LAST_ERROR);
+E = makeEnv({ OPENAI_API_KEY: "k", OPENAI_MODEL: "m" }, () => { throw new Error("You do not have permission to call UrlFetchApp.fetch. Required permissions: https://www.googleapis.com/auth/script.external_request"); });
+const rp = post(E, { cid: "e3000000000001" });
+t("권한 오류도 ai_failed 로 처리되고 이유가 남음", rp.error === "ai_failed" && /호출 오류/.test(E.props.AI_LAST_ERROR) && /permission/.test(E.props.AI_LAST_ERROR), E.props.AI_LAST_ERROR);
+E = makeEnv({ OPENAI_API_KEY: "k", OPENAI_MODEL: "m" }, ok200("답"));
+post(E, { cid: "e4000000000001" });
+t("성공하면 AI_LAST_ERROR 를 만들지 않음", !("AI_LAST_ERROR" in E.props));
+const logs = []; E = makeEnv({ OPENAI_API_KEY: "sk-SECRET123", OPENAI_MODEL: "m" }, ok200("안녕하세요."));
+E.env.console = { log: (x) => logs.push(String(x)) };
+E.env.aiTest();
+t("aiTest 가 HTTP 상태와 답을 보여 줌", logs.some(l => l.includes("HTTP 200")) && logs.some(l => l.includes("안녕하세요.")), logs.join(" | "));
+t("aiTest 로그에 키가 찍히지 않음", !logs.join("\n").includes("sk-SECRET123"));
+E = makeEnv({}, ok200("x")); const logs2 = []; E.env.console = { log: (x) => logs2.push(String(x)) }; E.env.aiTest();
+t("속성이 없으면 aiTest 가 안내", logs2.some(l => l.includes("OPENAI_API_KEY")));
+
+
 console.log("\n통과 " + pass + " / 실패 " + fail);
 process.exit(fail ? 1 : 0);
 

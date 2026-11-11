@@ -133,6 +133,40 @@ function aiRefund_(uid) {
     props.setProperty('AI_USAGE', JSON.stringify(u));
   } finally { lock.releaseLock(); }
 }
+// OpenAI 에 한 번 묻고 { code, answer, msg } 를 돌려줍니다 (msg 는 실패했을 때 OpenAI 가 알려 준 이유)
+function aiAsk_(apiKey, model, q) {
+  const res = UrlFetchApp.fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'post', contentType: 'application/json', muteHttpExceptions: true,
+    headers: { Authorization: 'Bearer ' + apiKey },
+    payload: JSON.stringify({
+      model: model,
+      max_completion_tokens: AI_LIMITS.maxTokens,
+      messages: [{ role: 'system', content: AI_SYSTEM }, { role: 'user', content: q }]
+    })
+  });
+  const code = res.getResponseCode();
+  let body = {};
+  try { body = JSON.parse(res.getContentText()); } catch (err) {}
+  const answer = String((body.choices && body.choices[0] && body.choices[0].message && body.choices[0].message.content) || '').trim();
+  const msg = String((body.error && body.error.message) || '').slice(0, 300);
+  return { code: code, answer: code === 200 ? answer : '', msg: msg };
+}
+// 마지막 실패 이유를 스크립트 속성 AI_LAST_ERROR 에 남깁니다 (화면에는 보내지 않음)
+function aiLog_(props, text) {
+  try { props.setProperty('AI_LAST_ERROR', Utilities.formatDate(new Date(), 'Asia/Seoul', 'MM-dd HH:mm') + ' ' + String(text).slice(0, 400)); } catch (err) {}
+}
+// 편집기에서 이 함수를 골라 ▶ 실행하면 OpenAI 에 한 번 물어보고 결과를 '실행 로그'에 보여 줍니다.
+// 처음 실행할 때 '외부 서비스 연결' 권한 승인 창이 뜹니다. 승인한 뒤 새 버전으로 다시 배포해야 웹 앱에서도 쓸 수 있습니다.
+function aiTest() {
+  const props = PropertiesService.getScriptProperties();
+  const apiKey = props.getProperty('OPENAI_API_KEY');
+  const model = props.getProperty('OPENAI_MODEL');
+  console.log('키 있음: ' + !!apiKey + ' / 모델: ' + model + ' / AI_ENABLED: ' + props.getProperty('AI_ENABLED'));
+  if (!apiKey || !model) { console.log('스크립트 속성에 OPENAI_API_KEY 와 OPENAI_MODEL 을 먼저 넣으세요.'); return; }
+  const r = aiAsk_(apiKey, model, '한 문장으로 인사해 주세요.');
+  console.log('HTTP ' + r.code + (r.msg ? ' / OpenAI 메시지: ' + r.msg : ''));
+  console.log('답: ' + (r.answer || '(비어 있음)'));
+}
 function aiPost_(d) {
   const room = String(d.room || '');
   if (!/^[0-9a-z]{1,8}$/.test(room)) return json_({ ok: false, error: 'bad_input' });
@@ -158,20 +192,12 @@ function aiPost_(d) {
   // OpenAI 를 기다리는 동안에는 잠금을 잡지 않습니다 (다른 사람의 채팅이 막히지 않도록)
   let answer = '';
   try {
-    const res = UrlFetchApp.fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'post', contentType: 'application/json', muteHttpExceptions: true,
-      headers: { Authorization: 'Bearer ' + apiKey },
-      payload: JSON.stringify({
-        model: model,
-        max_completion_tokens: AI_LIMITS.maxTokens,
-        messages: [{ role: 'system', content: AI_SYSTEM }, { role: 'user', content: q }]
-      })
-    });
-    if (res.getResponseCode() === 200) {
-      const body = JSON.parse(res.getContentText());
-      answer = String((body.choices && body.choices[0] && body.choices[0].message && body.choices[0].message.content) || '').trim();
-    }
-  } catch (err) { answer = ''; }
+    const r = aiAsk_(apiKey, model, q);
+    answer = r.answer;
+    if (!answer) aiLog_(props, 'HTTP ' + r.code + (r.msg ? ' ' + r.msg : ' (답이 비어 있음)'));
+  } catch (err) {
+    aiLog_(props, '호출 오류: ' + err.message);
+  }
   if (!answer) {
     try { aiRefund_(uid); } catch (err) {}
     return json_({ ok: false, error: 'ai_failed' });
