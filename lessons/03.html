@@ -164,18 +164,21 @@
         </div>
 
         <div class="sub">
-          <h3><span class="k">2-4</span>오늘 쓸 작업 폴더 만들기</h3>
-          <p>오늘 만드는 파일은 모두 이 폴더에 모읍니다. 탐색기 창은 옆에 띄워 두세요.</p>
-          <div class="cmd"><span class="lbl">PowerShell</span><pre>mkdir C:\projects\03_python; cd C:\projects\03_python; explorer .</pre><button class="copy" type="button">복사</button></div>
-          <p>폴더가 비어 있습니다. 연습할 파일도 <b>에이전트와 함께 만들어서</b> 시작합니다.</p>
+          <h3><span class="k">2-4</span>작업 폴더 만들고 연습용 PDF 받기</h3>
+          <p>오늘 쓰는 파일은 모두 이 폴더에 모읍니다. 아래 한 줄이 폴더를 만들고, 연습용 PDF를 내려받아 풀어 줍니다. 모두 가짜 자료입니다.</p>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre>mkdir C:\projects\03_python; cd C:\projects\03_python; Invoke-WebRequest https://kimjkeun.github.io/AI_teachr/assets/samples/pdf-sample.zip -OutFile s.zip; Expand-Archive s.zip -DestinationPath . -Force; Remove-Item s.zip; explorer .</pre><button class="copy" type="button">복사</button></div>
+          <div class="screen">C:\projects\03_python
+├─ 공문\                PDF 3개 (교원연수 · 체험학습 · 안전교육)
+└─ 연수교재_전체.pdf     12쪽 (4개 장, 장마다 3쪽)</div>
+          <p>엑셀과 한글 연습 파일은 이 폴더에서 에이전트와 함께 만들거나 강사가 나눠 드립니다. 탐색기 창은 옆에 띄워 두세요.</p>
         </div>
         <button class="done-btn" type="button" data-done="py" aria-pressed="false">파이썬 준비 완료</button>
       </section>
 
       <!-- 3 -->
       <section class="step" id="pdf" data-step="pdf">
-        <div class="step-head"><span class="n">3</span><h2>PDF · 만들고, 나누고, 다시 합치기</h2><span class="time">10분</span></div>
-        <p class="lead">PDF를 자르고 붙이는 라이브러리 <b>pypdf</b>를 직접 설치해 봅니다. 그 뒤 연습할 PDF부터 에이전트와 함께 만듭니다.</p>
+        <div class="step-head"><span class="n">3</span><h2>PDF · 합치고, 나누고, 다시 합치기</h2><span class="time">10분</span></div>
+        <p class="lead">PDF를 자르고 붙이는 라이브러리 <b>pypdf</b>를 직접 설치해 봅니다. 그 뒤 에이전트에게 PDF를 합치고, 나누고, 다시 합치게 합니다.</p>
 
         <div class="sub">
           <h3><span class="k">3-1</span>직접 설치해 보기</h3>
@@ -202,57 +205,60 @@ pip        25.0.1
         </div>
 
         <div class="sub">
-          <h3><span class="k">3-3</span>에이전트에게 연습용 PDF 만들게 하기</h3>
+          <h3><span class="k">3-3</span>PDF 3개를 하나로 합치기</h3>
           <div class="tip"><b>02에서 배운 것 다시 쓰기</b>: 에이전트를 부르고(<code class="i">claude</code>, <code class="i">codex</code>, <code class="i">agy</code>, <code class="i">grok</code>) 먼저 "이 폴더에 폴더 밖 금지 규칙 파일을 만들어줘"라고 한 뒤, 다시 켜서 자동 모드로 바꾸세요.</div>
-          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>연습용 PDF를 만들어줘. 10쪽이고, 1부 3쪽, 2부 4쪽, 3부 3쪽이야. 쪽마다 '몇 부 몇 쪽'을 크게 적어줘.</pre><button class="copy" type="button">복사</button></div>
-          <p>확인: 폴더에 PDF가 생겼나요? 엣지로 열어 10쪽이고 쪽마다 "1부 1쪽"처럼 적혀 있는지 보세요.</p>
-          <div class="note">
-            <b class="t">pypdf만으로는 PDF를 새로 만들 수 없습니다</b>
-            <p>pypdf는 <b>있는 PDF를 자르고 붙이는</b> 라이브러리입니다. 새로 만드는 일에는 다른 라이브러리가 필요해서, 에이전트가 직접 하나 골라 설치합니다(예: reportlab). 설치해도 되냐고 물으면 "응, 설치해"라고 답하세요. 한 라이브러리가 못 하는 일은 다른 앱을 깔아서 합니다.</p>
-          </div>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>공문 폴더의 PDF 3개를 하나로 합쳐줘. 이름은 PDF_모음.pdf로 해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: <code class="i">PDF_모음.pdf</code>를 엣지로 열어 PDF 3개의 내용이 모두 들어 있는지(4쪽) 보세요.</p>
         </div>
 
         <div class="sub">
-          <h3><span class="k">3-4</span>파트별로 나누기</h3>
-          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>그 PDF를 1부, 2부, 3부로 나눠서 각각 따로 저장해줘.</pre><button class="copy" type="button">복사</button></div>
-          <p>확인: PDF가 3개 생겼나요? 각각 3쪽, 4쪽, 3쪽이어야 합니다.</p>
+          <h3><span class="k">3-4</span>장별로 나누기</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>연수교재_전체.pdf를 장별로 나눠서 각각 따로 저장해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: 장별 PDF가 4개 생겼나요? 각각 3쪽이어야 합니다.</p>
         </div>
 
         <div class="sub">
-          <h3><span class="k">3-5</span>일부만 다시 합치기</h3>
-          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>1부와 3부만 다시 하나로 합쳐줘. 이름은 일부_합본.pdf로 해줘.</pre><button class="copy" type="button">복사</button></div>
-          <p>확인: <code class="i">일부_합본.pdf</code>가 6쪽이고, 1부 3쪽 다음에 3부 3쪽이 이어지는지 보세요. 2부는 빠져 있어야 합니다.</p>
+          <h3><span class="k">3-5</span>일부 장만 다시 합치기</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>1장과 3장만 다시 하나로 합쳐줘. 이름은 일부_합본.pdf로 해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: <code class="i">일부_합본.pdf</code>가 6쪽이고, 1장 3쪽 다음에 3장 3쪽이 이어지는지 보세요. 2장과 4장은 빠져 있어야 합니다.</p>
         </div>
-        <button class="done-btn" type="button" data-done="pdf" aria-pressed="false">PDF 만들기·나누기·합치기 완료</button>
+        <button class="done-btn" type="button" data-done="pdf" aria-pressed="false">PDF 합치기·나누기 완료</button>
       </section>
 
       <!-- 4 -->
       <section class="step" id="excel" data-step="excel">
         <div class="step-head"><span class="n">4</span><h2>엑셀 · 만들고, 반별로 나누고, 색 칠하기</h2><span class="time">10분</span></div>
-        <p class="lead">엑셀 파일을 다루는 라이브러리 <b>openpyxl</b>을 씁니다. 이번에는 <b>설치도 에이전트에게</b> 맡깁니다. 설치할 라이브러리 이름과 할 일을 한 번에 말하면 됩니다. 모두 지어낸 연습 자료입니다.</p>
+        <p class="lead">엑셀 파일을 다루는 라이브러리 <b>openpyxl</b>을 씁니다. 이번에는 <b>설치도 에이전트에게</b> 맡깁니다. 먼저 <b>설치만</b> 시키고, 끝나면 할 일을 시킵니다. 모두 지어낸 연습 자료입니다.</p>
 
         <div class="sub">
-          <h3><span class="k">4-1</span>연습용 엑셀 만들기 <span class="libtag">openpyxl</span></h3>
-          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>openpyxl 설치하고, 5개 반, 반마다 10명, 국어·수학·영어 점수가 있는 연습용 엑셀 파일을 만들어줘. 이름은 가짜로.</pre><button class="copy" type="button">복사</button></div>
-          <p>확인: 엑셀로 열어 <b>50명</b>(5개 반 × 10명)이 있고, 반·번호·이름·국어·수학·영어가 보이는지 확인하세요.</p>
+          <h3><span class="k">4-1</span>openpyxl 설치하기 <span class="libtag">openpyxl</span></h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>openpyxl 설치해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>설치가 끝났다고 알려 주면 됩니다. 이름은 <code class="i">openpyxl</code>입니다.</p>
         </div>
 
         <div class="sub">
-          <h3><span class="k">4-2</span>반별 시트로 나누기</h3>
+          <h3><span class="k">4-2</span>연습용 엑셀 만들기</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>5개 반, 반마다 10명, 국어·수학·영어 점수가 있는 연습용 엑셀 파일을 만들어줘. 이름은 가짜로.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: 엑셀로 열어 <b>50명</b>(5개 반 × 10명)이 있고, 반·번호·이름·국어·수학·영어가 보이는지 확인하세요.</p>
+          <div class="tip"><b>"합계"나 "평균" 열을 덧붙이는 경우가 있습니다.</b> 에이전트가 엑셀 수식(<code class="i">=SUM</code>)으로 저장하면, 엑셀에서 열어야 계산되고 에이전트가 다시 읽을 때는 값이 비어 있어서 뒤 단계가 막힙니다. 그럴 땐 <b>"합계와 평균은 값으로 넣어줘"</b>라고 하세요.</div>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">4-3</span>반별 시트로 나누기</h3>
           <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>반별로 시트를 나눠서 저장해줘.</pre><button class="copy" type="button">복사</button></div>
           <p>확인: 엑셀 아래 시트 탭이 <b>1반 ~ 5반</b>으로 나뉘고, 번호가 1번부터 차례대로인지 보세요.</p>
         </div>
 
         <div class="sub">
-          <h3><span class="k">4-3</span>반마다 따로 파일로 저장하기</h3>
+          <h3><span class="k">4-4</span>반마다 따로 파일로 저장하기</h3>
           <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>각 반 시트를 따로 엑셀 파일로도 저장해줘.</pre><button class="copy" type="button">복사</button></div>
           <p>확인: 폴더에 반별 파일 5개가 생겼나요? 각 파일에 그 반 10명만 들어 있어야 합니다.</p>
         </div>
 
         <div class="sub">
-          <h3><span class="k">4-4</span>60점 미만 칸 표시하기</h3>
+          <h3><span class="k">4-5</span>60점 미만 칸 표시하기</h3>
           <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>60점 미만 점수 칸은 빨갛게 표시해줘.</pre><button class="copy" type="button">복사</button></div>
-          <div class="tip"><b>엑셀을 열어 둔 채라면 닫고 하세요.</b> 열려 있는 파일은 고칠 수 없습니다. 평균이나 합계를 구할 때는 <b>"값으로 넣어줘"</b>라고 하세요. 엑셀 수식으로만 저장되면 엑셀에서 열기 전에는 값이 비어 있습니다.</div>
+          <div class="tip"><b>엑셀을 열어 둔 채라면 닫고 하세요.</b> 열려 있는 파일은 고칠 수 없습니다.</div>
         </div>
         <button class="done-btn" type="button" data-done="excel" aria-pressed="false">엑셀 만들기·나누기·표시 완료</button>
       </section>
@@ -267,13 +273,19 @@ pip        25.0.1
         </div>
 
         <div class="sub">
-          <h3><span class="k">5-1</span>가정통신문 · 제목과 날짜 바꾸기 <span class="libtag">python-hwpx</span></h3>
-          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>python-hwpx 설치하고, 2026 가정통신문 양식.hwpx를 복사해서 겨울방학 안내 가정통신문을 만들어줘. 제목은 '겨울방학 생활 안내', 날짜는 2026. 12. 18.로 바꾸고, &lt;참고&gt; 상자는 지워줘.</pre><button class="copy" type="button">복사</button></div>
+          <h3><span class="k">5-1</span>python-hwpx 설치하기 <span class="libtag">python-hwpx</span></h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>python-hwpx 설치해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>이름은 <code class="i">python-hwpx</code>입니다. 이름이 비슷한 가짜(<code class="i">hwpx</code>)를 고르지 않았는지 에이전트의 설명을 한 번 읽어 보세요.</p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">5-2</span>가정통신문 · 제목과 날짜 바꾸기</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>2026 가정통신문 양식.hwpx를 복사해서 겨울방학 안내 가정통신문을 만들어줘. 제목은 '겨울방학 생활 안내', 날짜는 2026. 12. 18.로 바꾸고, &lt;참고&gt; 상자는 지워줘.</pre><button class="copy" type="button">복사</button></div>
           <p>확인: 새로 생긴 파일을 <b>한글 프로그램으로 열어</b> 제목과 날짜가 바뀌었는지, 모양이 깨지지 않았는지 보세요. 원본은 그대로여야 합니다.</p>
         </div>
 
         <div class="sub">
-          <h3><span class="k">5-2</span>고사원안 · 빈칸 채우기 <span class="libtag">python-hwpx</span></h3>
+          <h3><span class="k">5-3</span>고사원안 · 빈칸 채우기</h3>
           <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>2026 고사원안 양식.hwpx의 빈칸을 채워서 새 파일로 저장해줘. 2학기 중간고사, 2학년 국어, 10월 28일 수요일, 선택형 20문항 60점, 서답형 2문항 40점이야.</pre><button class="copy" type="button">복사</button></div>
           <p>확인: 위쪽의 학기, 월, 일, 요일, 학년, 과목, 문항 수와 점수 칸이 채워졌는지 보세요. 양식 안내문과 예시 문항은 그대로 남아 있습니다.</p>
         </div>
@@ -283,16 +295,21 @@ pip        25.0.1
       <!-- 6 -->
       <section class="step" id="graph" data-step="graph">
         <div class="step-head"><span class="n">6</span><h2>그래프 · 내 교과 그림 그리기</h2><span class="time">10분</span></div>
-        <p class="lead">그래프를 그리는 라이브러리 <b>matplotlib</b>을 설치합니다. 먼저 모두 함께 하나를 그리고, 그 뒤 <b>내 교과 카드</b>를 골라서 만들어 봅니다. 한글 글꼴은 따로 말하지 않아도 에이전트가 맞춥니다.</p>
+        <p class="lead">그래프를 그리는 라이브러리 <b>matplotlib</b>을 먼저 설치합니다. 그다음 모두 함께 하나를 그리고, 그 뒤 <b>내 교과 카드</b>를 골라서 만들어 봅니다. 한글 글꼴은 따로 말하지 않아도 에이전트가 맞춥니다.</p>
 
         <div class="sub">
-          <h3><span class="k">6-1</span>함께 하기 · 반별 수학 점수 상자그림 <span class="libtag">matplotlib</span></h3>
-          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>matplotlib 설치하고, 만든 엑셀 파일로 반별 수학 점수를 상자그림으로 그려줘.</pre><button class="copy" type="button">복사</button></div>
+          <h3><span class="k">6-1</span>matplotlib 설치하기 <span class="libtag">matplotlib</span></h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>matplotlib 설치해줘.</pre><button class="copy" type="button">복사</button></div>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">6-2</span>함께 하기 · 반별 수학 점수 상자그림</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>4단계에서 만든 엑셀 파일로 반별 수학 점수를 상자그림으로 그려줘.</pre><button class="copy" type="button">복사</button></div>
           <p>확인: 그림 파일이 생겼나요? 반마다 상자 하나씩, 점수의 퍼짐이 보이는지 확인하세요. 4단계에서 만든 엑셀이 그대로 그림이 됩니다.</p>
         </div>
 
         <div class="sub">
-          <h3><span class="k">6-2</span>내 교과 카드 고르기</h3>
+          <h3><span class="k">6-3</span>내 교과 카드 고르기</h3>
           <p>내 교과의 카드를 펼쳐 <b>복사해서 에이전트에게 붙여넣으세요.</b> 숫자는 지어낸 연습용 값입니다. 실제 실험 값이 필요하면 직접 알려 주세요.</p>
           <details>
             <summary>수학 · 시험지 모양 이차함수</summary>
@@ -329,7 +346,7 @@ pip        25.0.1
         </div>
 
         <div class="sub">
-          <h3><span class="k">6-3</span>그림 고쳐 달라고 하기</h3>
+          <h3><span class="k">6-4</span>그림 고쳐 달라고 하기</h3>
           <p>그림이 나오면 <b>눈으로 보세요.</b> 에이전트가 "겹치지 않는 것을 확인했습니다"라고 해도 글자가 선과 겹쳐 있을 수 있습니다. 이럴 때는 이렇게 말하면 됩니다.</p>
           <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>글자가 선과 겹쳐. 안 겹치게 고쳐줘.</pre><button class="copy" type="button">복사</button></div>
         </div>
@@ -345,7 +362,6 @@ pip        25.0.1
             <thead><tr><th>용도</th><th>라이브러리</th></tr></thead>
             <tbody>
               <tr><td>PDF 합치기 · 나누기</td><td>pypdf</td></tr>
-              <tr><td>PDF 새로 만들기</td><td>에이전트가 고른 것 (예: reportlab)</td></tr>
               <tr><td>엑셀 읽고 쓰기</td><td>openpyxl</td></tr>
               <tr><td>한글(HWPX) 읽고 채우기</td><td>python-hwpx</td></tr>
               <tr><td>그래프 그리기</td><td>matplotlib</td></tr>
