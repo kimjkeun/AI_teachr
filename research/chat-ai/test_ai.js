@@ -2,7 +2,8 @@
 const fs = require("fs");
 const vm = require("vm");
 
-function makeEnv(propsInit, fetchImpl) {
+function makeEnv(propsInit, fetchImpl, ctx) {
+  const ctxFetches = [];
   const props = Object.assign({}, propsInit);
   const cache = {};
   const rows = [["id", "room", "kind", "이름", "내용", "시각", "강사", "삭제"]];
@@ -21,12 +22,14 @@ function makeEnv(propsInit, fetchImpl) {
         getDataRange: () => ({ getValues: () => rows, getDisplayValues: () => rows.map(r => r.map(String)) }),
         getRange: () => ({ setValue() {}, getDisplayValues: () => [] }),
       }) }) },
-    UrlFetchApp: { fetch: (url, opt) => { fetches.push({ url, opt }); return fetchImpl(url, opt); } },
+    UrlFetchApp: { fetch: (url, opt) => {
+      if (String(url).includes('ai-context.md')) { ctxFetches.push(url); return ctx == null ? { getResponseCode: () => 404, getContentText: () => '' } : { getResponseCode: () => 200, getContentText: () => ctx }; }
+      fetches.push({ url, opt }); return fetchImpl(url, opt); } },
     __today: "2026-11-12",
   };
   vm.createContext(env);
   vm.runInContext(fs.readFileSync(process.argv[2], "utf8"), env);
-  return { env, props, cache, rows, fetches };
+  return { env, props, cache, rows, fetches, ctxFetches };
 }
 const ok200 = (text) => () => ({ getResponseCode: () => 200, getContentText: () => JSON.stringify({ choices: [{ message: { content: text } }] }) });
 const call = (E, d) => JSON.parse(E.env.chatPost_(Object.assign({ room: "lesson03", action: "chat_ai", cid: "abcdef123456" }, d)).setMimeType ? "{}" : "{}");
@@ -137,6 +140,41 @@ t("aiTest 로그에 키가 찍히지 않음", !logs.join("\n").includes("sk-SECR
 E = makeEnv({}, ok200("x")); const logs2 = []; E.env.console = { log: (x) => logs2.push(String(x)) }; E.env.aiTest();
 t("속성이 없으면 aiTest 가 안내", logs2.some(l => l.includes("OPENAI_API_KEY")));
 
+
+
+// 10) 강의자료 요약(ai-context) 을 AI 에게 알려 주기
+const SAMPLE_CTX = "# 머리말 HEADER\n<<<LESSON 01>>>\nSECTION01\n<<<LESSON 02>>>\nSECTION02\n<<<LESSON 03>>>\nSECTION03\n<<<LESSON 04>>>\nSECTION04";
+const sysOf = (E) => JSON.parse(E.fetches[E.fetches.length - 1].opt.payload).messages[0].content;
+E = makeEnv({ OPENAI_API_KEY: "k", OPENAI_MODEL: "m" }, ok200("답"), SAMPLE_CTX);
+post(E, { room: "lesson04", cid: "c1000000000001" });
+let sys = sysOf(E);
+t("03 방(lesson04)에는 머리말과 03 내용만 전달", sys.includes("HEADER") && sys.includes("SECTION03") && !sys.includes("SECTION02") && !sys.includes("SECTION04") && !sys.includes("SECTION01"), sys.slice(-120));
+t("기본 안내(AI_SYSTEM)도 그대로 앞에 있음", sys.startsWith("당신은 교사 연수 채팅방의 도우미입니다"));
+post(E, { room: "lessonm4", cid: "c2000000000001" });
+sys = sysOf(E);
+t("mcp 방에는 04 내용만", sys.includes("SECTION04") && !sys.includes("SECTION03"));
+post(E, { room: "lesson02", cid: "c3000000000001" });
+t("02 방에는 02 내용만", sysOf(E).includes("SECTION02") && !sysOf(E).includes("SECTION03"));
+t("요약은 한 번만 내려받고 저장해 둔 것을 씀", E.ctxFetches.length === 1, E.ctxFetches.length);
+post(E, { room: "lesson07", cid: "c4000000000001" });
+sys = sysOf(E);
+t("모르는 방에는 머리말만 (차시 내용 없음)", sys.includes("HEADER") && !/SECTION0/.test(sys));
+E = makeEnv({ OPENAI_API_KEY: "k", OPENAI_MODEL: "m" }, ok200("답"), null);
+r = post(E, { room: "lesson04", cid: "c5000000000001" });
+t("요약을 못 읽어도 답은 함 (일반 안내만)", r.ok === true && sysOf(E).startsWith("당신은 교사 연수") && !sysOf(E).includes("강의자료 요약"));
+// 실제 만들어진 파일로
+const real = fs.readFileSync(process.argv[3] || "assets/ai-context.md", "utf8");
+E = makeEnv({ OPENAI_API_KEY: "k", OPENAI_MODEL: "m" }, ok200("답"), real);
+post(E, { room: "lesson04", cid: "c6000000000001" });
+sys = sysOf(E);
+t("실제 ai-context.md: 03 방에 pdf-sample 안내가 들어감", sys.includes("pdf-sample.zip") && sys.includes("python-hwpx"));
+t("실제 ai-context.md: 03 방에 다른 차시(MCP 연결 명령)는 안 들어감", !sys.includes("claude mcp add"));
+console.log("   (03 방에 보내는 안내 길이: " + sys.length + "글자)");
+post(E, { room: "lessonm4", cid: "c7000000000001" });
+t("실제 ai-context.md: mcp 방에는 MCP 내용", sysOf(E).includes("mcp"), "");
+const lg = []; E = makeEnv({ OPENAI_API_KEY: "k", OPENAI_MODEL: "m" }, ok200("안녕"), real);
+E.env.console = { log: (x) => lg.push(String(x)) }; E.env.aiTest();
+t("aiTest 가 요약을 읽었는지 보여 줌", lg.some(l => l.includes("강의자료 요약") && l.includes("글자를 읽었습니다")), lg.join(" | "));
 
 console.log("\n통과 " + pass + " / 실패 " + fail);
 process.exit(fail ? 1 : 0);

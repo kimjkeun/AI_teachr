@@ -135,3 +135,11 @@ const SCRIPT_URL = "";
 | HTTP 429 | 잔액·월 한도 소진 또는 너무 빠른 호출 | OpenAI 결제·한도 확인 |
 | HTTP 400, 파라미터 메시지 | 그 모델이 이 호출 방식을 지원하지 않음 | 다른 모델로 바꿔 시험 |
 | HTTP 200 인데 답이 비어 있음 | 생각하는 모델이 출력 상한을 다 써 버림 | 생각하지 않는 일반 모델로 바꾸기 |
+
+**AI가 강의자료 내용에 맞게 답하게 하기**
+- 사이트의 `assets/ai-context.md`(강의자료 요약)를 Apps Script가 읽어 와서, **질문한 채팅방의 차시** 내용만 AI에게 함께 알려 줍니다. 그래서 03 방에서는 03 내용(예: `pip install pypdf`, `python-hwpx` 주의)을 바탕으로 답합니다.
+- 요약은 강의자료 HTML에서 자동으로 뽑습니다. 강의자료를 고친 뒤에는 저장소 맨 위 폴더에서 `python research/chat-ai/build_context.py` 를 실행하고 push 하세요. **Apps Script를 다시 배포할 필요는 없습니다.** (Apps Script는 요약을 6시간 동안 저장해 두므로 최대 6시간 뒤에 반영됩니다.)
+- 공통 안내(환경, 원칙, 답하는 방법)는 `research/chat-ai/context-header.md` 를 직접 고칩니다.
+- 방과 차시의 연결은 `apps-script.gs` 의 `AI_ROOM_LESSON` 에 있습니다: `lesson01`→01, `lesson02`→02, `lesson04`→03(03 자료의 채팅방 이름은 예전 기록 때문에 04), `lessonm4`→04(MCP). 새 차시를 만들면 여기와 `build_context.py` 의 `LESSONS` 에 같이 추가하세요.
+- 방 이름은 영소문자·숫자 8글자까지만 서버가 받습니다(`lesson` + 2글자).
+- 질문마다 요약이 함께 전송되어 입력 글자 수가 늘어납니다(03 방 기준 약 8,800글자). 모델에 따라 요금이 늘 수 있으니 OpenAI 월 한도를 꼭 두세요. `aiTest` 실행 로그에 "강의자료 요약: …글자를 읽었습니다"가 나오면 연결된 것입니다.

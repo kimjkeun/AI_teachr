@@ -71,3 +71,5 @@
 - 켜는 방법은 README 6번. 선생님이 해야 할 일: OpenAI 전용 키 만들기와 월 한도 설정, 스크립트 속성 3개, apps-script.gs 새로 붙여 넣고 새 버전 배포.
 - 시험: research/chat-ai/test_ai.js (서버 34개, 가짜 환경), 화면은 가짜 서버로 20개 확인. 실제 OpenAI 호출과 실제 배포 후 동작은 아직 못 해 봄(키 필요).
 - 05차시(API 장착)의 시연 사례로 쓰기 좋음: 키를 서버 쪽 비밀 저장소에 두는 이유.
+- AI 도우미에 강의자료 요약 연결: assets/ai-context.md(research/chat-ai/build_context.py 가 lessons/*.html 에서 생성, 공통 안내는 research/chat-ai/context-header.md). Apps Script 가 6시간 캐시로 읽어 그 방의 차시만 전달. 강의자료를 고치면 build_context.py 다시 실행 후 push.
+- 채팅방 이름 규칙: 서버는 [0-9a-z]{1,8} 만 받음. 04(MCP) 자료의 방이 lessonmcp(9글자)여서 채팅이 연결 안 되던 문제를 lessonm4 로 고침(2026-11-12). 03 자료의 방은 lesson04.
