@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>파이썬으로 일하기 | 수요 AI 에이전트 빌더스</title>
-<meta name="description" content="수요 AI 에이전트 빌더스 강의자료 03: 파이썬은 앱이 없는 스마트폰. 용도에 맞는 라이브러리(앱)를 설치해서 PDF·엑셀·한글 파일을 다뤄 봅니다.">
+<meta name="description" content="수요 AI 에이전트 빌더스 강의자료 03: 파이썬은 앱이 없는 스마트폰. 용도에 맞는 라이브러리(앱)를 설치해서 PDF·엑셀·한글 파일을 다루고 내 교과 그래프를 그려 봅니다.">
 <meta property="og:title" content="파이썬으로 일하기 | 수요 AI 에이전트 빌더스">
-<meta property="og:description" content="파이썬을 설치하고, 용도에 맞는 라이브러리(앱)를 설치해서 PDF·엑셀·한글 파일을 다뤄 봅니다.">
+<meta property="og:description" content="파이썬을 설치하고, 용도에 맞는 라이브러리(앱)를 설치해서 PDF·엑셀·한글 파일을 다루고 내 교과 그래프를 그려 봅니다.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700;900&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -17,30 +17,31 @@
 <header class="top">
   <div class="wrap">
     <a class="home" href="./">← 강의자료 목록</a>
-    <div class="prog" aria-live="polite"><span id="progText">0 / 6 완료</span><span class="trk"><i id="progBar"></i></span></div>
+    <div class="prog" aria-live="polite"><span id="progText">0 / 7 완료</span><span class="trk"><i id="progBar"></i></span></div>
   </div>
 </header>
 
 <div class="wrap">
   <section class="lesson-hero">
-    <div class="meta"><span><b>강의자료 03</b></span><span>파이썬</span><span>약 65분</span><span>Windows · PowerShell 기준</span></div>
+    <div class="meta"><span><b>강의자료 03</b></span><span>파이썬</span><span>약 60분</span><span>Windows · PowerShell 기준</span></div>
     <h1>파이썬으로 일하기 · 용도에 맞는 라이브러리 설치</h1>
-    <p class="goal">오늘의 목표: 파이썬으로 무엇을 할 수 있는지 보고, <span class="mark">용도에 맞는 라이브러리(앱)를 설치해서</span> PDF, 엑셀, 한글 파일을 다뤄 봅니다.</p>
+    <p class="goal">오늘의 목표: 파이썬으로 무엇을 할 수 있는지 보고, <span class="mark">용도에 맞는 라이브러리(앱)를 설치해서</span> PDF, 엑셀, 한글 파일을 다루고 내 교과 그래프까지 그려 봅니다.</p>
     <div class="takeaways">
       <span><b>①</b>파이썬 = 앱 없는 스마트폰</span>
       <span><b>②</b>파이썬과 라이브러리 설치</span>
-      <span><b>③</b>용도별 라이브러리로 실습</span>
+      <span><b>③</b>연습 자료부터 함께 만들기</span>
     </div>
   </section>
 
   <div class="layout">
     <nav class="toc" aria-label="오늘의 순서" id="toc">
-      <a href="#why"><b><span>1</span></b>에이전트와 파이썬<small>15분</small></a>
+      <a href="#why"><b><span>1</span></b>에이전트와 파이썬<small>10분</small></a>
       <a href="#py"><b><span>2</span></b>파이썬 준비<small>10분</small></a>
-      <a href="#files"><b><span>3</span></b>실습 파일 받기<small>5분</small></a>
-      <a href="#first"><b><span>4</span></b>첫 라이브러리 설치<small>15분</small></a>
-      <a href="#more"><b><span>5</span></b>용도별 라이브러리<small>15분</small></a>
-      <a href="#end"><b><span>6</span></b>마무리<small>5분</small></a>
+      <a href="#pdf"><b><span>3</span></b>PDF<small>10분</small></a>
+      <a href="#excel"><b><span>4</span></b>엑셀<small>10분</small></a>
+      <a href="#hwp"><b><span>5</span></b>한글(HWPX)<small>7분</small></a>
+      <a href="#graph"><b><span>6</span></b>그래프<small>10분</small></a>
+      <a href="#end"><b><span>7</span></b>마무리<small>5분</small></a>
       <a href="#safety" class="faq-link"><b>!</b>실제 자료로 할 때<small>꼭 읽기</small></a>
       <a href="#faq" class="faq-link"><b>?</b>막혔을 때<small>상시</small></a>
     </nav>
@@ -48,7 +49,7 @@
     <main>
       <!-- 1 -->
       <section class="step" id="why" data-step="why">
-        <div class="step-head"><span class="n">1</span><h2>에이전트와 파이썬</h2><span class="time">15분</span></div>
+        <div class="step-head"><span class="n">1</span><h2>에이전트와 파이썬</h2><span class="time">10분</span></div>
         <p class="lead">이 강의는 AI 에이전트를 다룹니다. 에이전트는 <b>프로그래밍 언어</b>로 컴퓨터에 일을 시킬 수 있어요. 오늘은 그중 <b>파이썬</b>을 써 봅니다. 선생님이 코드를 짤 일은 없습니다.</p>
 
         <div class="sub">
@@ -161,33 +162,24 @@
           <div class="cmd"><span class="lbl">PowerShell</span><pre>pip --version</pre><button class="copy" type="button">복사</button></div>
           <div class="screen"><span class="ok">pip 25.0.1 from C:\Users\...\Python312\...</span>   ← 이렇게 나오면 준비 끝</div>
         </div>
+
+        <div class="sub">
+          <h3><span class="k">2-4</span>오늘 쓸 작업 폴더 만들기</h3>
+          <p>오늘 만드는 파일은 모두 이 폴더에 모읍니다. 탐색기 창은 옆에 띄워 두세요.</p>
+          <div class="cmd"><span class="lbl">PowerShell</span><pre>mkdir C:\projects\03_python; cd C:\projects\03_python; explorer .</pre><button class="copy" type="button">복사</button></div>
+          <p>폴더가 비어 있습니다. 연습할 파일도 <b>에이전트와 함께 만들어서</b> 시작합니다.</p>
+        </div>
         <button class="done-btn" type="button" data-done="py" aria-pressed="false">파이썬 준비 완료</button>
       </section>
 
       <!-- 3 -->
-      <section class="step" id="files" data-step="files">
-        <div class="step-head"><span class="n">3</span><h2>실습 파일 받기</h2><span class="time">5분</span></div>
-        <p class="lead">모두 가짜 자료입니다. 아래 한 줄이 <code class="i">C:\projects\tools</code> 폴더에 내려받아 압축까지 풀어 줍니다.</p>
-        <div class="cmd"><span class="lbl">PowerShell</span><pre>cd C:\projects; Invoke-WebRequest https://kimjkeun.github.io/AI_teachr/assets/samples/tools-sample.zip -OutFile tools.zip; Expand-Archive tools.zip -DestinationPath . -Force; Remove-Item tools.zip; cd tools; explorer .</pre><button class="copy" type="button">복사</button></div>
-        <div class="screen">C:\projects\tools
-├─ 공문\                     PDF 3개 (교원연수 · 체험학습 · 안전교육)
-├─ 연수교재_전체.pdf          12쪽짜리 교재
-├─ 2학년_명렬표.xlsx          1~3반 36명이 뒤섞인 한 시트 (가명)
-├─ 가정통신문_겨울방학.hwpx   한글 문서
-├─ 사진\                     4000×3000 큰 사진 6장
-└─ 읽어주세요.txt</div>
-        <p>탐색기 창은 옆에 띄워 두세요. <b>에이전트는 아직 부르지 않습니다.</b> 4단계에서 라이브러리를 직접 하나 설치해 본 뒤에 부릅니다.</p>
-        <button class="done-btn" type="button" data-done="files" aria-pressed="false">실습 파일 준비 완료</button>
-      </section>
-
-      <!-- 4 -->
-      <section class="step" id="first" data-step="first">
-        <div class="step-head"><span class="n">4</span><h2>첫 라이브러리 설치 · PDF 3개를 하나로</h2><span class="time">15분</span></div>
-        <p class="lead">PDF를 다루는 라이브러리 <b>pypdf</b>를 직접 설치해 보고, 그걸로 에이전트에게 PDF 3개를 하나로 합치게 합니다.</p>
+      <section class="step" id="pdf" data-step="pdf">
+        <div class="step-head"><span class="n">3</span><h2>PDF · 만들고, 나누고, 다시 합치기</h2><span class="time">10분</span></div>
+        <p class="lead">PDF를 자르고 붙이는 라이브러리 <b>pypdf</b>를 직접 설치해 봅니다. 그 뒤 연습할 PDF부터 에이전트와 함께 만듭니다.</p>
 
         <div class="sub">
-          <h3><span class="k">4-1</span>직접 설치해 보기</h3>
-          <p><code class="i">PS C:\projects\tools&gt;</code>에서 입력합니다. 1-3에서 눌러 본 '설치' 버튼을 진짜로 누르는 것입니다.</p>
+          <h3><span class="k">3-1</span>직접 설치해 보기</h3>
+          <p><code class="i">PS C:\projects\03_python&gt;</code>에서 입력합니다. 1-3에서 눌러 본 '설치' 버튼을 진짜로 누르는 것입니다.</p>
           <div class="cmd"><span class="lbl">PowerShell</span><pre>pip install pypdf</pre><button class="copy" type="button">복사</button></div>
           <div class="screen">Collecting pypdf
   Downloading pypdf-…-py3-none-any.whl
@@ -196,7 +188,7 @@ Installing collected packages: pypdf
         </div>
 
         <div class="sub">
-          <h3><span class="k">4-2</span>설치된 라이브러리 보기</h3>
+          <h3><span class="k">3-2</span>설치된 라이브러리 보기</h3>
           <p>스마트폰 홈 화면에서 깔린 앱을 보듯, 설치된 라이브러리 목록을 봅니다.</p>
           <div class="cmd"><span class="lbl">PowerShell</span><pre>pip list</pre><button class="copy" type="button">복사</button></div>
           <div class="screen">Package    Version
@@ -210,61 +202,163 @@ pip        25.0.1
         </div>
 
         <div class="sub">
-          <h3><span class="k">4-3</span>에이전트에게 맡기기</h3>
+          <h3><span class="k">3-3</span>에이전트에게 연습용 PDF 만들게 하기</h3>
           <div class="tip"><b>02에서 배운 것 다시 쓰기</b>: 에이전트를 부르고(<code class="i">claude</code>, <code class="i">codex</code>, <code class="i">agy</code>, <code class="i">grok</code>) 먼저 "이 폴더에 폴더 밖 금지 규칙 파일을 만들어줘"라고 한 뒤, 다시 켜서 자동 모드로 바꾸세요.</div>
-          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>pypdf로 공문 폴더의 PDF 3개를 하나로 합쳐줘. 파일 이름은 PDF_모음.pdf로 해줘.</pre><button class="copy" type="button">복사</button></div>
-          <p>확인: <code class="i">PDF_모음.pdf</code>를 엣지로 열어 PDF 3개의 내용이 모두 들어 있는지(4쪽) 보세요.</p>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>연습용 PDF를 만들어줘. 10쪽이고, 1부 3쪽, 2부 4쪽, 3부 3쪽이야. 쪽마다 '몇 부 몇 쪽'을 크게 적어줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: 폴더에 PDF가 생겼나요? 엣지로 열어 10쪽이고 쪽마다 "1부 1쪽"처럼 적혀 있는지 보세요.</p>
+          <div class="note">
+            <b class="t">pypdf만으로는 PDF를 새로 만들 수 없습니다</b>
+            <p>pypdf는 <b>있는 PDF를 자르고 붙이는</b> 라이브러리입니다. 새로 만드는 일에는 다른 라이브러리가 필요해서, 에이전트가 직접 하나 골라 설치합니다(예: reportlab). 설치해도 되냐고 물으면 "응, 설치해"라고 답하세요. 한 라이브러리가 못 하는 일은 다른 앱을 깔아서 합니다.</p>
+          </div>
         </div>
-        <button class="done-btn" type="button" data-done="first" aria-pressed="false">첫 라이브러리로 합치기 완료</button>
+
+        <div class="sub">
+          <h3><span class="k">3-4</span>파트별로 나누기</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>그 PDF를 1부, 2부, 3부로 나눠서 각각 따로 저장해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: PDF가 3개 생겼나요? 각각 3쪽, 4쪽, 3쪽이어야 합니다.</p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">3-5</span>일부만 다시 합치기</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>1부와 3부만 다시 하나로 합쳐줘. 이름은 일부_합본.pdf로 해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: <code class="i">일부_합본.pdf</code>가 6쪽이고, 1부 3쪽 다음에 3부 3쪽이 이어지는지 보세요. 2부는 빠져 있어야 합니다.</p>
+        </div>
+        <button class="done-btn" type="button" data-done="pdf" aria-pressed="false">PDF 만들기·나누기·합치기 완료</button>
+      </section>
+
+      <!-- 4 -->
+      <section class="step" id="excel" data-step="excel">
+        <div class="step-head"><span class="n">4</span><h2>엑셀 · 만들고, 반별로 나누고, 색 칠하기</h2><span class="time">10분</span></div>
+        <p class="lead">엑셀 파일을 다루는 라이브러리 <b>openpyxl</b>을 씁니다. 이번에는 <b>설치도 에이전트에게</b> 맡깁니다. 설치할 라이브러리 이름과 할 일을 한 번에 말하면 됩니다. 모두 지어낸 연습 자료입니다.</p>
+
+        <div class="sub">
+          <h3><span class="k">4-1</span>연습용 엑셀 만들기 <span class="libtag">openpyxl</span></h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>openpyxl 설치하고, 5개 반, 반마다 10명, 국어·수학·영어 점수가 있는 연습용 엑셀 파일을 만들어줘. 이름은 가짜로.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: 엑셀로 열어 <b>50명</b>(5개 반 × 10명)이 있고, 반·번호·이름·국어·수학·영어가 보이는지 확인하세요.</p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">4-2</span>반별 시트로 나누기</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>반별로 시트를 나눠서 저장해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: 엑셀 아래 시트 탭이 <b>1반 ~ 5반</b>으로 나뉘고, 번호가 1번부터 차례대로인지 보세요.</p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">4-3</span>반마다 따로 파일로 저장하기</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>각 반 시트를 따로 엑셀 파일로도 저장해줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: 폴더에 반별 파일 5개가 생겼나요? 각 파일에 그 반 10명만 들어 있어야 합니다.</p>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">4-4</span>60점 미만 칸 표시하기</h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>60점 미만 점수 칸은 빨갛게 표시해줘.</pre><button class="copy" type="button">복사</button></div>
+          <div class="tip"><b>엑셀을 열어 둔 채라면 닫고 하세요.</b> 열려 있는 파일은 고칠 수 없습니다. 평균이나 합계를 구할 때는 <b>"값으로 넣어줘"</b>라고 하세요. 엑셀 수식으로만 저장되면 엑셀에서 열기 전에는 값이 비어 있습니다.</div>
+        </div>
+        <button class="done-btn" type="button" data-done="excel" aria-pressed="false">엑셀 만들기·나누기·표시 완료</button>
       </section>
 
       <!-- 5 -->
-      <section class="step" id="more" data-step="more">
-        <div class="step-head"><span class="n">5</span><h2>용도에 맞게 라이브러리 더 설치하기</h2><span class="time">15분</span></div>
-        <p class="lead">이제 설치도 에이전트에게 맡깁니다. <b>설치할 라이브러리 이름과 할 일</b>을 한 번에 말하면, 에이전트가 설치하고 바로 작업합니다. 순서대로 함께 해 봅니다.</p>
-
-        <div class="sub">
-          <h3><span class="k">5-1</span>엑셀 · 반별로 나누기 <span class="libtag">openpyxl</span></h3>
-          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>openpyxl 설치하고, 2학년_명렬표.xlsx를 반별 시트로 나눠서 번호순으로 정렬해줘. 원본은 그대로 두고 반별_명렬표.xlsx로 저장해줘.</pre><button class="copy" type="button">복사</button></div>
-          <p>확인: <code class="i">반별_명렬표.xlsx</code>를 열어 아래 시트 탭이 1반·2반·3반으로 나뉘고, 번호가 1번부터 차례대로인지 보세요.</p>
+      <section class="step" id="hwp" data-step="hwp">
+        <div class="step-head"><span class="n">5</span><h2>한글(HWPX) · 양식 빈칸 채우기</h2><span class="time">7분</span></div>
+        <p class="lead">한글 프로그램을 열지 않고, 양식의 빈칸을 에이전트가 채우게 합니다. 쓰는 라이브러리는 <b>python-hwpx</b>입니다. 양식 파일 두 개(가정통신문, 고사원안)는 <b>강사가 나눠 드립니다</b>. 받은 파일을 <code class="i">C:\projects\03_python</code>에 넣으세요.</p>
+        <div class="note">
+          <b class="t">확장자가 .hwpx여야 합니다</b>
+          <p>예전 형식인 <code class="i">.hwp</code> 파일은 python-hwpx가 열지 못합니다. 한글에서 파일을 열고 <b>파일 → 다른 이름으로 저장 → 파일 형식: HWPX</b>로 저장한 사본을 쓰세요. 이름은 3-2에서 본 <code class="i">python-hwpx</code>입니다(hwpx만 쓰면 다른 라이브러리).</p>
         </div>
 
         <div class="sub">
-          <h3><span class="k">5-2</span>PDF · 필요한 쪽만 떼기 <span class="libtag">pypdf</span></h3>
-          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>연수교재_전체.pdf에서 '개인정보 보호' 장만 찾아서 따로 PDF로 저장해줘.</pre><button class="copy" type="button">복사</button></div>
-          <p>이번에는 "설치하고"가 없습니다. pypdf는 4단계에서 이미 설치했기 때문입니다. <b>한 번 깐 앱을 계속 쓰듯, 라이브러리도 한 번 설치하면 계속 씁니다.</b></p>
+          <h3><span class="k">5-1</span>가정통신문 · 제목과 날짜 바꾸기 <span class="libtag">python-hwpx</span></h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>python-hwpx 설치하고, 2026 가정통신문 양식.hwpx를 복사해서 겨울방학 안내 가정통신문을 만들어줘. 제목은 '겨울방학 생활 안내', 날짜는 2026. 12. 18.로 바꾸고, &lt;참고&gt; 상자는 지워줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: 새로 생긴 파일을 <b>한글 프로그램으로 열어</b> 제목과 날짜가 바뀌었는지, 모양이 깨지지 않았는지 보세요. 원본은 그대로여야 합니다.</p>
         </div>
 
         <div class="sub">
-          <h3><span class="k">5-3</span>한글(HWPX) · 내용만 뽑기 <span class="libtag">python-hwpx</span></h3>
-          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>python-hwpx 설치하고, 가정통신문_겨울방학.hwpx에서 날짜와 할 일만 뽑아서 메모장 파일로 정리해줘.</pre><button class="copy" type="button">복사</button></div>
-          <p>한글 프로그램을 열지 않고도 내용을 꺼낼 수 있습니다. 4-2의 가짜 라이브러리 주의를 떠올리세요. 이름은 <code class="i">python-hwpx</code>입니다.</p>
+          <h3><span class="k">5-2</span>고사원안 · 빈칸 채우기 <span class="libtag">python-hwpx</span></h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>2026 고사원안 양식.hwpx의 빈칸을 채워서 새 파일로 저장해줘. 2학기 중간고사, 2학년 국어, 10월 28일 수요일, 선택형 20문항 60점, 서답형 2문항 40점이야.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: 위쪽의 학기, 월, 일, 요일, 학년, 과목, 문항 수와 점수 칸이 채워졌는지 보세요. 양식 안내문과 예시 문항은 그대로 남아 있습니다.</p>
+        </div>
+        <button class="done-btn" type="button" data-done="hwp" aria-pressed="false">한글 양식 채우기 완료</button>
+      </section>
+
+      <!-- 6 -->
+      <section class="step" id="graph" data-step="graph">
+        <div class="step-head"><span class="n">6</span><h2>그래프 · 내 교과 그림 그리기</h2><span class="time">10분</span></div>
+        <p class="lead">그래프를 그리는 라이브러리 <b>matplotlib</b>을 설치합니다. 먼저 모두 함께 하나를 그리고, 그 뒤 <b>내 교과 카드</b>를 골라서 만들어 봅니다. 한글 글꼴은 따로 말하지 않아도 에이전트가 맞춥니다.</p>
+
+        <div class="sub">
+          <h3><span class="k">6-1</span>함께 하기 · 반별 수학 점수 상자그림 <span class="libtag">matplotlib</span></h3>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>matplotlib 설치하고, 만든 엑셀 파일로 반별 수학 점수를 상자그림으로 그려줘.</pre><button class="copy" type="button">복사</button></div>
+          <p>확인: 그림 파일이 생겼나요? 반마다 상자 하나씩, 점수의 퍼짐이 보이는지 확인하세요. 4단계에서 만든 엑셀이 그대로 그림이 됩니다.</p>
         </div>
 
         <div class="sub">
-          <h3><span class="k">5-4</span>오늘 설치한 라이브러리</h3>
+          <h3><span class="k">6-2</span>내 교과 카드 고르기</h3>
+          <p>내 교과의 카드를 펼쳐 <b>복사해서 에이전트에게 붙여넣으세요.</b> 숫자는 지어낸 연습용 값입니다. 실제 실험 값이 필요하면 직접 알려 주세요.</p>
+          <details>
+            <summary>수학 · 시험지 모양 이차함수</summary>
+            <div class="body"><div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>y = x² − 4x + 3 그래프를 시험지 모양으로 그려줘. 꼭짓점과 x절편에 점과 점선을 표시하고, 흑백에 격자 없이.</pre><button class="copy" type="button">복사</button></div></div>
+          </details>
+          <details>
+            <summary>물리 · 던진 공의 포물선</summary>
+            <div class="body"><div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>공을 30도, 45도, 60도로 던졌을 때 포물선 궤적을 한 그래프에 그려줘.</pre><button class="copy" type="button">복사</button></div></div>
+          </details>
+          <details>
+            <summary>물리 · 용수철 실험과 추세선</summary>
+            <div class="body"><div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>용수철에 추를 달았을 때 늘어난 길이를 연습용 가짜 데이터로 만들고, 점과 직선 추세선을 그려줘.</pre><button class="copy" type="button">복사</button></div></div>
+          </details>
+          <details>
+            <summary>화학 · 물의 가열 곡선</summary>
+            <div class="body"><div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>물을 가열할 때 시간에 따른 온도 변화(가열 곡선)를 그려줘. 녹는점과 끓는점에서 평평한 구간을 표시해줘.</pre><button class="copy" type="button">복사</button></div></div>
+          </details>
+          <details>
+            <summary>생명과학 · 온도에 따른 효소 활성</summary>
+            <div class="body"><div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>효소 활성이 온도에 따라 변하는 종 모양 곡선을 그리고, 최적 온도를 표시해줘.</pre><button class="copy" type="button">복사</button></div></div>
+          </details>
+          <details>
+            <summary>지구과학 · 지진파 P파와 S파</summary>
+            <div class="body"><div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>지진파 P파와 S파가 멀리 갈수록 도달 시간이 어떻게 달라지는지 그래프로 그려줘.</pre><button class="copy" type="button">복사</button></div></div>
+          </details>
+          <details>
+            <summary>사회 · 수요와 공급의 균형</summary>
+            <div class="body"><div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>수요곡선과 공급곡선을 그리고 균형점을 점선으로 표시해줘.</pre><button class="copy" type="button">복사</button></div></div>
+          </details>
+          <details>
+            <summary>국어 · 영어 · 그 밖의 교과 · 월별 꺾은선</summary>
+            <div class="body"><div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>학급 독서량을 연습용 가짜 데이터로 만들어 월별 꺾은선그래프로 그려줘.</pre><button class="copy" type="button">복사</button></div><p>"독서량" 자리에 설문 결과, 출석 현황 같은 내 주제를 넣어 보세요.</p></div>
+          </details>
+        </div>
+
+        <div class="sub">
+          <h3><span class="k">6-3</span>그림 고쳐 달라고 하기</h3>
+          <p>그림이 나오면 <b>눈으로 보세요.</b> 에이전트가 "겹치지 않는 것을 확인했습니다"라고 해도 글자가 선과 겹쳐 있을 수 있습니다. 이럴 때는 이렇게 말하면 됩니다.</p>
+          <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>글자가 선과 겹쳐. 안 겹치게 고쳐줘.</pre><button class="copy" type="button">복사</button></div>
+        </div>
+        <button class="done-btn" type="button" data-done="graph" aria-pressed="false">내 교과 그래프 완료</button>
+      </section>
+
+      <!-- 7 -->
+      <section class="step" id="end" data-step="end">
+        <div class="step-head"><span class="n">7</span><h2>마무리</h2><span class="time">5분</span></div>
+        <div class="sub">
+          <h3><span class="k">7-1</span>오늘 설치한 라이브러리</h3>
           <table class="keys">
             <thead><tr><th>용도</th><th>라이브러리</th></tr></thead>
             <tbody>
-              <tr><td>PDF 합치기 · 쪽 떼기</td><td>pypdf</td></tr>
+              <tr><td>PDF 합치기 · 나누기</td><td>pypdf</td></tr>
+              <tr><td>PDF 새로 만들기</td><td>에이전트가 고른 것 (예: reportlab)</td></tr>
               <tr><td>엑셀 읽고 쓰기</td><td>openpyxl</td></tr>
-              <tr><td>한글(HWPX) 읽기</td><td>python-hwpx</td></tr>
+              <tr><td>한글(HWPX) 읽고 채우기</td><td>python-hwpx</td></tr>
+              <tr><td>그래프 그리기</td><td>matplotlib</td></tr>
             </tbody>
           </table>
           <div class="cmd prompt"><span class="lbl">에이전트에게 · 확인</span><pre>지금 설치된 파이썬 라이브러리 보여줘.</pre><button class="copy" type="button">복사</button></div>
         </div>
-        <button class="done-btn" type="button" data-done="more" aria-pressed="false">세 가지 모두 해 봤어요</button>
-      </section>
-
-      <!-- 6 -->
-      <section class="step" id="end" data-step="end">
-        <div class="step-head"><span class="n">6</span><h2>마무리</h2><span class="time">5분</span></div>
         <div class="sub">
-          <h3><span class="k">6-1</span>소감 남기기</h3>
-          <p>오른쪽 아래 <b>💬 채팅</b>에 <b>1-5에서 해 보고 싶은 일 한 줄</b>을 남겨 주세요. 예: "설문 결과를 그래프로 만들어 보고 싶다."</p>
+          <h3><span class="k">7-2</span>소감 남기기</h3>
+          <p>오른쪽 아래 <b>💬 채팅</b>에 <b>내 교과에서 파이썬으로 해 보고 싶은 일 한 줄</b>을 남겨 주세요. 1-5의 카드를 참고해도 좋습니다. 예: "설문 결과를 그래프로 만들어 보고 싶다."</p>
         </div>
         <div class="sub">
-          <h3><span class="k">6-2</span>더 해보기 · 다음에도 쓰게 남기기</h3>
+          <h3><span class="k">7-3</span>더 해보기 · 다음에도 쓰게 남기기</h3>
           <p>방금 한 일을 매번 에이전트에게 부탁하지 않고 쓰고 싶다면 이렇게 말해 보세요.</p>
           <div class="cmd prompt"><span class="lbl">에이전트에게</span><pre>방금 한 걸 다음에도 쓸 수 있게 더블클릭하면 되는 파일로 만들어줘.</pre><button class="copy" type="button">복사</button></div>
         </div>
@@ -280,6 +374,7 @@ pip        25.0.1
           <li>성적, 상담 기록처럼 민감한 자료는 맡기지 않습니다.</li>
           <li>파일을 <b>인터넷에 올리는 방식</b>(온라인 변환 사이트 등)은 쓰지 않습니다. 파이썬 라이브러리는 내 컴퓨터 안에서 처리합니다.</li>
           <li>작업 전에는 언제나 <b>원본 백업</b>을 먼저 합니다.</li>
+          <li>오늘 쓴 연습 자료와 그래프 숫자는 모두 <b>지어낸 값</b>입니다. 실제 성적이나 학생 이름은 넣지 않습니다.</li>
         </ul>
       </section>
 
@@ -303,8 +398,16 @@ pip        25.0.1
           <div class="body"><p>에이전트에게 "이거 믿을 만한 거야?"라고 물어보세요. 공식 이름, 만든 곳, 최근 업데이트를 확인해 줍니다. 이름이 비슷한 라이브러리가 여러 개면 <b>설명과 만든 곳</b>이 분명한 것을 고릅니다.</p></div>
         </details>
         <details>
-          <summary>압축을 풀었더니 파일 이름이 깨져 보여요</summary>
-          <div class="body"><p>탐색기의 "압축 풀기"로 풀면 생길 수 있습니다. 3단계의 PowerShell 명령으로 다시 받아 주세요.</p></div>
+          <summary>PDF나 그림에서 한글이 네모(□)로 나와요</summary>
+          <div class="body"><p>글꼴 문제입니다. 에이전트에게 <b>"한글이 네모로 나와. 맑은 고딕으로 고쳐줘"</b>라고 말하세요.</p></div>
+        </details>
+        <details>
+          <summary>한글 파일이 안 열린다고 해요 (.hwp)</summary>
+          <div class="body"><p>python-hwpx는 <code class="i">.hwpx</code>만 엽니다. 한글에서 파일을 열고 <b>파일 → 다른 이름으로 저장 → 파일 형식: HWPX</b>로 저장한 사본을 쓰세요.</p></div>
+        </details>
+        <details>
+          <summary>엑셀의 평균이 비어 있어요</summary>
+          <div class="body"><p>에이전트가 엑셀 수식으로만 저장했기 때문입니다. 엑셀에서 열면 계산되어 보이지만, 에이전트가 읽을 때는 값이 비어 있습니다. <b>"값으로 넣어줘"</b>라고 말하세요.</p></div>
         </details>
         <details>
           <summary>"파일이 사용 중"이라며 저장이 안 돼요</summary>
@@ -375,8 +478,8 @@ pip        25.0.1
   storeReset();
 
   /* ---------- 진행 체크 ---------- */
-  const STEPS = ["why", "py", "files", "first", "more", "end"];
-  const KEY = "wab-l3-done-v2";
+  const STEPS = ["why", "py", "pdf", "excel", "hwp", "graph", "end"];
+  const KEY = "wab-l3-done-v3";
   let done = store.get(KEY, []);
   function paint() {
     $$(".done-btn").forEach(b => b.setAttribute("aria-pressed", done.includes(b.dataset.done) ? "true" : "false"));
