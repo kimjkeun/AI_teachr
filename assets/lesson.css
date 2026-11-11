@@ -327,6 +327,9 @@ details.alt > p, details.alt > .cmd { margin: 0 16px 14px; }
 .chat-msg.notice .chat-meta b::before { content: "📌 "; }
 .chat-msg.is-pinned p { justify-self: stretch; }
 .chat-msg.pending { opacity: .55; }
+.chat-msg.ai p { background: color-mix(in srgb, var(--green) 9%, var(--surface)); border: 1px dashed color-mix(in srgb, var(--green) 55%, var(--line)); }
+.chat-ainote { margin: 0; padding: 6px 12px; font-size: 12.5px; line-height: 1.5; color: var(--muted); background: var(--warn-bg); border-top: 1px solid var(--warn-line); }
+.chat-ainote[hidden] { display: none; }
 .chat-msg .cmd { padding: 10px 10px 10px 14px; }
 .chat-msg .cmd pre { font-size: 13px; }
 .chat-meta { display: flex; align-items: baseline; gap: 6px; font-size: 12.5px; color: var(--muted); }

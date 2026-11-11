@@ -14,7 +14,14 @@
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
     del(k) { try { localStorage.removeItem(k); } catch {} }
   };
-  const K = { name: "wab-chat-name", admin: "wab-chat-admin", seen: "wab-chat-seen-" + ROOM };
+  const K = { name: "wab-chat-name", admin: "wab-chat-admin", seen: "wab-chat-seen-" + ROOM, cid: "wab-chat-cid" };
+  // AI 질문 횟수를 브라우저마다 세기 위한 무작위 번호 (이름·개인정보가 아닙니다)
+  const cid = () => {
+    let v = store.get(K.cid, "");
+    if (!/^[0-9a-z]{8,20}$/.test(v)) { v = Array.from({ length: 14 }, () => "0123456789abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 36)]).join(""); store.set(K.cid, v); }
+    return v;
+  };
+  const AI_MAX = 300;
 
   /* ---------- 화면 ---------- */
   const fab = el("button", "chat-fab"); fab.type = "button"; fab.setAttribute("aria-expanded", "false");
@@ -36,16 +43,21 @@
   const ta = el("textarea"); ta.rows = 1; ta.maxLength = 1000; ta.placeholder = "메시지 (Enter 전송 · Shift+Enter 줄바꿈)"; ta.setAttribute("aria-label", "메시지");
   const opts = el("div", "chat-opts");
   const kindSel = el("select"); kindSel.setAttribute("aria-label", "보내는 형식");
-  [["msg", "💬 메시지"], ["code", "⌨️ 복사용 블록"], ["notice", "📌 공지"]].forEach(([v, t]) => { const o = el("option", null, t); o.value = v; kindSel.append(o); });
+  [["msg", "💬 메시지"], ["ai", "🤖 AI에게 묻기"], ["code", "⌨️ 복사용 블록"], ["notice", "📌 공지"]].forEach(([v, t]) => { const o = el("option", null, t); o.value = v; kindSel.append(o); });
   const send = el("button", "btn chat-send", "보내기"); send.type = "submit";
   nameRow.append(nameIn, kindSel);
   opts.append(ta, send);
   form.append(nameRow, opts);
 
+  const aiNote = el("p", "chat-ainote", "🤖 질문은 OpenAI 서버로 전송됩니다. 학생 이름·연락처 같은 개인정보는 쓰지 마세요. AI 답은 틀릴 수 있어요. (질문은 " + AI_MAX + "자까지)");
+  aiNote.hidden = true;
+  const showAiNote = () => { aiNote.hidden = !(kindSel.value === "ai" || /^\/ai(\s|$)/i.test(ta.value)); };
+  kindSel.addEventListener("change", showAiNote);
+
   const foot = el("div", "chat-foot");
   const adminBtn = el("button", "linkbtn"); adminBtn.type = "button";
   foot.append(adminBtn);
-  panel.append(head, pinned, list, status, form, foot);
+  panel.append(head, pinned, list, status, form, aiNote, foot);
   document.body.append(fab, panel);
 
   /* ---------- 상태 ---------- */
@@ -76,6 +88,7 @@
     const item = el("div", "chat-msg " + m.kind + (m.admin ? " admin" : "") + (m.pending ? " pending" : ""));
     const meta = el("div", "chat-meta");
     meta.append(el("b", null, m.name));
+    if (m.kind === "ai") { const tag = el("span", "chat-tag", "🤖"); tag.title = "AI 도우미"; tag.setAttribute("aria-label", "AI 도우미"); meta.append(tag); }
     if (m.admin) { const tag = el("span", "chat-tag", "🧑‍🏫"); tag.title = "강사"; tag.setAttribute("aria-label", "강사"); meta.append(tag); }
     meta.append(el("time", null, m.pending ? "보내는 중…" : fmtTime(m.t)));
     if (adminKey() && !m.pending) {
@@ -119,10 +132,24 @@
   const setStatus = (t, bad) => { status.textContent = t || ""; status.classList.toggle("bad", !!bad); };
 
   /* ---------- 서버 ---------- */
-  async function post(body) {
-    const res = await fetch(SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(Object.assign({ room: ROOM }, body)) });
-    return res.json();
+  async function post(body, ms) {
+    const ctl = ms ? new AbortController() : null;
+    const t = ms ? setTimeout(() => ctl.abort(), ms) : 0;
+    try {
+      const res = await fetch(SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(Object.assign({ room: ROOM }, body)), signal: ctl ? ctl.signal : undefined });
+      return await res.json();
+    } finally { clearTimeout(t); }
   }
+  const AI_ERR = {
+    ai_off: "AI 도우미가 아직 켜져 있지 않습니다.",
+    ai_user_limit: "오늘 이 브라우저에서 쓸 수 있는 AI 질문을 모두 썼습니다. 내일 다시 이용해 주세요.",
+    ai_day_limit: "오늘 AI 질문 한도가 모두 찼습니다. 내일 다시 이용해 주세요.",
+    pii: "전화번호나 주민번호처럼 보이는 글이 있어 보내지 않았습니다. 지우고 다시 물어보세요.",
+    too_fast: "AI에게는 몇 초 간격으로 물어볼 수 있습니다.",
+    ai_failed: "AI가 답하지 못했습니다. 잠시 후 다시 시도해 주세요. (질문 횟수는 줄어들지 않았습니다)",
+    bad_name: "'AI'는 이름으로 쓸 수 없습니다.",
+    bad_input: "AI 도우미를 쓸 수 없는 상태입니다. 잠시 후 다시 시도해 주세요."
+  };
   async function load() {
     if (busy) return;
     try {
@@ -159,27 +186,34 @@
   document.addEventListener("visibilitychange", () => { if (!document.hidden) load(); schedule(); });
 
   const grow = () => { ta.style.height = "auto"; ta.style.height = Math.min(ta.scrollHeight + 2, 130) + "px"; };
-  ta.addEventListener("input", grow);
+  ta.addEventListener("input", () => { grow(); showAiNote(); });
   ta.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); }
   });
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const name = nameIn.value.trim(), text = ta.value.trim(), kind = kindSel.value;
+    const name = nameIn.value.trim(), orig = ta.value.trim();
+    let kind = kindSel.value, text = orig;
+    if (/^\/ai\s+/i.test(text)) { kind = "ai"; text = text.replace(/^\/ai\s+/i, "").trim(); }   // "/ai 질문"으로도 물을 수 있음
     if (!name) { setStatus("이름을 먼저 적어 주세요.", true); nameIn.focus(); return; }
     if (!text || busy) return;
+    if (kind === "ai" && text.length > AI_MAX) { setStatus("AI 질문은 " + AI_MAX + "자까지입니다. (지금 " + text.length + "자)", true); return; }
     store.set(K.name, name);
     busy = true; send.disabled = true;
-    const temp = { id: Infinity, kind, name, text, t: Date.now(), admin: !!adminKey(), pending: true };
-    messages = messages.concat([temp]); ta.value = ""; grow(); render(); list.scrollTop = list.scrollHeight;
+    const ask = kind === "ai";
+    const temp = { id: Infinity, kind: ask ? "msg" : kind, name, text: ask ? "@AI " + text : text, t: Date.now(), admin: !!adminKey(), pending: true };
+    messages = messages.concat([temp]); ta.value = ""; grow(); showAiNote(); render(); list.scrollTop = list.scrollHeight;
+    if (ask) setStatus("🤖 AI가 답을 쓰는 중입니다… (몇 초 걸려요)");
     try {
-      const data = await post({ action: "chat", name, text, kind, adminKey: adminKey() });
-      if (data.ok) { messages = data.messages; setStatus(""); if (kind !== "msg") kindSel.value = "msg"; }
+      const data = ask ? await post({ action: "ai_ask", name, text, cid: cid() }, 60000)
+                       : await post({ action: "chat", name, text, kind, adminKey: adminKey() });
+      if (data.ok) { messages = data.messages; setStatus(""); if (kind !== "msg") kindSel.value = "msg"; showAiNote(); }
       else {
-        messages = messages.filter(m => m !== temp); ta.value = text;
-        setStatus(data.error === "too_fast" ? "조금 천천히 보내 주세요." : data.error === "bad_key" ? "공지는 강사 모드에서만 올릴 수 있습니다." : "보내지 못했습니다. 다시 시도해 주세요.", true);
+        messages = messages.filter(m => m !== temp); ta.value = orig; grow(); showAiNote();
+        setStatus(ask ? (AI_ERR[data.error] || "AI에게 묻지 못했습니다. 다시 시도해 주세요.")
+                      : data.error === "too_fast" ? "조금 천천히 보내 주세요." : data.error === "bad_key" ? "공지는 강사 모드에서만 올릴 수 있습니다." : data.error === "bad_name" ? AI_ERR.bad_name : "보내지 못했습니다. 다시 시도해 주세요.", true);
       }
-    } catch { messages = messages.filter(m => m !== temp); ta.value = text; setStatus("보내지 못했습니다. 인터넷 연결을 확인해 주세요.", true); }
+    } catch { messages = messages.filter(m => m !== temp); ta.value = orig; grow(); showAiNote(); setStatus(ask ? "AI가 답하지 못했습니다. 잠시 후 다시 시도해 주세요." : "보내지 못했습니다. 인터넷 연결을 확인해 주세요.", true); }
     busy = false; send.disabled = false; render(); ta.focus();
   });
 
