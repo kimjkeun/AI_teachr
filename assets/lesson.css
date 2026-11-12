@@ -429,3 +429,5 @@ details.alt > p, details.alt > .cmd { margin: 0 16px 14px; }
 .uses { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
 .uses .ico { font-size: 26px; line-height: 1; }
 .uses small { font: 600 12px var(--mono); color: var(--green); overflow-wrap: anywhere; }
+
+.intro-video { display: block; width: 100%; max-width: 720px; margin: 16px 0 4px; border-radius: 10px; border: 1px solid var(--line, #ddd); background: #000; }

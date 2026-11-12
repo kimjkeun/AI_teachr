@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>03 도입 영상 · 모션 그래픽</title>
+<style>
+:root { --paper:#F3F5F0; --surface:#fff; --ink:#14211A; --muted:#56665C; --line:#D3DCD3; --accent:#F4C21B; --green:#1F5E46; --board:#183A2D; --board-ink:#E8EFE3; --board-dim:#8FB3A1; --danger:#B3402A; --warn-bg:#FFF4D1; --warn-line:#E2B93B;
+  --body:"Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif; --mono:"Consolas","Malgun Gothic",monospace; }
+* { box-sizing:border-box; margin:0; padding:0; }
+html,body { width:1920px; height:1080px; overflow:hidden; background:var(--paper); }
+body { position:relative; font-family:var(--body); color:var(--ink); word-break:keep-all;
+  background-image:linear-gradient(rgba(31,94,70,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(31,94,70,.07) 1px,transparent 1px); background-size:40px 40px; }
+.abs { position:absolute; }
+.scene { position:absolute; inset:0; opacity:0; }
+.tag { position:absolute; left:80px; top:56px; font:600 28px var(--mono); color:var(--muted); letter-spacing:.04em; }
+.tag b { color:var(--green); }
+#bar { position:absolute; left:0; bottom:0; height:10px; width:0; background:var(--green); }
+#bar2 { position:absolute; left:0; bottom:0; height:10px; width:100%; background:rgba(31,94,70,.12); }
+
+/* S1 */
+#s1 .center { position:absolute; left:0; right:0; top:330px; text-align:center; }
+#s1 h1 { font-size:210px; font-weight:900; line-height:1.1; letter-spacing:-.02em; white-space:nowrap; }
+#s1 h1 span.ch { display:inline-block; }
+#s1 .hl { background:linear-gradient(transparent 62%, var(--accent) 62%, var(--accent) 94%, transparent 94%) no-repeat; background-size:0% 100%; }
+#s1 p { font-size:50px; color:var(--muted); margin-top:38px; font-weight:500; }
+#s1 .chip { display:inline-block; font:600 32px var(--mono); color:var(--green); border:3px solid var(--green); padding:10px 26px; border-radius:999px; margin-bottom:44px; background:var(--surface); }
+
+/* S2 */
+#phone { left:250px; top:150px; width:400px; height:800px; border:16px solid var(--ink); border-radius:70px; background:#fff; overflow:hidden; box-shadow:0 30px 60px rgba(20,33,26,.18); }
+#phone .notch { position:absolute; left:50%; top:0; width:140px; height:34px; margin-left:-70px; background:var(--ink); border-radius:0 0 22px 22px; }
+#phone .empty { position:absolute; left:0; right:0; top:340px; text-align:center; font-size:40px; color:var(--muted); line-height:1.5; font-weight:600; }
+#phone .grid { position:absolute; left:34px; right:34px; top:120px; display:grid; grid-template-columns:1fr 1fr; gap:46px 28px; }
+.app { text-align:center; }
+.app i { display:block; width:140px; height:140px; margin:0 auto 12px; border-radius:36px; font:900 44px/140px var(--body); font-style:normal; color:#fff; box-shadow:0 10px 20px rgba(0,0,0,.18); }
+.app span { font:600 24px var(--mono); color:var(--ink); }
+#eq { left:820px; top:230px; width:1020px; }
+.eq-row { display:flex; align-items:center; gap:30px; height:130px; margin-bottom:26px; padding:0 40px; background:var(--surface); border:3px solid var(--line); border-radius:26px; }
+.eq-row .k { font-size:54px; font-weight:800; width:380px; }
+.eq-row .eqs { font:800 54px var(--mono); color:var(--green); }
+.eq-row .v { font-size:54px; font-weight:800; color:var(--green); }
+.eq-row.hot { border-color:var(--green); background:#EAF3EC; }
+
+/* S3 */
+#term { left:300px; top:230px; width:1320px; height:470px; background:var(--board); border-radius:28px; box-shadow:0 30px 70px rgba(20,33,26,.28); padding:30px 44px; font:500 46px/1.7 var(--mono); color:var(--board-ink); overflow:hidden; }
+#term .dots { position:absolute; left:34px; top:20px; }
+#term .dots i { display:inline-block; width:18px; height:18px; border-radius:50%; margin-right:10px; background:#7a9a8a; }
+#term .lines { margin-top:36px; white-space:pre; }
+#term .p { color:var(--board-dim); }
+#term .ok { color:#7CE0A6; }
+#term .dim { color:var(--board-dim); font-size:40px; }
+.cursor { display:inline-block; width:22px; height:46px; background:var(--accent); vertical-align:-8px; margin-left:4px; }
+#ask { left:300px; top:760px; width:1320px; background:var(--surface); border:4px solid var(--ink); border-radius:30px; padding:28px 44px; font-size:50px; font-weight:700; }
+#ask small { display:block; font:600 26px var(--mono); color:var(--muted); margin-bottom:8px; }
+#askok { right:60px; top:-40px; background:var(--green); color:#fff; font:700 34px var(--body); padding:12px 26px; border-radius:999px; }
+
+/* S4 cards */
+.card { top:215px; width:410px; height:660px; background:var(--surface); border:4px solid var(--ink); border-radius:34px; box-shadow:0 22px 44px rgba(20,33,26,.16); padding:34px 30px; overflow:hidden; }
+.card h3 { font-size:58px; font-weight:900; line-height:1.1; }
+.card h4 { font-size:34px; font-weight:600; color:var(--muted); margin-top:6px; }
+.card .lib { position:absolute; left:30px; bottom:26px; font:700 30px var(--mono); color:var(--green); background:#EAF3EC; border-radius:12px; padding:6px 16px; }
+.card .stage { position:absolute; left:30px; right:30px; top:190px; height:380px; }
+.sheet { position:absolute; width:150px; height:200px; background:#fff; border:4px solid var(--ink); border-radius:12px; padding:18px 14px; font:700 28px var(--body); }
+.sheet b { display:block; height:8px; background:var(--line); border-radius:4px; margin-top:12px; }
+.sheet em { font-style:normal; color:#C0392B; }
+.cell { position:absolute; width:62px; height:44px; border:2px solid var(--line); text-align:center; font:600 26px/40px var(--mono); background:#fff; }
+.tab { position:absolute; top:316px; height:46px; line-height:42px; padding:0 14px; font:700 26px var(--body); border:3px solid var(--ink); border-radius:10px 10px 0 0; background:#EAF3EC; }
+.frm { position:absolute; left:0; right:0; font-size:36px; font-weight:700; line-height:1; white-space:nowrap; }
+.frm span.f { display:inline-block; min-width:62px; text-align:center; border-bottom:4px solid var(--ink); margin:0 6px; color:var(--green); font-weight:900; }
+.box { position:absolute; border:4px solid var(--ink); background:#CFE5D7; }
+.whisk { position:absolute; width:4px; background:var(--ink); }
+.med { position:absolute; height:6px; background:var(--green); }
+#cap4 { left:0; right:0; top:930px; text-align:center; font-size:52px; font-weight:800; }
+#cap4 span { background:linear-gradient(transparent 62%, var(--accent) 62%, var(--accent) 94%, transparent 94%); padding:0 .1em; }
+
+/* S5 */
+#s5 h2 { position:absolute; left:0; right:0; top:150px; text-align:center; font-size:96px; font-weight:900; }
+.lib2 { top:340px; width:660px; height:380px; background:var(--surface); border:6px solid var(--ink); border-radius:34px; text-align:center; padding-top:80px; font:800 86px var(--mono); }
+.lib2 small { display:block; font:600 36px var(--body); margin-top:26px; color:var(--muted); }
+#bad { left:230px; border-color:var(--danger); color:var(--danger); }
+#good { left:1030px; border-color:var(--green); color:var(--green); }
+#stamp { left:640px; top:300px; font:900 84px var(--body); color:var(--danger); border:10px solid var(--danger); border-radius:16px; padding:0 24px; background:rgba(255,255,255,.85); }
+#tick { left:1500px; top:300px; width:130px; height:130px; border-radius:50%; background:var(--green); color:#fff; font:900 90px/130px var(--body); text-align:center; }
+#quote { left:0; right:0; top:800px; text-align:center; font-size:76px; font-weight:800; }
+#quote span { background:var(--warn-bg); border:4px solid var(--warn-line); border-radius:30px; padding:14px 40px; display:inline-block; }
+
+/* S6 */
+#s6 .center { position:absolute; left:0; right:0; top:340px; text-align:center; }
+#s6 h2 { font-size:160px; font-weight:900; letter-spacing:-.02em; line-height:1.15; }
+#s6 .hl { background:linear-gradient(transparent 62%, var(--accent) 62%, var(--accent) 94%, transparent 94%) no-repeat; background-size:0% 100%; }
+#s6 p { font-size:56px; margin-top:40px; color:var(--muted); font-weight:600; }
+#s6 .brand { margin-top:70px; font:700 38px var(--mono); color:var(--green); letter-spacing:.08em; }
+#fade { position:absolute; inset:0; background:var(--paper); opacity:0; pointer-events:none; }
+</style></head>
+<body>
+<div class="tag">수요 AI 에이전트 빌더스 · <b>03</b></div>
+
+<div class="scene" id="s1"><div class="center">
+  <div class="chip" id="s1chip">강의자료 03 · 약 60분</div>
+  <h1 id="s1t"></h1>
+  <p id="s1sub">용도에 맞는 라이브러리(앱)를 깔아서 · PDF · 엑셀 · 한글 · 그래프까지</p>
+</div></div>
+
+<div class="scene" id="s2">
+  <div class="abs" id="phone"><div class="notch"></div><div class="empty" id="phEmpty">앱이 없어요<br>기본 기능만 있음</div><div class="grid" id="phGrid"></div></div>
+  <div class="abs" id="eq"></div>
+</div>
+
+<div class="scene" id="s3">
+  <div class="abs" id="term"><div class="dots"><i></i><i></i><i></i></div><div class="lines" id="termLines"></div></div>
+  <div class="abs" id="ask"><small>에이전트에게</small><span id="askText"></span><div class="abs" id="askok">✓ 합쳤어요</div></div>
+</div>
+
+<div class="scene" id="s4"><div id="cards"></div><div class="abs" id="cap4"><span>말로 시키면, 에이전트가 일합니다</span></div></div>
+
+<div class="scene" id="s5">
+  <h2 id="s5h">이름이 비슷한 <span style="color:var(--danger)">가짜</span>를 조심하세요</h2>
+  <div class="abs lib2" id="bad">hwpx<small>이름만 비슷한 다른 라이브러리</small></div>
+  <div class="abs lib2" id="good">python-hwpx<small>한글 파일용 라이브러리</small></div>
+  <div class="abs" id="stamp">가짜</div>
+  <div class="abs" id="tick">✓</div>
+  <div class="abs" id="quote"><span id="quoteText"></span></div>
+</div>
+
+<div class="scene" id="s6"><div class="center">
+  <h2 id="s6t">오늘, <span class="hl" id="s6hl">내 교과 그래프</span>까지</h2>
+  <p id="s6p">PDF · 엑셀 · 한글 · 그래프를 에이전트와 함께</p>
+  <div class="brand" id="s6b">수요 AI 에이전트 빌더스</div>
+</div></div>
+
+<div id="bar2"></div><div id="bar"></div><div id="fade"></div>
+
+<script>
+const DUR = 30;
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const P = (t, s, d) => clamp((t - s) / d);
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeIO = (x) => (x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const back = (x) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const win = (t, a, b, f = .45) => clamp((t - a) / f) * clamp((b - t) / f);   // 장면이 보이는 정도
+const typed = (s, p, cur) => s.slice(0, Math.round(clamp(p) * s.length)) + (cur ? '<span class="cursor"></span>' : '');
+const mv = (el, x, y, s = 1, o = 1, r = 0) => { el.style.opacity = o; el.style.transform = `translate(${x}px,${y}px) scale(${s}) rotate(${r}deg)`; };
+
+/* ---------- 만들기 ---------- */
+// S1 제목 글자
+const TITLE = '파이썬으로 ', TITLE2 = '일하기';
+$('s1t').innerHTML = [...TITLE].map(c => `<span class="ch">${c === ' ' ? '&nbsp;' : c}</span>`).join('') + '<span class="hl" id="s1hl">' + [...TITLE2].map(c => `<span class="ch">${c}</span>`).join('') + '</span>';
+const s1chars = [...document.querySelectorAll('#s1t .ch')];
+
+// S2 앱
+const APPS = [['PDF', '#C0392B', 'pypdf'], ['엑셀', '#1F7A4D', 'openpyxl'], ['한글', '#2E5AA8', 'python-hwpx'], ['그래프', '#D9822B', 'matplotlib']];
+$('phGrid').innerHTML = APPS.map(a => `<div class="app"><i style="background:${a[1]}">${a[0]}</i><span>${a[2]}</span></div>`).join('');
+const appEls = [...document.querySelectorAll('#phGrid .app')];
+const EQ = [['스마트폰', '=', '파이썬'], ['앱', '=', '라이브러리'], ['앱스토어', '=', 'PyPI'], ['설치 버튼', '=', 'pip install']];
+$('eq').innerHTML = EQ.map(r => `<div class="eq-row"><span class="k">${r[0]}</span><span class="eqs">${r[1]}</span><span class="v">${r[2]}</span></div>`).join('');
+const eqEls = [...document.querySelectorAll('.eq-row')];
+
+// S4 카드
+const CARDS = [
+  { h: 'PDF', s: '합치고 나누기', lib: 'pypdf' },
+  { h: '엑셀', s: '반별로 나누기', lib: 'openpyxl' },
+  { h: '한글', s: '양식 빈칸 채우기', lib: 'python-hwpx' },
+  { h: '그래프', s: '내 교과 그림', lib: 'matplotlib' },
+];
+$('cards').innerHTML = CARDS.map((c, i) => `<div class="abs card" id="card${i}" style="left:${100 + i * 450}px"><h3>${c.h}</h3><h4>${c.s}</h4><div class="stage" id="st${i}"></div><div class="lib">${c.lib}</div></div>`).join('');
+// 카드 A: 낱장 3개
+$('st0').innerHTML = ['공문 1', '공문 2', '공문 3'].map((n, i) => `<div class="sheet" id="sh${i}"><em>${n}</em><b></b><b></b><b></b></div>`).join('') + '<div class="abs" id="merged" style="left:0;right:0;top:300px;text-align:center;font:700 32px var(--mono);color:var(--green)">PDF_모음.pdf · 4쪽</div>';
+// 카드 B: 표
+const SCORES = [['번호', '국어', '수학', '영어'], ['1', '92', '58', '81'], ['2', '75', '84', '55'], ['3', '88', '71', '90']];
+let cellHtml = '';
+SCORES.forEach((r, ri) => r.forEach((v, ci) => { const low = ri > 0 && ci > 0 && Number(v) < 60; cellHtml += `<div class="cell" data-low="${low ? 1 : 0}" style="left:${ci * 80 - 0}px;top:${ri * 52}px;${ri === 0 ? 'background:#E8E8E8;font-weight:900' : ''}">${v}</div>`; }));
+$('st1').innerHTML = cellHtml + [1, 2, 3, 4, 5].map((n, i) => `<div class="tab" id="tab${i}" style="left:${i * 66}px;font-size:24px;padding:0 10px">${n}반</div>`).join('');
+const cellEls = [...document.querySelectorAll('#st1 .cell')];
+// 카드 C: 양식
+const FORM = [['2026년도 ', '2', ' 학기'], ['', '10', '월 ', '28', '일 (', '수', ')'], ['', '2', '학년 ', '국어', ' 중간고사']];
+$('st2').innerHTML = `
+  <div class="frm" style="top:0">2026년도 <span class="f" data-i="0"></span> 학기</div>
+  <div class="frm" style="top:96px"><span class="f" data-i="1"></span>월 <span class="f" data-i="2"></span>일 (<span class="f" data-i="3" style="min-width:48px"></span>)</div>
+  <div class="frm" style="top:192px"><span class="f" data-i="4" style="min-width:50px"></span>학년 <span class="f" data-i="5" style="min-width:96px"></span></div>
+  <div class="frm" style="top:288px;font-size:30px;color:var(--muted)">중간고사 · 문항 수 · 점수</div>`;
+const FVAL = ['2', '10', '28', '수', '2', '국어'];
+const fEls = [...document.querySelectorAll('#st2 .f')];
+// 카드 D: 상자그림
+let boxHtml = '<div class="abs" style="left:0;top:340px;width:340px;height:4px;background:var(--ink)"></div><div class="abs" style="left:0;top:0;width:4px;height:344px;background:var(--ink)"></div>';
+const BOX = [[40, 120, 250, 210, 70], [150, 90, 220, 170, 120], [260, 140, 280, 215, 60]];
+BOX.forEach((b, i) => { boxHtml += `<div class="whisk" id="wh${i}"></div><div class="box" id="bx${i}" style="left:${b[0]}px;width:58px"></div><div class="med" id="md${i}" style="left:${b[0] - 4}px;width:66px"></div><div class="abs" style="left:${b[0] - 4}px;top:352px;width:66px;text-align:center;font:700 22px var(--mono)">${i + 3}반</div>`; });
+$('st3').innerHTML = boxHtml;
+
+// S3 터미널
+const T1 = 'pip install pypdf';
+const ASK = '공문 폴더의 PDF 3개를 하나로 합쳐줘.';
+
+/* ---------- 장면 ---------- */
+function s1(t) {
+  const a = win(t, 0, 4.6, .3);
+  $('s1').style.opacity = a;
+  mv($('s1chip'), 0, (1 - easeOut(P(t, .15, .6))) * 40, 1, easeOut(P(t, .15, .6)));
+  s1chars.forEach((c, i) => { const p = easeOut(P(t, .5 + i * .07, .5)); mv(c, 0, (1 - p) * 70, 1, p); });
+  $('s1hl').style.backgroundSize = (easeOut(P(t, 1.5, .8)) * 100) + '% 100%';
+  const p2 = easeOut(P(t, 1.7, .6)); mv($('s1sub'), 0, (1 - p2) * 30, 1, p2);
+  $('s1').style.transform = `translateY(${-(1 - clamp((4.6 - t) / .5)) * 40}px)`;
+}
+function s2(t) {
+  const a = win(t, 4.2, 11, .45); $('s2').style.opacity = a;
+  const pin = easeOut(P(t, 4.3, .8));
+  mv($('phone'), 0, (1 - pin) * 220, 1, pin);
+  const emp = 1 - P(t, 6.1, .4);
+  $('phEmpty').style.opacity = emp;
+  APPS.forEach((_, i) => { const p = P(t, 6.3 + i * .55, .5); const s = p ? back(p) : 0; mv(appEls[i], 0, 0, s, clamp(p * 3)); });
+  EQ.forEach((_, i) => {
+    const p = easeOut(P(t, 5.0 + i * .9, .55));
+    mv(eqEls[i], (1 - p) * 90, 0, 1, p);
+    eqEls[i].classList.toggle('hot', t > 5.0 + i * .9 + .6 && t < 5.0 + i * .9 + 1.5);
+  });
+}
+function s3(t) {
+  const a = win(t, 11, 15.8, .4); $('s3').style.opacity = a;
+  const pin = easeOut(P(t, 11.05, .6));
+  mv($('term'), 0, (1 - pin) * 60, 1, pin);
+  const typing = P(t, 11.7, 1.3);
+  let html = `<span class="p">PS C:\\projects\\03_python&gt;</span> ${typed(T1, typing, typing < 1)}\n`;
+  if (t > 13.1) html += `<span class="dim">Collecting pypdf …</span>\n`;
+  if (t > 13.6) html += `<span class="ok">Successfully installed pypdf ✓</span>\n`;
+  $('termLines').innerHTML = html;
+  const ap = easeOut(P(t, 14.0, .5));
+  mv($('ask'), 0, (1 - ap) * 60, 1, ap);
+  $('askText').innerHTML = typed(ASK, P(t, 14.4, .9), P(t, 14.4, .9) < 1);
+  const ok = P(t, 15.3, .35); mv($('askok'), 0, 0, ok ? back(ok) : 0, clamp(ok * 3));
+}
+function s4(t) {
+  const a = win(t, 15.6, 23.3, .4); $('s4').style.opacity = a;
+  const T0 = [15.9, 17.0, 18.1, 19.2];
+  T0.forEach((s, i) => { const p = easeOut(P(t, s, .6)); mv($('card' + i), 0, (1 - p) * 120, 1, p); });
+  // A: 낱장이 한 장으로
+  const pa = easeIO(P(t, T0[0] + .6, 1.1));
+  [-1, 0, 1].forEach((k, i) => { const x = 95 + k * 92 * (1 - pa) + (i - 1) * 8 * pa; const y = 40 + (i === 1 ? 0 : 20 * (1 - pa)) + i * 6 * pa; const el = $('sh' + i); el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.transform = `rotate(${(k * 6) * (1 - pa)}deg)`; });
+  $('merged').style.opacity = P(t, T0[0] + 1.7, .4);
+  // B: 표, 낮은 점수는 빨갛게, 탭
+  const pb = P(t, T0[1] + .5, .5);
+  cellEls.forEach((c, i) => { c.style.opacity = clamp(pb * 3 - (i % 16) * .05); });
+  cellEls.forEach(c => { if (c.dataset.low === '1') { const r = P(t, T0[1] + 1.1, .3); c.style.background = r > 0 ? `rgb(${255},${Math.round(255 - 70 * r)},${Math.round(255 - 70 * r)})` : '#fff'; c.style.color = r > .5 ? '#B3402A' : 'var(--ink)'; } });
+  [0, 1, 2, 3, 4].forEach(i => { const p = P(t, T0[1] + 1.4 + i * .12, .3); mv($('tab' + i), 0, (1 - easeOut(p)) * 30, 1, easeOut(p)); });
+  // C: 양식 채움
+  fEls.forEach((f, i) => { const p = P(t, T0[2] + .6 + i * .22, .3); f.textContent = p > 0 ? FVAL[i] : ''; f.style.background = p > 0 && p < 1 ? 'var(--accent)' : (p >= 1 ? 'transparent' : 'transparent'); f.style.transform = `scale(${p > 0 ? 1 + .25 * Math.sin(p * Math.PI) : 1})`; });
+  // D: 상자그림 자람
+  BOX.forEach((b, i) => {
+    const p = easeOut(P(t, T0[3] + .5 + i * .25, .7));
+    const base = 340, top = base - (b[4] + (b[3] - b[4])) * 0;  // (미사용)
+    const q1 = b[2], q3 = b[1];            // 상자: q3(위) ~ q1(아래) 높이 좌표(위가 작음)
+    const boxTop = 340 - (340 - q3) * p, boxBottom = 340 - (340 - q1) * p;
+    const bx = $('bx' + i); bx.style.top = boxTop + 'px'; bx.style.height = Math.max(0, boxBottom - boxTop) + 'px';
+    const med = $('md' + i); med.style.top = (340 - (340 - b[3]) * p) + 'px';
+    const wh = $('wh' + i); wh.style.left = (b[0] + 27) + 'px'; wh.style.top = (340 - (340 - (b[1] - 40)) * p) + 'px'; wh.style.height = Math.max(0, (340 - (340 - (b[2] + 40)) * p) - (340 - (340 - (b[1] - 40)) * p)) + 'px';
+    bx.style.opacity = p; med.style.opacity = p; wh.style.opacity = p;
+  });
+  const cp = easeOut(P(t, 21.0, .6)); mv($('cap4'), 0, (1 - cp) * 30, 1, cp);
+}
+function s5(t) {
+  const a = win(t, 23.0, 27.4, .4); $('s5').style.opacity = a;
+  const hp = easeOut(P(t, 23.1, .5)); mv($('s5h'), 0, (1 - hp) * -40, 1, hp);
+  const bp = easeOut(P(t, 23.5, .6)); mv($('bad'), (1 - bp) * -300, 0, 1, bp);
+  const gp = easeOut(P(t, 23.9, .6)); mv($('good'), (1 - gp) * 300, 0, 1, gp);
+  const sp = P(t, 24.7, .25); mv($('stamp'), 0, 0, sp ? 1 + (1 - easeOut(sp)) * 1.6 : 0, clamp(sp * 3), -10);
+  const tp = P(t, 25.2, .3); mv($('tick'), 0, 0, tp ? back(tp) : 0, clamp(tp * 3));
+  const qp = P(t, 25.5, 1.0); $('quoteText').innerHTML = '"' + typed('이거 믿을 만한 거야?', qp, false) + '"'; $('quote').style.opacity = qp > 0 ? 1 : 0;
+}
+function s6(t) {
+  const a = win(t, 27.0, 30.4, .4); $('s6').style.opacity = a;
+  const w = [...$('s6t').childNodes];
+  const p1 = easeOut(P(t, 27.2, .7)); mv($('s6t'), 0, (1 - p1) * 60, 1, p1);
+  $('s6hl').style.backgroundSize = (easeOut(P(t, 28.0, .7)) * 100) + '% 100%';
+  const p2 = easeOut(P(t, 28.2, .6)); mv($('s6p'), 0, (1 - p2) * 30, 1, p2);
+  const p3 = easeOut(P(t, 28.6, .6)); mv($('s6b'), 0, (1 - p3) * 24, 1, p3);
+}
+function render(t) {
+  t = clamp(t, 0, DUR);
+  s1(t); s2(t); s3(t); s4(t); s5(t); s6(t);
+  $('bar').style.width = (t / DUR * 100) + '%';
+  $('fade').style.opacity = clamp((t - 29.5) / .5);
+}
+window.render = render;
+const q = new URLSearchParams(location.search);
+render(q.has('t') ? Number(q.get('t')) : 0);
+</script>
+</body></html>
